@@ -132,7 +132,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DLGD500</Key>
-          <Name>(5048=-1,-1,-1,-1,0)(98=-1,-1,-1,-1,0)(82=-1,-1,-1,-1,0)(83=-1,-1,-1,-1,0)(84=-1,-1,-1,-1,0)(85=-1,-1,-1,-1,0)(86=-1,-1,-1,-1,0)(87=-1,-1,-1,-1,0)(88=-1,-1,-1,-1,0)(89=-1,-1,-1,-1,0)(90=-1,-1,-1,-1,0)(102=-1,-1,-1,-1,0)(80=-1,-1,-1,-1,0)(81=-1,-1,-1,-1,0)(91=150,104,360,379,0)(92=-1,-1,-1,-1,0)(93=-1,-1,-1,-1,0)(94=-1,-1,-1,-1,0)(100=-1,-1,-1,-1,0)(101=-1,-1,-1,-1,0)(5031=-1,-1,-1,-1,0)(104=-1,-1,-1,-1,0)</Name>
+          <Name>(5048=150,104,366,310,0)(98=631,83,965,476,0)(82=-1,-1,-1,-1,0)(83=-1,-1,-1,-1,0)(84=-1,-1,-1,-1,0)(85=-1,-1,-1,-1,0)(86=-1,-1,-1,-1,0)(87=-1,-1,-1,-1,0)(88=-1,-1,-1,-1,0)(89=-1,-1,-1,-1,0)(90=-1,-1,-1,-1,0)(102=-1,-1,-1,-1,0)(80=1209,368,1410,649,1)(81=968,373,1169,622,1)(91=985,142,1195,417,1)(92=-1,-1,-1,-1,0)(93=-1,-1,-1,-1,0)(94=-1,-1,-1,-1,0)(100=-1,-1,-1,-1,0)(101=-1,-1,-1,-1,0)(5031=-1,-1,-1,-1,0)(104=-1,-1,-1,-1,0)</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -157,7 +157,7 @@
         <periodic>1</periodic>
         <aLwin>0</aLwin>
         <aCover>0</aCover>
-        <aSer1>1</aSer1>
+        <aSer1>0</aSer1>
         <aSer2>0</aSer2>
         <aPa>0</aPa>
         <viewmode>1</viewmode>
@@ -221,6 +221,18 @@
       <bDave2>0</bDave2>
       <PathWithFileName>.\proc_a.a51</PathWithFileName>
       <FilenameWithoutPath>proc_a.a51</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>1</GroupNumber>
+      <FileNumber>3</FileNumber>
+      <FileType>2</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>.\proc_b.a51</PathWithFileName>
+      <FilenameWithoutPath>proc_b.a51</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>

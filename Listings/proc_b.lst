@@ -1,10 +1,10 @@
-A51 MACRO ASSEMBLER  PROC_A                                                               10/30/2018 11:57:39 PAGE     1
+A51 MACRO ASSEMBLER  PROC_B                                                               10/30/2018 12:10:53 PAGE     1
 
 
 MACRO ASSEMBLER A51 V8.2.7.0
-OBJECT MODULE PLACED IN .\Objects\proc_a.obj
-ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE proc_a.a51 SET(SMALL) DEBUG PRINT(.\Listings\proc_a.lst) OBJECT(.\Objec
-                      ts\proc_a.obj) EP
+OBJECT MODULE PLACED IN .\Objects\proc_b.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE proc_b.a51 SET(SMALL) DEBUG PRINT(.\Listings\proc_b.lst) OBJECT(.\Objec
+                      ts\proc_b.obj) EP
 
 LOC  OBJ            LINE     SOURCE
 
@@ -19,21 +19,20 @@ LOC  OBJ            LINE     SOURCE
                 +1   200     
                      201     
                      202     
-                     203     NAME processA
-                     204     PUBLIC processA
+                     203     NAME processB
+                     204     PUBLIC processB
                      205             
-                     206     processASegment SEGMENT CODE
+                     206     processBSegment SEGMENT CODE
                      207             ; switch to the created relocatable segment
-----                 208             RSEG processASegment
+----                 208             RSEG processBSegment
                      209                     
                      210     ;do random stuff
-0000                 211     processA:
-0000 7C04            212             mov r4,#4
-0002 7D05            213             mov r5,#5
-0004 7E06            214             mov r6,#6
-0006 7F07            215             mov r7,#7
-                     216             end
-A51 MACRO ASSEMBLER  PROC_A                                                               10/30/2018 11:57:39 PAGE     2
+0000                 211     processB:
+0000 7901            212             mov r1,#1
+0002 7A02            213             mov r2,#2
+0004 7B03            214             mov r3,#3
+                     215             end
+A51 MACRO ASSEMBLER  PROC_B                                                               10/30/2018 12:10:53 PAGE     2
 
 SYMBOL TABLE LISTING
 ------ ----- -------
@@ -101,7 +100,7 @@ EAL. . . . . . . .  B ADDR   00A8H.7 A
 ES . . . . . . . .  B ADDR   00A8H.4 A   
 ET0. . . . . . . .  B ADDR   00A8H.1 A   
 ET1. . . . . . . .  B ADDR   00A8H.3 A   
-A51 MACRO ASSEMBLER  PROC_A                                                               10/30/2018 11:57:39 PAGE     3
+A51 MACRO ASSEMBLER  PROC_B                                                               10/30/2018 12:10:53 PAGE     3
 
 ET2. . . . . . . .  B ADDR   00A8H.5 A   
 EX0. . . . . . . .  B ADDR   00A8H.0 A   
@@ -157,8 +156,8 @@ P6 . . . . . . . .  D ADDR   00FAH   A
 P7 . . . . . . . .  D ADDR   00DBH   A   
 P8 . . . . . . . .  D ADDR   00DDH   A   
 PCON . . . . . . .  D ADDR   0087H   A   
-PROCESSA . . . . .  C ADDR   0000H   R   SEG=PROCESSASEGMENT
-PROCESSASEGMENT. .  C SEG    0008H       REL=UNIT
+PROCESSB . . . . .  C ADDR   0000H   R   SEG=PROCESSBSEGMENT
+PROCESSBSEGMENT. .  C SEG    0006H       REL=UNIT
 PSW. . . . . . . .  D ADDR   00D0H   A   
 RB80 . . . . . . .  B ADDR   0098H.2 A   
 RD . . . . . . . .  B ADDR   00B0H.7 A   
@@ -169,7 +168,7 @@ RS1. . . . . . . .  B ADDR   00D0H.4 A
 RXD. . . . . . . .  B ADDR   00B0H.0 A   
 S0BUF. . . . . . .  D ADDR   0099H   A   
 S0CON. . . . . . .  D ADDR   0098H   A   
-A51 MACRO ASSEMBLER  PROC_A                                                               10/30/2018 11:57:39 PAGE     4
+A51 MACRO ASSEMBLER  PROC_B                                                               10/30/2018 12:10:53 PAGE     4
 
 S0RELH . . . . . .  D ADDR   00BAH   A   
 S0RELL . . . . . .  D ADDR   00AAH   A   

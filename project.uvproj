@@ -386,6 +386,11 @@
               <FileType>2</FileType>
               <FilePath>.\proc_a.a51</FilePath>
             </File>
+            <File>
+              <FileName>proc_b.a51</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\proc_b.a51</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

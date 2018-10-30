@@ -1,15 +1,16 @@
 $NOMOD51
 #include <Reg517a.inc>
 
-NAME processA
-PUBLIC processA
+NAME processB
+PUBLIC processB
 	
-processASegment SEGMENT CODE
+processBSegment SEGMENT CODE
 	; switch to the created relocatable segment
-	RSEG processASegment
+	RSEG processBSegment
 		
 ;do random stuff
-processA:
+processB:
 	mov r1,#1
 	mov r2,#2
 	mov r3,#3
+	end

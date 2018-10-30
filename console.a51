@@ -1,7 +1,7 @@
 $NOMOD51
 #include <Reg517a.inc>
 
-EXTRN CODE (processA)
+EXTRN CODE (processA,processB)
 
 ;configure seriel port 0
 	mov s0con,#01010000b
@@ -39,7 +39,7 @@ inpIsA:
 	jmp readMoreInput
 
 inpIsB:
-	call processA
+	call processB
 	jmp readMoreInput
 
 inpIsC:
