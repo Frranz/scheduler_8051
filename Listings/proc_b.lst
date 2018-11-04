@@ -1,4 +1,4 @@
-A51 MACRO ASSEMBLER  PROC_B                                                               11/04/2018 20:02:52 PAGE     1
+A51 MACRO ASSEMBLER  PROC_B                                                               11/04/2018 20:07:42 PAGE     1
 
 
 MACRO ASSEMBLER A51 V8.2.7.0
@@ -42,14 +42,14 @@ LOC  OBJ            LINE     SOURCE
                      223     
 000C D28C            224             setb tr0
                      225             
-000E                 226     checktf0:
-000E 308DFD          227             jnb tf0,checktf0
+000E                 226     checktf:
+000E 308DFD          227             jnb tf0,checktf
 0011 8005            228             jmp endloop
                      229     ;       clr tf0
                      230     ;       setb tr0
                      231             
 0013 19              232             dec r1
-0014 D9F8            233             djnz r1,checktf0
+0014 D9F8            233             djnz r1,checktf
                      234             
 0016 7B11            235             mov r3,#11h             
                      236             
@@ -60,7 +60,7 @@ LOC  OBJ            LINE     SOURCE
 001B 22              241             ret
                      242     
                      243             end
-A51 MACRO ASSEMBLER  PROC_B                                                               11/04/2018 20:02:52 PAGE     2
+A51 MACRO ASSEMBLER  PROC_B                                                               11/04/2018 20:07:42 PAGE     2
 
 SYMBOL TABLE LISTING
 ------ ----- -------
@@ -90,7 +90,7 @@ CCL1 . . . . . . .  D ADDR   00C2H   A
 CCL2 . . . . . . .  D ADDR   00C4H   A   
 CCL3 . . . . . . .  D ADDR   00C6H   A   
 CCL4 . . . . . . .  D ADDR   00CEH   A   
-CHECKTF0 . . . . .  C ADDR   000EH   R   SEG=PROCESSBSEGMENT
+CHECKTF. . . . . .  C ADDR   000EH   R   SEG=PROCESSBSEGMENT
 CLK. . . . . . . .  B ADDR   00D8H.6 A   
 CLRMSK . . . . . .  D ADDR   00A6H   A   
 CMEN . . . . . . .  D ADDR   00F6H   A   
@@ -128,7 +128,7 @@ EADC . . . . . . .  B ADDR   00B8H.0 A
 EAL. . . . . . . .  B ADDR   00A8H.7 A   
 ENDLOOP. . . . . .  C ADDR   0018H   R   SEG=PROCESSBSEGMENT
 ES . . . . . . . .  B ADDR   00A8H.4 A   
-A51 MACRO ASSEMBLER  PROC_B                                                               11/04/2018 20:02:52 PAGE     3
+A51 MACRO ASSEMBLER  PROC_B                                                               11/04/2018 20:07:42 PAGE     3
 
 ET0. . . . . . . .  B ADDR   00A8H.1 A   
 ET1. . . . . . . .  B ADDR   00A8H.3 A   
@@ -196,7 +196,7 @@ RI0. . . . . . . .  B ADDR   0098H.0 A
 RS0. . . . . . . .  B ADDR   00D0H.3 A   
 RS1. . . . . . . .  B ADDR   00D0H.4 A   
 RXD. . . . . . . .  B ADDR   00B0H.0 A   
-A51 MACRO ASSEMBLER  PROC_B                                                               11/04/2018 20:02:52 PAGE     4
+A51 MACRO ASSEMBLER  PROC_B                                                               11/04/2018 20:07:42 PAGE     4
 
 S0BUF. . . . . . .  D ADDR   0099H   A   
 S0CON. . . . . . .  D ADDR   0098H   A   

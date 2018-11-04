@@ -24,14 +24,14 @@ processB:
 
 	setb tr0
 	
-checktf0:
-	jnb tf0,checktf0
+checktf:
+	jnb tf0,checktf
 	jmp endloop
 ;	clr tf0
 ;	setb tr0
 	
 	dec r1
-	djnz r1,checktf0
+	djnz r1,checktf
 	
 	mov r3,#11h	 	
 	
