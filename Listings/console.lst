@@ -1,4 +1,4 @@
-A51 MACRO ASSEMBLER  CONSOLE                                                              10/30/2018 11:58:14 PAGE     1
+A51 MACRO ASSEMBLER  CONSOLE                                                              11/04/2018 19:43:08 PAGE     1
 
 
 MACRO ASSEMBLER A51 V8.2.7.0
@@ -38,11 +38,11 @@ LOC  OBJ            LINE     SOURCE
 0014 600B            219             jz  inpIsA
                      220             
                      221             ;check if input was b
-0016 04              222             inc A
+0016 14              222             dec A
 0017 600D            223             jz  inpIsB
                      224             
                      225             ;check if input was c
-0019 04              226             inc A
+0019 14              226             dec A
 001A 600F            227             jz  inpIsC
                      228             
                      229             ;check if input was z
@@ -65,20 +65,20 @@ LOC  OBJ            LINE     SOURCE
                      246     
 002D                 247     inpIsZ:
 002D 8000            248             jmp readMoreInput
-A51 MACRO ASSEMBLER  CONSOLE                                                              10/30/2018 11:58:14 PAGE     2
+A51 MACRO ASSEMBLER  CONSOLE                                                              11/04/2018 19:43:08 PAGE     2
 
                      249     
 002F                 250     readMoreInput:
 002F C298            251             clr RI0
 0031 80D9            252             jmp waitloop
-                     253     
+                     253             
 0033                 254     endloop:
 0033 00              255             nop
 0034 D2AE            256             setb wdt
 0036 D2BE            257             setb swdt
 0038 80F9            258             jmp endloop
                      259             end
-A51 MACRO ASSEMBLER  CONSOLE                                                              10/30/2018 11:58:14 PAGE     3
+A51 MACRO ASSEMBLER  CONSOLE                                                              11/04/2018 19:43:08 PAGE     3
 
 SYMBOL TABLE LISTING
 ------ ----- -------
@@ -146,7 +146,7 @@ EAL. . . . . . . .  B ADDR   00A8H.7 A
 ENDLOOP. . . . . .  C ADDR   0033H   A   
 ES . . . . . . . .  B ADDR   00A8H.4 A   
 ET0. . . . . . . .  B ADDR   00A8H.1 A   
-A51 MACRO ASSEMBLER  CONSOLE                                                              10/30/2018 11:58:14 PAGE     4
+A51 MACRO ASSEMBLER  CONSOLE                                                              11/04/2018 19:43:08 PAGE     4
 
 ET1. . . . . . . .  B ADDR   00A8H.3 A   
 ET2. . . . . . . .  B ADDR   00A8H.5 A   
@@ -214,7 +214,7 @@ RB80 . . . . . . .  B ADDR   0098H.2 A
 RD . . . . . . . .  B ADDR   00B0H.7 A   
 READMOREINPUT. . .  C ADDR   002FH   A   
 REN0 . . . . . . .  B ADDR   0098H.4 A   
-A51 MACRO ASSEMBLER  CONSOLE                                                              10/30/2018 11:58:14 PAGE     5
+A51 MACRO ASSEMBLER  CONSOLE                                                              11/04/2018 19:43:08 PAGE     5
 
 RI0. . . . . . . .  B ADDR   0098H.0 A   
 RS0. . . . . . . .  B ADDR   00D0H.3 A   

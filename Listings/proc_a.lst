@@ -1,4 +1,4 @@
-A51 MACRO ASSEMBLER  PROC_A                                                               10/30/2018 11:57:39 PAGE     1
+A51 MACRO ASSEMBLER  PROC_A                                                               11/04/2018 19:02:10 PAGE     1
 
 
 MACRO ASSEMBLER A51 V8.2.7.0
@@ -28,12 +28,31 @@ LOC  OBJ            LINE     SOURCE
                      209                     
                      210     ;do random stuff
 0000                 211     processA:
-0000 7C04            212             mov r4,#4
-0002 7D05            213             mov r5,#5
-0004 7E06            214             mov r6,#6
-0006 7F07            215             mov r7,#7
-                     216             end
-A51 MACRO ASSEMBLER  PROC_A                                                               10/30/2018 11:57:39 PAGE     2
+                     212             ;prep counting up A from 117 => u
+0000 7475            213             mov A,#117
+                     214             ;send: 
+                     215             
+0002                 216     sendloop:
+0002 F599            217             mov s0buf,A
+0004 439801          218             orl s0con,#00000001b
+                     219     
+0007 F8              220             mov r0,A
+0008                 221             waitNextSend:   
+                     222                     ;wartet bis bit abgesendet
+0008 E598            223                     mov A,s0con
+000A 30E1FB          224                     jnb acc.1,waitNextSend
+000D 5398FD          225                     anl s0con,#11111101b
+                     226     
+0010 C8              227             xch A,r0
+0011 04              228             inc A
+0012 B47BED          229             cjne A,#123,sendloop
+                     230     
+                     231     
+0015 22              232             ret
+                     233             
+                     234             
+                     235             end
+A51 MACRO ASSEMBLER  PROC_A                                                               11/04/2018 19:02:10 PAGE     2
 
 SYMBOL TABLE LISTING
 ------ ----- -------
@@ -101,7 +120,7 @@ EAL. . . . . . . .  B ADDR   00A8H.7 A
 ES . . . . . . . .  B ADDR   00A8H.4 A   
 ET0. . . . . . . .  B ADDR   00A8H.1 A   
 ET1. . . . . . . .  B ADDR   00A8H.3 A   
-A51 MACRO ASSEMBLER  PROC_A                                                               10/30/2018 11:57:39 PAGE     3
+A51 MACRO ASSEMBLER  PROC_A                                                               11/04/2018 19:02:10 PAGE     3
 
 ET2. . . . . . . .  B ADDR   00A8H.5 A   
 EX0. . . . . . . .  B ADDR   00A8H.0 A   
@@ -158,7 +177,7 @@ P7 . . . . . . . .  D ADDR   00DBH   A
 P8 . . . . . . . .  D ADDR   00DDH   A   
 PCON . . . . . . .  D ADDR   0087H   A   
 PROCESSA . . . . .  C ADDR   0000H   R   SEG=PROCESSASEGMENT
-PROCESSASEGMENT. .  C SEG    0008H       REL=UNIT
+PROCESSASEGMENT. .  C SEG    0016H       REL=UNIT
 PSW. . . . . . . .  D ADDR   00D0H   A   
 RB80 . . . . . . .  B ADDR   0098H.2 A   
 RD . . . . . . . .  B ADDR   00B0H.7 A   
@@ -169,7 +188,7 @@ RS1. . . . . . . .  B ADDR   00D0H.4 A
 RXD. . . . . . . .  B ADDR   00B0H.0 A   
 S0BUF. . . . . . .  D ADDR   0099H   A   
 S0CON. . . . . . .  D ADDR   0098H   A   
-A51 MACRO ASSEMBLER  PROC_A                                                               10/30/2018 11:57:39 PAGE     4
+A51 MACRO ASSEMBLER  PROC_A                                                               11/04/2018 19:02:10 PAGE     4
 
 S0RELH . . . . . .  D ADDR   00BAH   A   
 S0RELL . . . . . .  D ADDR   00AAH   A   
@@ -177,6 +196,7 @@ S1BUF. . . . . . .  D ADDR   009CH   A
 S1CON. . . . . . .  D ADDR   009BH   A   
 S1RELH . . . . . .  D ADDR   00BBH   A   
 S1RELL . . . . . .  D ADDR   009DH   A   
+SENDLOOP . . . . .  C ADDR   0002H   R   SEG=PROCESSASEGMENT
 SETMSK . . . . . .  D ADDR   00A5H   A   
 SM0. . . . . . . .  B ADDR   0098H.7 A   
 SM1. . . . . . . .  B ADDR   0098H.6 A   
@@ -209,6 +229,7 @@ TMOD . . . . . . .  D ADDR   0089H   A
 TR0. . . . . . . .  B ADDR   0088H.4 A   
 TR1. . . . . . . .  B ADDR   0088H.6 A   
 TXD. . . . . . . .  B ADDR   00B0H.1 A   
+WAITNEXTSEND . . .  C ADDR   0008H   R   SEG=PROCESSASEGMENT
 WDT. . . . . . . .  B ADDR   00A8H.6 A   
 WDTH . . . . . . .  D ADDR   0085H   A   
 WDTL . . . . . . .  D ADDR   0084H   A   

@@ -20,11 +20,11 @@ waitloop:
 	jz  inpIsA
 	
 	;check if input was b
-	inc A
+	dec A
 	jz  inpIsB
 	
 	;check if input was c
-	inc A
+	dec A
 	jz  inpIsC
 	
 	;check if input was z
@@ -51,7 +51,7 @@ inpIsZ:
 readMoreInput:
 	clr RI0
 	jmp waitloop
-
+	
 endloop:
 	nop
 	setb wdt

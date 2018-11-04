@@ -1,4 +1,4 @@
-A51 MACRO ASSEMBLER  PROC_B                                                               10/30/2018 12:10:53 PAGE     1
+A51 MACRO ASSEMBLER  PROC_B                                                               11/04/2018 20:02:52 PAGE     1
 
 
 MACRO ASSEMBLER A51 V8.2.7.0
@@ -28,11 +28,39 @@ LOC  OBJ            LINE     SOURCE
                      209                     
                      210     ;do random stuff
 0000                 211     processB:
-0000 7901            212             mov r1,#1
-0002 7A02            213             mov r2,#2
-0004 7B03            214             mov r3,#3
-                     215             end
-A51 MACRO ASSEMBLER  PROC_B                                                               10/30/2018 12:10:53 PAGE     2
+                     212     
+                     213             ;prepare timer
+0000 D2AF            214             setb eal
+0002 D2A9            215             setb et0
+                     216             
+                     217             ;configuring timer for 0.75 seconds
+0004 758C00          218             mov th0,#0
+0007 758D00          219             mov th1,#0
+                     220             
+                     221             ;15 cuz on timer runs 0,065536s
+000A 790F            222             mov r1,#15
+                     223     
+000C D28C            224             setb tr0
+                     225             
+000E                 226     checktf0:
+000E 308DFD          227             jnb tf0,checktf0
+0011 8005            228             jmp endloop
+                     229     ;       clr tf0
+                     230     ;       setb tr0
+                     231             
+0013 19              232             dec r1
+0014 D9F8            233             djnz r1,checktf0
+                     234             
+0016 7B11            235             mov r3,#11h             
+                     236             
+0018                 237     endloop:
+0018 00              238             nop
+0019 80FD            239             jmp endloop
+                     240             
+001B 22              241             ret
+                     242     
+                     243             end
+A51 MACRO ASSEMBLER  PROC_B                                                               11/04/2018 20:02:52 PAGE     2
 
 SYMBOL TABLE LISTING
 ------ ----- -------
@@ -62,6 +90,7 @@ CCL1 . . . . . . .  D ADDR   00C2H   A
 CCL2 . . . . . . .  D ADDR   00C4H   A   
 CCL3 . . . . . . .  D ADDR   00C6H   A   
 CCL4 . . . . . . .  D ADDR   00CEH   A   
+CHECKTF0 . . . . .  C ADDR   000EH   R   SEG=PROCESSBSEGMENT
 CLK. . . . . . . .  B ADDR   00D8H.6 A   
 CLRMSK . . . . . .  D ADDR   00A6H   A   
 CMEN . . . . . . .  D ADDR   00F6H   A   
@@ -97,11 +126,12 @@ DPL. . . . . . . .  D ADDR   0082H   A
 DPSEL. . . . . . .  D ADDR   0092H   A   
 EADC . . . . . . .  B ADDR   00B8H.0 A   
 EAL. . . . . . . .  B ADDR   00A8H.7 A   
+ENDLOOP. . . . . .  C ADDR   0018H   R   SEG=PROCESSBSEGMENT
 ES . . . . . . . .  B ADDR   00A8H.4 A   
+A51 MACRO ASSEMBLER  PROC_B                                                               11/04/2018 20:02:52 PAGE     3
+
 ET0. . . . . . . .  B ADDR   00A8H.1 A   
 ET1. . . . . . . .  B ADDR   00A8H.3 A   
-A51 MACRO ASSEMBLER  PROC_B                                                               10/30/2018 12:10:53 PAGE     3
-
 ET2. . . . . . . .  B ADDR   00A8H.5 A   
 EX0. . . . . . . .  B ADDR   00A8H.0 A   
 EX1. . . . . . . .  B ADDR   00A8H.2 A   
@@ -157,7 +187,7 @@ P7 . . . . . . . .  D ADDR   00DBH   A
 P8 . . . . . . . .  D ADDR   00DDH   A   
 PCON . . . . . . .  D ADDR   0087H   A   
 PROCESSB . . . . .  C ADDR   0000H   R   SEG=PROCESSBSEGMENT
-PROCESSBSEGMENT. .  C SEG    0006H       REL=UNIT
+PROCESSBSEGMENT. .  C SEG    001CH       REL=UNIT
 PSW. . . . . . . .  D ADDR   00D0H   A   
 RB80 . . . . . . .  B ADDR   0098H.2 A   
 RD . . . . . . . .  B ADDR   00B0H.7 A   
@@ -166,10 +196,10 @@ RI0. . . . . . . .  B ADDR   0098H.0 A
 RS0. . . . . . . .  B ADDR   00D0H.3 A   
 RS1. . . . . . . .  B ADDR   00D0H.4 A   
 RXD. . . . . . . .  B ADDR   00B0H.0 A   
+A51 MACRO ASSEMBLER  PROC_B                                                               11/04/2018 20:02:52 PAGE     4
+
 S0BUF. . . . . . .  D ADDR   0099H   A   
 S0CON. . . . . . .  D ADDR   0098H   A   
-A51 MACRO ASSEMBLER  PROC_B                                                               10/30/2018 12:10:53 PAGE     4
-
 S0RELH . . . . . .  D ADDR   00BAH   A   
 S0RELL . . . . . .  D ADDR   00AAH   A   
 S1BUF. . . . . . .  D ADDR   009CH   A   

@@ -10,7 +10,35 @@ processBSegment SEGMENT CODE
 		
 ;do random stuff
 processB:
-	mov r1,#1
-	mov r2,#2
-	mov r3,#3
+
+	;prepare timer
+	setb eal
+	setb et0
+	
+	;configuring timer for 0.75 seconds
+	mov th0,#0
+	mov th1,#0
+	
+	;15 cuz on timer runs 0,065536s
+	mov r1,#15
+
+	setb tr0
+	
+checktf0:
+	jnb tf0,checktf0
+	jmp endloop
+;	clr tf0
+;	setb tr0
+	
+	dec r1
+	djnz r1,checktf0
+	
+	mov r3,#11h	 	
+	
+endloop:
+	nop
+	jmp endloop
+	
+	ret
+
 	end
