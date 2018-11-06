@@ -19,7 +19,7 @@ processB:
 	
 	;configuring timer for 0.75 seconds
 	mov th0,#0
-	mov th1,#0
+	mov tl0,#0
 	
 	;15 cuz on timer runs 0,065536s
 	mov r1,#0xa8

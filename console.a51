@@ -1,7 +1,17 @@
 $NOMOD51
 #include <Reg517a.inc>
 
-EXTRN CODE (processA,processB)
+NAME consoleProcess
+PUBLIC consoleProcess
+
+EXTRN CODE (processA,processB)	
+
+consoleSegment SEGMENT CODE
+	; switch to the created relocatable segment
+	RSEG consoleSegment
+		
+
+consoleProcess:
 
 ;configure seriel port 0
 	mov s0con,#01010000b

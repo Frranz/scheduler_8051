@@ -1,5 +1,6 @@
 ".\Objects\console.obj",
 ".\Objects\proc_a.obj",
-".\Objects\proc_b.obj" 
+".\Objects\proc_b.obj",
+".\Objects\scheduler.obj" 
 TO ".\Objects\project" 
 PRINT(".\Listings\project.m51") RAMSIZE(256) 

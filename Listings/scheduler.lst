@@ -1,10 +1,10 @@
-A51 MACRO ASSEMBLER  CONSOLE                                                              11/06/2018 10:34:48 PAGE     1
+A51 MACRO ASSEMBLER  SCHEDULER                                                            11/06/2018 10:55:47 PAGE     1
 
 
 MACRO ASSEMBLER A51 V8.2.7.0
-OBJECT MODULE PLACED IN .\Objects\console.obj
-ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE console.a51 SET(SMALL) DEBUG PRINT(.\Listings\console.lst) OBJECT(.\Obj
-                      ects\console.obj) EP
+OBJECT MODULE PLACED IN .\Objects\scheduler.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE scheduler.a51 SET(SMALL) DEBUG PRINT(.\Listings\scheduler.lst) OBJECT(.
+                      \Objects\scheduler.obj) EP
 
 LOC  OBJ            LINE     SOURCE
 
@@ -19,78 +19,42 @@ LOC  OBJ            LINE     SOURCE
                 +1   200     
                      201     
                      202     
-                     203     NAME consoleProcess
-                     204     PUBLIC consoleProcess
-                     205     
-                     206     EXTRN CODE (processA,processB)  
-                     207     
-                     208     consoleSegment SEGMENT CODE
-                     209             ; switch to the created relocatable segment
-----                 210             RSEG consoleSegment
+                     203     EXTRN CODE (consoleProcess)
+                     204             
+                     205             ;define timer2 interupt routine
+001B                 206             org 001bh
+001B 80F4            207             jmp tihandler
+                     208             
+                     209             ;start
+0000                 210             org 0000h
                      211                     
-                     212     
-0000                 213     consoleProcess:
-                     214     
-                     215     ;configure seriel port 0
-0000 759850          216             mov s0con,#01010000b
-0003 75D8C0          217             mov adcon0,#11000000b
-0006 75BA03          218             mov s0relh,#00000011b
-0009 75AAD9          219             mov s0rell,#11011001b
-                     220     
-000C                 221     waitloop:
-                     222             ;check if receive interrupt flag is set
-000C D2AE            223             setb wdt
-000E D2BE            224             setb swdt
-0010 3098F9          225             jnb RI0,waitloop
-0013 A999            226             mov r1,s0buf
-                     227             
-                     228             ;check if input was a
-0015 E9              229             mov A,r1
-0016 9461            230             SUBB A,#97
-0018 600B            231             jz  inpIsA
-                     232             
-                     233             ;check if input was b
-001A 14              234             dec A
-001B 600D            235             jz  inpIsB
+                     212             ;enable all interrupts
+0000 D2AF            213             setb eal
+0002 758D00          214             mov th1,#0
+0005 758B00          215             mov tl1,#0
+                     216             
+                     217             ;enable and start timer 1
+0008 D2AB            218             setb et1
+000A D28E            219             setb tr1
+                     220             
+                     221             ;start console process
+000C 120000   F      222             call consoleProcess
+000F 8003            223             jmp endloop
+                     224             
+                     225             
+0011                 226     tihandler:
+0011 A900            227             mov r1,0
+                     228             
+0013 32              229             reti
+                     230             
+0014                 231     endloop:
+0014 00              232             nop
+0015 D2AE            233             setb wdt
+0017 D2BE            234             setb swdt
+0019 80F9            235             jmp endloop
                      236             
-                     237             ;check if input was c
-001D 14              238             dec A
-001E 600F            239             jz  inpIsC
-                     240             
-                     241             ;check if input was z
-0020 29              242             add A,r1
-0021 947A            243             subb A,#122
-0023 600C            244             jz  inpIsZ
-                     245             
-                     246             
-                     247     
-0025                 248     inpIsA:
-A51 MACRO ASSEMBLER  CONSOLE                                                              11/06/2018 10:34:48 PAGE     2
-
-0025 120000   F      249             call processA
-0028 8009            250             jmp readMoreInput
-                     251     
-002A                 252     inpIsB:
-002A 120000   F      253             call processB
-002D 8004            254             jmp readMoreInput
-                     255     
-002F                 256     inpIsC:
-002F 8002            257             jmp readMoreInput
-                     258     
-0031                 259     inpIsZ:
-0031 8000            260             jmp readMoreInput
-                     261     
-0033                 262     readMoreInput:
-0033 C298            263             clr RI0
-0035 80D5            264             jmp waitloop
-                     265             
-0037                 266     endloop:
-0037 00              267             nop
-0038 D2AE            268             setb wdt
-003A D2BE            269             setb swdt
-003C 80F9            270             jmp endloop
-                     271             end
-A51 MACRO ASSEMBLER  CONSOLE                                                              11/06/2018 10:34:48 PAGE     3
+                     237             end
+A51 MACRO ASSEMBLER  SCHEDULER                                                            11/06/2018 10:55:47 PAGE     2
 
 SYMBOL TABLE LISTING
 ------ ----- -------
@@ -144,8 +108,7 @@ COMCLRH. . . . . .  D ADDR   00A4H   A
 COMCLRL. . . . . .  D ADDR   00A3H   A   
 COMSETH. . . . . .  D ADDR   00A2H   A   
 COMSETL. . . . . .  D ADDR   00A1H   A   
-CONSOLEPROCESS . .  C ADDR   0000H   R   SEG=CONSOLESEGMENT
-CONSOLESEGMENT . .  C SEG    003EH       REL=UNIT
+CONSOLEPROCESS . .  C ADDR   -----       EXT
 CRCH . . . . . . .  D ADDR   00CBH   A   
 CRCL . . . . . . .  D ADDR   00CAH   A   
 CTCON. . . . . . .  D ADDR   00E1H   A   
@@ -157,10 +120,10 @@ DPL. . . . . . . .  D ADDR   0082H   A
 DPSEL. . . . . . .  D ADDR   0092H   A   
 EADC . . . . . . .  B ADDR   00B8H.0 A   
 EAL. . . . . . . .  B ADDR   00A8H.7 A   
-ENDLOOP. . . . . .  C ADDR   0037H   R   SEG=CONSOLESEGMENT
-A51 MACRO ASSEMBLER  CONSOLE                                                              11/06/2018 10:34:48 PAGE     4
-
+ENDLOOP. . . . . .  C ADDR   0014H   A   
 ES . . . . . . . .  B ADDR   00A8H.4 A   
+A51 MACRO ASSEMBLER  SCHEDULER                                                            11/06/2018 10:55:47 PAGE     3
+
 ET0. . . . . . . .  B ADDR   00A8H.1 A   
 ET1. . . . . . . .  B ADDR   00A8H.3 A   
 ET2. . . . . . . .  B ADDR   00A8H.5 A   
@@ -188,10 +151,6 @@ IEX3 . . . . . . .  B ADDR   00C0H.2 A
 IEX4 . . . . . . .  B ADDR   00C0H.3 A   
 IEX5 . . . . . . .  B ADDR   00C0H.4 A   
 IEX6 . . . . . . .  B ADDR   00C0H.5 A   
-INPISA . . . . . .  C ADDR   0025H   R   SEG=CONSOLESEGMENT
-INPISB . . . . . .  C ADDR   002AH   R   SEG=CONSOLESEGMENT
-INPISC . . . . . .  C ADDR   002FH   R   SEG=CONSOLESEGMENT
-INPISZ . . . . . .  C ADDR   0031H   R   SEG=CONSOLESEGMENT
 INT0 . . . . . . .  B ADDR   00B0H.2 A   
 INT1 . . . . . . .  B ADDR   00B0H.3 A   
 IP0. . . . . . . .  D ADDR   00A9H   A   
@@ -221,14 +180,9 @@ P6 . . . . . . . .  D ADDR   00FAH   A
 P7 . . . . . . . .  D ADDR   00DBH   A   
 P8 . . . . . . . .  D ADDR   00DDH   A   
 PCON . . . . . . .  D ADDR   0087H   A   
-PROCESSA . . . . .  C ADDR   -----       EXT
-PROCESSB . . . . .  C ADDR   -----       EXT
 PSW. . . . . . . .  D ADDR   00D0H   A   
 RB80 . . . . . . .  B ADDR   0098H.2 A   
 RD . . . . . . . .  B ADDR   00B0H.7 A   
-A51 MACRO ASSEMBLER  CONSOLE                                                              11/06/2018 10:34:48 PAGE     5
-
-READMOREINPUT. . .  C ADDR   0033H   R   SEG=CONSOLESEGMENT
 REN0 . . . . . . .  B ADDR   0098H.4 A   
 RI0. . . . . . . .  B ADDR   0098H.0 A   
 RS0. . . . . . . .  B ADDR   00D0H.3 A   
@@ -236,6 +190,8 @@ RS1. . . . . . . .  B ADDR   00D0H.4 A
 RXD. . . . . . . .  B ADDR   00B0H.0 A   
 S0BUF. . . . . . .  D ADDR   0099H   A   
 S0CON. . . . . . .  D ADDR   0098H   A   
+A51 MACRO ASSEMBLER  SCHEDULER                                                            11/06/2018 10:55:47 PAGE     4
+
 S0RELH . . . . . .  D ADDR   00BAH   A   
 S0RELL . . . . . .  D ADDR   00AAH   A   
 S1BUF. . . . . . .  D ADDR   009CH   A   
@@ -267,6 +223,7 @@ TH0. . . . . . . .  D ADDR   008CH   A
 TH1. . . . . . . .  D ADDR   008DH   A   
 TH2. . . . . . . .  D ADDR   00CDH   A   
 TI0. . . . . . . .  B ADDR   0098H.1 A   
+TIHANDLER. . . . .  C ADDR   0011H   A   
 TL0. . . . . . . .  D ADDR   008AH   A   
 TL1. . . . . . . .  D ADDR   008BH   A   
 TL2. . . . . . . .  D ADDR   00CCH   A   
@@ -274,7 +231,6 @@ TMOD . . . . . . .  D ADDR   0089H   A
 TR0. . . . . . . .  B ADDR   0088H.4 A   
 TR1. . . . . . . .  B ADDR   0088H.6 A   
 TXD. . . . . . . .  B ADDR   00B0H.1 A   
-WAITLOOP . . . . .  C ADDR   000CH   R   SEG=CONSOLESEGMENT
 WDT. . . . . . . .  B ADDR   00A8H.6 A   
 WDTH . . . . . . .  D ADDR   0085H   A   
 WDTL . . . . . . .  D ADDR   0084H   A   
