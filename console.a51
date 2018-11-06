@@ -11,6 +11,8 @@ EXTRN CODE (processA,processB)
 
 waitloop:
 	;check if receive interrupt flag is set
+	setb wdt
+	setb swdt
 	jnb RI0,waitloop
 	mov r1,s0buf
 	

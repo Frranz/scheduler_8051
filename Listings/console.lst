@@ -1,4 +1,4 @@
-A51 MACRO ASSEMBLER  CONSOLE                                                              11/04/2018 20:07:42 PAGE     1
+A51 MACRO ASSEMBLER  CONSOLE                                                              11/06/2018 09:29:00 PAGE     1
 
 
 MACRO ASSEMBLER A51 V8.2.7.0
@@ -29,56 +29,58 @@ LOC  OBJ            LINE     SOURCE
                      210     
 000C                 211     waitloop:
                      212             ;check if receive interrupt flag is set
-000C 3098FD          213             jnb RI0,waitloop
-000F A999            214             mov r1,s0buf
-                     215             
-                     216             ;check if input was a
-0011 E9              217             mov A,r1
-0012 9461            218             SUBB A,#97
-0014 600B            219             jz  inpIsA
-                     220             
-                     221             ;check if input was b
-0016 14              222             dec A
-0017 600D            223             jz  inpIsB
-                     224             
-                     225             ;check if input was c
-0019 14              226             dec A
-001A 600F            227             jz  inpIsC
-                     228             
-                     229             ;check if input was z
-001C 29              230             add A,r1
-001D 947A            231             subb A,#122
-001F 600C            232             jz  inpIsZ
-                     233             
-                     234             
-                     235     
-0021                 236     inpIsA:
-0021 120000   F      237             call processA
-0024 8009            238             jmp readMoreInput
-                     239     
-0026                 240     inpIsB:
-0026 120000   F      241             call processB
-0029 8004            242             jmp readMoreInput
-                     243     
-002B                 244     inpIsC:
-002B 8002            245             jmp readMoreInput
-                     246     
-002D                 247     inpIsZ:
-002D 8000            248             jmp readMoreInput
-A51 MACRO ASSEMBLER  CONSOLE                                                              11/04/2018 20:07:42 PAGE     2
+000C D2AE            213             setb wdt
+000E D2BE            214             setb swdt
+0010 3098F9          215             jnb RI0,waitloop
+0013 A999            216             mov r1,s0buf
+                     217             
+                     218             ;check if input was a
+0015 E9              219             mov A,r1
+0016 9461            220             SUBB A,#97
+0018 600B            221             jz  inpIsA
+                     222             
+                     223             ;check if input was b
+001A 14              224             dec A
+001B 600D            225             jz  inpIsB
+                     226             
+                     227             ;check if input was c
+001D 14              228             dec A
+001E 600F            229             jz  inpIsC
+                     230             
+                     231             ;check if input was z
+0020 29              232             add A,r1
+0021 947A            233             subb A,#122
+0023 600C            234             jz  inpIsZ
+                     235             
+                     236             
+                     237     
+0025                 238     inpIsA:
+0025 120000   F      239             call processA
+0028 8009            240             jmp readMoreInput
+                     241     
+002A                 242     inpIsB:
+002A 120000   F      243             call processB
+002D 8004            244             jmp readMoreInput
+                     245     
+002F                 246     inpIsC:
+002F 8002            247             jmp readMoreInput
+                     248     
+A51 MACRO ASSEMBLER  CONSOLE                                                              11/06/2018 09:29:00 PAGE     2
 
-                     249     
-002F                 250     readMoreInput:
-002F C298            251             clr RI0
-0031 80D9            252             jmp waitloop
-                     253             
-0033                 254     endloop:
-0033 00              255             nop
-0034 D2AE            256             setb wdt
-0036 D2BE            257             setb swdt
-0038 80F9            258             jmp endloop
-                     259             end
-A51 MACRO ASSEMBLER  CONSOLE                                                              11/04/2018 20:07:42 PAGE     3
+0031                 249     inpIsZ:
+0031 8000            250             jmp readMoreInput
+                     251     
+0033                 252     readMoreInput:
+0033 C298            253             clr RI0
+0035 80D5            254             jmp waitloop
+                     255             
+0037                 256     endloop:
+0037 00              257             nop
+0038 D2AE            258             setb wdt
+003A D2BE            259             setb swdt
+003C 80F9            260             jmp endloop
+                     261             end
+A51 MACRO ASSEMBLER  CONSOLE                                                              11/06/2018 09:29:00 PAGE     3
 
 SYMBOL TABLE LISTING
 ------ ----- -------
@@ -143,10 +145,10 @@ DPL. . . . . . . .  D ADDR   0082H   A
 DPSEL. . . . . . .  D ADDR   0092H   A   
 EADC . . . . . . .  B ADDR   00B8H.0 A   
 EAL. . . . . . . .  B ADDR   00A8H.7 A   
-ENDLOOP. . . . . .  C ADDR   0033H   A   
+ENDLOOP. . . . . .  C ADDR   0037H   A   
 ES . . . . . . . .  B ADDR   00A8H.4 A   
 ET0. . . . . . . .  B ADDR   00A8H.1 A   
-A51 MACRO ASSEMBLER  CONSOLE                                                              11/04/2018 20:07:42 PAGE     4
+A51 MACRO ASSEMBLER  CONSOLE                                                              11/06/2018 09:29:00 PAGE     4
 
 ET1. . . . . . . .  B ADDR   00A8H.3 A   
 ET2. . . . . . . .  B ADDR   00A8H.5 A   
@@ -174,10 +176,10 @@ IEX3 . . . . . . .  B ADDR   00C0H.2 A
 IEX4 . . . . . . .  B ADDR   00C0H.3 A   
 IEX5 . . . . . . .  B ADDR   00C0H.4 A   
 IEX6 . . . . . . .  B ADDR   00C0H.5 A   
-INPISA . . . . . .  C ADDR   0021H   A   
-INPISB . . . . . .  C ADDR   0026H   A   
-INPISC . . . . . .  C ADDR   002BH   A   
-INPISZ . . . . . .  C ADDR   002DH   A   
+INPISA . . . . . .  C ADDR   0025H   A   
+INPISB . . . . . .  C ADDR   002AH   A   
+INPISC . . . . . .  C ADDR   002FH   A   
+INPISZ . . . . . .  C ADDR   0031H   A   
 INT0 . . . . . . .  B ADDR   00B0H.2 A   
 INT1 . . . . . . .  B ADDR   00B0H.3 A   
 IP0. . . . . . . .  D ADDR   00A9H   A   
@@ -212,9 +214,9 @@ PROCESSB . . . . .  C ADDR   -----       EXT
 PSW. . . . . . . .  D ADDR   00D0H   A   
 RB80 . . . . . . .  B ADDR   0098H.2 A   
 RD . . . . . . . .  B ADDR   00B0H.7 A   
-READMOREINPUT. . .  C ADDR   002FH   A   
+READMOREINPUT. . .  C ADDR   0033H   A   
 REN0 . . . . . . .  B ADDR   0098H.4 A   
-A51 MACRO ASSEMBLER  CONSOLE                                                              11/04/2018 20:07:42 PAGE     5
+A51 MACRO ASSEMBLER  CONSOLE                                                              11/06/2018 09:29:00 PAGE     5
 
 RI0. . . . . . . .  B ADDR   0098H.0 A   
 RS0. . . . . . . .  B ADDR   00D0H.3 A   

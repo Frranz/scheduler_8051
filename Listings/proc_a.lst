@@ -1,4 +1,4 @@
-A51 MACRO ASSEMBLER  PROC_A                                                               11/04/2018 19:02:10 PAGE     1
+A51 MACRO ASSEMBLER  PROC_A                                                               11/06/2018 09:29:00 PAGE     1
 
 
 MACRO ASSEMBLER A51 V8.2.7.0
@@ -25,34 +25,36 @@ LOC  OBJ            LINE     SOURCE
                      206     processASegment SEGMENT CODE
                      207             ; switch to the created relocatable segment
 ----                 208             RSEG processASegment
-                     209                     
-                     210     ;do random stuff
-0000                 211     processA:
-                     212             ;prep counting up A from 117 => u
-0000 7475            213             mov A,#117
-                     214             ;send: 
-                     215             
-0002                 216     sendloop:
-0002 F599            217             mov s0buf,A
-0004 439801          218             orl s0con,#00000001b
-                     219     
-0007 F8              220             mov r0,A
-0008                 221             waitNextSend:   
-                     222                     ;wartet bis bit abgesendet
-0008 E598            223                     mov A,s0con
-000A 30E1FB          224                     jnb acc.1,waitNextSend
-000D 5398FD          225                     anl s0con,#11111101b
-                     226     
-0010 C8              227             xch A,r0
-0011 04              228             inc A
-0012 B47BED          229             cjne A,#123,sendloop
-                     230     
-                     231     
-0015 22              232             ret
-                     233             
-                     234             
-                     235             end
-A51 MACRO ASSEMBLER  PROC_A                                                               11/04/2018 19:02:10 PAGE     2
+                     209             
+                     210     
+                     211             
+                     212     ;do random stuff
+0000                 213     processA:
+                     214             ;prep counting up A from 117 => u
+0000 7475            215             mov A,#117
+                     216             ;send: 
+                     217             
+0002                 218     sendloop:
+0002 F599            219             mov s0buf,A
+0004 439801          220             orl s0con,#00000001b
+                     221     
+0007 F8              222             mov r0,A
+0008                 223             waitNextSend:   
+                     224                     ;wartet bis bit abgesendet
+0008 E598            225                     mov A,s0con
+000A 30E1FB          226                     jnb acc.1,waitNextSend
+000D 5398FD          227                     anl s0con,#11111101b
+                     228     
+0010 C8              229             xch A,r0
+0011 04              230             inc A
+0012 B47BED          231             cjne A,#123,sendloop
+                     232     
+                     233     
+0015 22              234             ret
+                     235             
+                     236             
+                     237             end
+A51 MACRO ASSEMBLER  PROC_A                                                               11/06/2018 09:29:00 PAGE     2
 
 SYMBOL TABLE LISTING
 ------ ----- -------
@@ -120,7 +122,7 @@ EAL. . . . . . . .  B ADDR   00A8H.7 A
 ES . . . . . . . .  B ADDR   00A8H.4 A   
 ET0. . . . . . . .  B ADDR   00A8H.1 A   
 ET1. . . . . . . .  B ADDR   00A8H.3 A   
-A51 MACRO ASSEMBLER  PROC_A                                                               11/04/2018 19:02:10 PAGE     3
+A51 MACRO ASSEMBLER  PROC_A                                                               11/06/2018 09:29:00 PAGE     3
 
 ET2. . . . . . . .  B ADDR   00A8H.5 A   
 EX0. . . . . . . .  B ADDR   00A8H.0 A   
@@ -188,7 +190,7 @@ RS1. . . . . . . .  B ADDR   00D0H.4 A
 RXD. . . . . . . .  B ADDR   00B0H.0 A   
 S0BUF. . . . . . .  D ADDR   0099H   A   
 S0CON. . . . . . .  D ADDR   0098H   A   
-A51 MACRO ASSEMBLER  PROC_A                                                               11/04/2018 19:02:10 PAGE     4
+A51 MACRO ASSEMBLER  PROC_A                                                               11/06/2018 09:29:00 PAGE     4
 
 S0RELH . . . . . .  D ADDR   00BAH   A   
 S0RELL . . . . . .  D ADDR   00AAH   A   

@@ -7,7 +7,9 @@ PUBLIC processA
 processASegment SEGMENT CODE
 	; switch to the created relocatable segment
 	RSEG processASegment
-		
+	
+
+	
 ;do random stuff
 processA:
 	;prep counting up A from 117 => u

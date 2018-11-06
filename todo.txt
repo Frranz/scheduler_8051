@@ -1,1 +1,2 @@
 process B funktioniert nicht, jnb tf0 no read/exec permission on timer overflow
+=> maybe mit interrupt routine probieren
