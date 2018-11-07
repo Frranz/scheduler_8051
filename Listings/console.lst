@@ -1,4 +1,4 @@
-A51 MACRO ASSEMBLER  CONSOLE                                                              11/06/2018 10:34:48 PAGE     1
+A51 MACRO ASSEMBLER  CONSOLE                                                              11/07/2018 15:15:45 PAGE     1
 
 
 MACRO ASSEMBLER A51 V8.2.7.0
@@ -22,7 +22,7 @@ LOC  OBJ            LINE     SOURCE
                      203     NAME consoleProcess
                      204     PUBLIC consoleProcess
                      205     
-                     206     EXTRN CODE (processA,processB)  
+                     206     EXTRN CODE (processA,processB)
                      207     
                      208     consoleSegment SEGMENT CODE
                      209             ; switch to the created relocatable segment
@@ -65,7 +65,7 @@ LOC  OBJ            LINE     SOURCE
                      246             
                      247     
 0025                 248     inpIsA:
-A51 MACRO ASSEMBLER  CONSOLE                                                              11/06/2018 10:34:48 PAGE     2
+A51 MACRO ASSEMBLER  CONSOLE                                                              11/07/2018 15:15:45 PAGE     2
 
 0025 120000   F      249             call processA
 0028 8009            250             jmp readMoreInput
@@ -90,7 +90,7 @@ LOC  OBJ            LINE     SOURCE
 003A D2BE            269             setb swdt
 003C 80F9            270             jmp endloop
                      271             end
-A51 MACRO ASSEMBLER  CONSOLE                                                              11/06/2018 10:34:48 PAGE     3
+A51 MACRO ASSEMBLER  CONSOLE                                                              11/07/2018 15:15:45 PAGE     3
 
 SYMBOL TABLE LISTING
 ------ ----- -------
@@ -158,7 +158,7 @@ DPSEL. . . . . . .  D ADDR   0092H   A
 EADC . . . . . . .  B ADDR   00B8H.0 A   
 EAL. . . . . . . .  B ADDR   00A8H.7 A   
 ENDLOOP. . . . . .  C ADDR   0037H   R   SEG=CONSOLESEGMENT
-A51 MACRO ASSEMBLER  CONSOLE                                                              11/06/2018 10:34:48 PAGE     4
+A51 MACRO ASSEMBLER  CONSOLE                                                              11/07/2018 15:15:45 PAGE     4
 
 ES . . . . . . . .  B ADDR   00A8H.4 A   
 ET0. . . . . . . .  B ADDR   00A8H.1 A   
@@ -226,7 +226,7 @@ PROCESSB . . . . .  C ADDR   -----       EXT
 PSW. . . . . . . .  D ADDR   00D0H   A   
 RB80 . . . . . . .  B ADDR   0098H.2 A   
 RD . . . . . . . .  B ADDR   00B0H.7 A   
-A51 MACRO ASSEMBLER  CONSOLE                                                              11/06/2018 10:34:48 PAGE     5
+A51 MACRO ASSEMBLER  CONSOLE                                                              11/07/2018 15:15:45 PAGE     5
 
 READMOREINPUT. . .  C ADDR   0033H   R   SEG=CONSOLESEGMENT
 REN0 . . . . . . .  B ADDR   0098H.4 A   

@@ -1,2 +1,16 @@
 process B funktioniert nicht, jnb tf0 no read/exec permission on timer overflow
 => maybe mit interrupt routine probieren
+
+
+PUBLIC statusProcA,statusProcB
+	
+	statusProcA	ds 1
+	statusProcB	ds 1
+		
+	statusNotRunning equ 0
+	statusPlsStart equ 1
+	statusRunning equ 2
+
+
+
+EXTRN DATA (statusProcA,statusProcB)	

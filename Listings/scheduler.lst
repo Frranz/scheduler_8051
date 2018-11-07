@@ -1,4 +1,4 @@
-A51 MACRO ASSEMBLER  SCHEDULER                                                            11/06/2018 10:55:47 PAGE     1
+A51 MACRO ASSEMBLER  SCHEDULER                                                            11/07/2018 15:15:46 PAGE     1
 
 
 MACRO ASSEMBLER A51 V8.2.7.0
@@ -20,41 +20,42 @@ LOC  OBJ            LINE     SOURCE
                      201     
                      202     
                      203     EXTRN CODE (consoleProcess)
-                     204             
-                     205             ;define timer2 interupt routine
-001B                 206             org 001bh
-001B 80F4            207             jmp tihandler
-                     208             
-                     209             ;start
-0000                 210             org 0000h
-                     211                     
-                     212             ;enable all interrupts
-0000 D2AF            213             setb eal
-0002 758D00          214             mov th1,#0
-0005 758B00          215             mov tl1,#0
-                     216             
-                     217             ;enable and start timer 1
-0008 D2AB            218             setb et1
-000A D28E            219             setb tr1
-                     220             
-                     221             ;start console process
-000C 120000   F      222             call consoleProcess
-000F 8003            223             jmp endloop
-                     224             
+                     204     
+                     205             
+                     206             ;define timer2 interupt routine
+001B                 207             org 001bh
+001B 80F4            208             jmp tihandler
+                     209             
+                     210             ;start
+0000                 211             org 0000h
+                     212                     
+                     213             ;enable all interrupts
+0000 D2AF            214             setb eal
+0002 758D00          215             mov th1,#0
+0005 758B00          216             mov tl1,#0
+                     217             
+                     218             ;enable and start timer 1
+0008 D2AB            219             setb et1
+000A D28E            220             setb tr1
+                     221             
+                     222             ;start console process
+000C 120000   F      223             call consoleProcess
+000F 8003            224             jmp endloop
                      225             
-0011                 226     tihandler:
-0011 A900            227             mov r1,0
-                     228             
-0013 32              229             reti
-                     230             
-0014                 231     endloop:
-0014 00              232             nop
-0015 D2AE            233             setb wdt
-0017 D2BE            234             setb swdt
-0019 80F9            235             jmp endloop
-                     236             
-                     237             end
-A51 MACRO ASSEMBLER  SCHEDULER                                                            11/06/2018 10:55:47 PAGE     2
+                     226             
+0011                 227     tihandler:
+0011 A900            228             mov r1,0
+                     229             
+0013 32              230             reti
+                     231             
+0014                 232     endloop:
+0014 00              233             nop
+0015 D2AE            234             setb wdt
+0017 D2BE            235             setb swdt
+0019 80F9            236             jmp endloop
+                     237             
+                     238             end
+A51 MACRO ASSEMBLER  SCHEDULER                                                            11/07/2018 15:15:46 PAGE     2
 
 SYMBOL TABLE LISTING
 ------ ----- -------
@@ -122,7 +123,7 @@ EADC . . . . . . .  B ADDR   00B8H.0 A
 EAL. . . . . . . .  B ADDR   00A8H.7 A   
 ENDLOOP. . . . . .  C ADDR   0014H   A   
 ES . . . . . . . .  B ADDR   00A8H.4 A   
-A51 MACRO ASSEMBLER  SCHEDULER                                                            11/06/2018 10:55:47 PAGE     3
+A51 MACRO ASSEMBLER  SCHEDULER                                                            11/07/2018 15:15:46 PAGE     3
 
 ET0. . . . . . . .  B ADDR   00A8H.1 A   
 ET1. . . . . . . .  B ADDR   00A8H.3 A   
@@ -190,7 +191,7 @@ RS1. . . . . . . .  B ADDR   00D0H.4 A
 RXD. . . . . . . .  B ADDR   00B0H.0 A   
 S0BUF. . . . . . .  D ADDR   0099H   A   
 S0CON. . . . . . .  D ADDR   0098H   A   
-A51 MACRO ASSEMBLER  SCHEDULER                                                            11/06/2018 10:55:47 PAGE     4
+A51 MACRO ASSEMBLER  SCHEDULER                                                            11/07/2018 15:15:46 PAGE     4
 
 S0RELH . . . . . .  D ADDR   00BAH   A   
 S0RELL . . . . . .  D ADDR   00AAH   A   

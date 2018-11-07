@@ -4,7 +4,7 @@ $NOMOD51
 NAME consoleProcess
 PUBLIC consoleProcess
 
-EXTRN CODE (processA,processB)	
+EXTRN CODE (processA,processB)
 
 consoleSegment SEGMENT CODE
 	; switch to the created relocatable segment

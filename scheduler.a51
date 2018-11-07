@@ -2,6 +2,7 @@ $NOMOD51
 #include <Reg517a.inc>
 
 EXTRN CODE (consoleProcess)
+
 	
 	;define timer2 interupt routine
 	org 001bh
