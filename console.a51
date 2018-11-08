@@ -10,8 +10,18 @@ consoleSegment SEGMENT CODE
 	; switch to the created relocatable segment
 	RSEG consoleSegment
 		
+	;define process status values
+	statusNotRunning equ 0
+	statusStartReq equ 1
+	statusRunning equ 2
 
 consoleProcess:
+
+	;set default values for process status
+	;proc_a is @ 0x60
+	mov 0x60,#statusNotRunning
+	;proc_b is @0x61
+	mov 0x61,#statusNotRunning
 
 ;configure seriel port 0
 	mov s0con,#01010000b
@@ -47,11 +57,35 @@ waitloop:
 	
 
 inpIsA:
-	call processA
+	;load status proc A in Reg A
+	mov A,0x60
+	
+	;check if A is not running already
+	cjne A,#0,readMoreInput
+	
+	;check if A is not queued for being ready
+	cjne A,#1,readMoreInput
+	
+	;change status to request starting
+	mov 0x60,#2
+	
+;	call processA
 	jmp readMoreInput
 
 inpIsB:
-	call processB
+	;load status proc A in Reg A
+	mov A,0x61
+	
+	;check if A is not running already
+	cjne A,#0,readMoreInput
+	
+	;check if A is not queued for being ready
+	cjne A,#1,readMoreInput
+	
+	;change status to request starting
+	mov 0x61,#2	
+	
+	;call process b
 	jmp readMoreInput
 
 inpIsC:

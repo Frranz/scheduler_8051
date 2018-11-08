@@ -31,8 +31,14 @@ sendloop:
 	inc A
 	cjne A,#123,sendloop
 
+	;mark proc_a as done
+	mov 0x61,#0
 
-	ret
+endloop:
+	nop
+	setb wdt
+	setb swdt
+	jmp endloop
 	
 	
 	end

@@ -1,4 +1,4 @@
-A51 MACRO ASSEMBLER  PROC_B                                                               11/06/2018 10:39:54 PAGE     1
+A51 MACRO ASSEMBLER  PROC_B                                                               11/08/2018 13:06:38 PAGE     1
 
 
 MACRO ASSEMBLER A51 V8.2.7.0
@@ -59,23 +59,27 @@ LOC  OBJ            LINE     SOURCE
                      240             
 0018 7B11            241             mov r3,#11h             
                      242             
-001A                 243     endloop:
-001A 00              244             nop
-001B 80FD            245             jmp endloop
-                     246             
-001D 22              247             ret
-                     248     
-A51 MACRO ASSEMBLER  PROC_B                                                               11/06/2018 10:39:54 PAGE     2
+                     243             ;mark proc_b as done
+001A 756100          244             mov 0x61,#0
+001D                 245     endloop:
+001D 00              246             nop
+001E D2AE            247             setb wdt
+0020 D2BE            248             setb swdt
+A51 MACRO ASSEMBLER  PROC_B                                                               11/08/2018 13:06:38 PAGE     2
 
-001E                 249     tihandler:
-001E 19              250             dec r1
-001F D9EB            251             djnz r1,checktf
-                     252             
-0021 7B11            253             mov r3,#11h             
-                     254             
-                     255     
-                     256             end
-A51 MACRO ASSEMBLER  PROC_B                                                               11/06/2018 10:39:54 PAGE     3
+0022 80F9            249             jmp endloop
+                     250             
+0024 22              251             ret
+                     252     
+0025                 253     tihandler:
+0025 19              254             dec r1
+0026 D9E4            255             djnz r1,checktf
+                     256             
+0028 7B11            257             mov r3,#11h             
+                     258             
+                     259     
+                     260             end
+A51 MACRO ASSEMBLER  PROC_B                                                               11/08/2018 13:06:38 PAGE     3
 
 SYMBOL TABLE LISTING
 ------ ----- -------
@@ -141,9 +145,9 @@ DPL. . . . . . . .  D ADDR   0082H   A
 DPSEL. . . . . . .  D ADDR   0092H   A   
 EADC . . . . . . .  B ADDR   00B8H.0 A   
 EAL. . . . . . . .  B ADDR   00A8H.7 A   
-ENDLOOP. . . . . .  C ADDR   001AH   R   SEG=PROCESSBSEGMENT
+ENDLOOP. . . . . .  C ADDR   001DH   R   SEG=PROCESSBSEGMENT
 ES . . . . . . . .  B ADDR   00A8H.4 A   
-A51 MACRO ASSEMBLER  PROC_B                                                               11/06/2018 10:39:54 PAGE     4
+A51 MACRO ASSEMBLER  PROC_B                                                               11/08/2018 13:06:38 PAGE     4
 
 ET0. . . . . . . .  B ADDR   00A8H.1 A   
 ET1. . . . . . . .  B ADDR   00A8H.3 A   
@@ -202,7 +206,7 @@ P7 . . . . . . . .  D ADDR   00DBH   A
 P8 . . . . . . . .  D ADDR   00DDH   A   
 PCON . . . . . . .  D ADDR   0087H   A   
 PROCESSB . . . . .  C ADDR   0000H   R   SEG=PROCESSBSEGMENT
-PROCESSBSEGMENT. .  C SEG    0023H       REL=UNIT
+PROCESSBSEGMENT. .  C SEG    002AH       REL=UNIT
 PSW. . . . . . . .  D ADDR   00D0H   A   
 RB80 . . . . . . .  B ADDR   0098H.2 A   
 RD . . . . . . . .  B ADDR   00B0H.7 A   
@@ -211,7 +215,7 @@ RI0. . . . . . . .  B ADDR   0098H.0 A
 RS0. . . . . . . .  B ADDR   00D0H.3 A   
 RS1. . . . . . . .  B ADDR   00D0H.4 A   
 RXD. . . . . . . .  B ADDR   00B0H.0 A   
-A51 MACRO ASSEMBLER  PROC_B                                                               11/06/2018 10:39:54 PAGE     5
+A51 MACRO ASSEMBLER  PROC_B                                                               11/08/2018 13:06:38 PAGE     5
 
 S0BUF. . . . . . .  D ADDR   0099H   A   
 S0CON. . . . . . .  D ADDR   0098H   A   
@@ -246,7 +250,7 @@ TH0. . . . . . . .  D ADDR   008CH   A
 TH1. . . . . . . .  D ADDR   008DH   A   
 TH2. . . . . . . .  D ADDR   00CDH   A   
 TI0. . . . . . . .  B ADDR   0098H.1 A   
-TIHANDLER. . . . .  C ADDR   001EH   R   SEG=PROCESSBSEGMENT
+TIHANDLER. . . . .  C ADDR   0025H   R   SEG=PROCESSBSEGMENT
 TL0. . . . . . . .  D ADDR   008AH   A   
 TL1. . . . . . . .  D ADDR   008BH   A   
 TL2. . . . . . . .  D ADDR   00CCH   A   

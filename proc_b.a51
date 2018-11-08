@@ -41,8 +41,12 @@ checktf:
 	
 	mov r3,#11h	 	
 	
+	;mark proc_b as done
+	mov 0x61,#0
 endloop:
 	nop
+	setb wdt
+	setb swdt
 	jmp endloop
 	
 	ret

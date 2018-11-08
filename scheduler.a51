@@ -2,7 +2,12 @@ $NOMOD51
 #include <Reg517a.inc>
 
 EXTRN CODE (consoleProcess)
-
+	
+	
+	;define process status values
+	statusNotRunning equ 0
+	statusStartReq equ 1
+	statusRunning equ 2
 	
 	;define timer2 interupt routine
 	org 001bh
@@ -26,6 +31,8 @@ EXTRN CODE (consoleProcess)
 	
 	
 tihandler:
+
+	;do scheduelr stuff here
 	mov r1,0
 	
 	reti
