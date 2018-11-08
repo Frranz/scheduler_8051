@@ -1,4 +1,4 @@
-A51 MACRO ASSEMBLER  CONSOLE                                                              11/06/2018 09:29:00 PAGE     1
+A51 MACRO ASSEMBLER  CONSOLE                                                              11/06/2018 10:12:08 PAGE     1
 
 
 MACRO ASSEMBLER A51 V8.2.7.0
@@ -65,7 +65,7 @@ LOC  OBJ            LINE     SOURCE
 002F                 246     inpIsC:
 002F 8002            247             jmp readMoreInput
                      248     
-A51 MACRO ASSEMBLER  CONSOLE                                                              11/06/2018 09:29:00 PAGE     2
+A51 MACRO ASSEMBLER  CONSOLE                                                              11/06/2018 10:12:08 PAGE     2
 
 0031                 249     inpIsZ:
 0031 8000            250             jmp readMoreInput
@@ -80,7 +80,7 @@ LOC  OBJ            LINE     SOURCE
 003A D2BE            259             setb swdt
 003C 80F9            260             jmp endloop
                      261             end
-A51 MACRO ASSEMBLER  CONSOLE                                                              11/06/2018 09:29:00 PAGE     3
+A51 MACRO ASSEMBLER  CONSOLE                                                              11/06/2018 10:12:08 PAGE     3
 
 SYMBOL TABLE LISTING
 ------ ----- -------
@@ -148,7 +148,7 @@ EAL. . . . . . . .  B ADDR   00A8H.7 A
 ENDLOOP. . . . . .  C ADDR   0037H   A   
 ES . . . . . . . .  B ADDR   00A8H.4 A   
 ET0. . . . . . . .  B ADDR   00A8H.1 A   
-A51 MACRO ASSEMBLER  CONSOLE                                                              11/06/2018 09:29:00 PAGE     4
+A51 MACRO ASSEMBLER  CONSOLE                                                              11/06/2018 10:12:08 PAGE     4
 
 ET1. . . . . . . .  B ADDR   00A8H.3 A   
 ET2. . . . . . . .  B ADDR   00A8H.5 A   
@@ -216,7 +216,7 @@ RB80 . . . . . . .  B ADDR   0098H.2 A
 RD . . . . . . . .  B ADDR   00B0H.7 A   
 READMOREINPUT. . .  C ADDR   0033H   A   
 REN0 . . . . . . .  B ADDR   0098H.4 A   
-A51 MACRO ASSEMBLER  CONSOLE                                                              11/06/2018 09:29:00 PAGE     5
+A51 MACRO ASSEMBLER  CONSOLE                                                              11/06/2018 10:12:08 PAGE     5
 
 RI0. . . . . . . .  B ADDR   0098H.0 A   
 RS0. . . . . . . .  B ADDR   00D0H.3 A   

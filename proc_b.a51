@@ -22,7 +22,7 @@ processB:
 	mov th1,#0
 	
 	;15 cuz on timer runs 0,065536s
-	mov r1,#0xa8
+	mov r1,#0xfe
 
 	;starting timer
 	setb tr0
@@ -32,20 +32,24 @@ checktf:
 	setb wdt
 	setb swdt
 	jnb tf0,checktf
-;	clr tf0
 ;	setb tr0
 	
 	dec r1
 	clr tf0
 	djnz r1,checktf
 	
-	mov r3,#11h	 	
+	mov r3,#11h	
 	
-endloop:
-	nop
-	jmp endloop
+	mov s0buf,#'*'
+	orl s0con,#00000001b
+
+waitNextSend:
+		;wartet bis abgesendet
+		mov A,s0con
+		jnb acc.1,waitNextSend
+		anl s0con,#11111101b
 	
-	ret
+	jmp checktf
 
 tihandler:
 	dec r1
