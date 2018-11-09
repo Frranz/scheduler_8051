@@ -1,10 +1,10 @@
-A51 MACRO ASSEMBLER  CONSOLE                                                              11/09/2018 17:18:31 PAGE     1
+A51 MACRO ASSEMBLER  INIT                                                                 11/09/2018 19:29:02 PAGE     1
 
 
 MACRO ASSEMBLER A51 V8.2.7.0
-OBJECT MODULE PLACED IN .\Objects\console.obj
-ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE console.a51 SET(SMALL) DEBUG PRINT(.\Listings\console.lst) OBJECT(.\Obj
-                      ects\console.obj) EP
+OBJECT MODULE PLACED IN .\Objects\init.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE init.a51 SET(SMALL) DEBUG PRINT(.\Listings\init.lst) OBJECT(.\Objects\i
+                      nit.obj) EP
 
 LOC  OBJ            LINE     SOURCE
 
@@ -19,106 +19,67 @@ LOC  OBJ            LINE     SOURCE
                 +1   200     
                      201     
                      202     
-                     203     NAME consoleProcess
-                     204     PUBLIC consoleProcess
-                     205     
-                     206     EXTRN CODE (processA,processB)
-                     207     
-                     208     consoleSegment SEGMENT CODE
-                     209             ; switch to the created relocatable segment
-----                 210             RSEG consoleSegment
-                     211                     
-                     212             ;define process status values
-  0000               213             statusNotRunning equ 0
-  0001               214             statusStartReq equ 1
-  0002               215             statusRunning equ 2
-                     216     
-0000                 217     consoleProcess: 
+                     203     ;NAME init
+                     204     ;PUBLIC init
+                     205             
+                     206     EXTRN CODE (scheduler)
+                     207             
+                     208             
+                     209             ;define process status values
+  0000               210             statusNotRunning equ 0
+  0001               211             statusStartReq equ 1
+  0002               212             statusRunning equ 2
+                     213                     
+0000                 214             org 0
+0000 020000   F      215             jmp start
+                     216             
+                     217     
                      218     
-                     219     ;configure seriel port 0
-0000 759850          220             mov s0con,#01010000b
-0003 75D8C0          221             mov adcon0,#11000000b
-0006 75BA03          222             mov s0relh,#00000011b
-0009 75AAD9          223             mov s0rell,#11011001b
+                     219     
+                     220     
+                     221     
+                     222     
+                     223     
                      224     
-000C                 225     waitloop:
-                     226             ;check if receive interrupt flag is set
-000C D2AE            227             setb wdt
-000E D2BE            228             setb swdt
-0010 3098F9          229             jnb RI0,waitloop
-0013 A999            230             mov r1,s0buf
+                     225     
+                     226     
+                     227     
+                     228     
+                     229     
+                     230     
                      231             
-                     232             ;check if input was a
-0015 E9              233             mov A,r1
-0016 9461            234             SUBB A,#97
-0018 600B            235             jz  inpIsA
+                     232             programCode SEGMENT CODE
+----                 233                     RSEG programCode
+                     234             
+0000                 235     start:  
                      236             
-                     237             ;check if input was b
-001A 14              238             dec A
-001B 6015            239             jz  inpIsB
+                     237             ;set default values for process control
+                     238             ;set console as first process to start
+0000 755800          239             mov 0x58,#0     ;so the scheduler knows which process was running (console is start
+                             ed by hand as first)                 ;2+1%3 = 0 ==> id of console process
                      240             
-                     241             ;check if input was c
-001D 14              242             dec A
-001E 601F            243             jz  inpIsC
-                     244             
-                     245             ;check if input was z
-0020 29              246             add A,r1
-0021 947A            247             subb A,#122
-0023 601C            248             jz  inpIsZ
-A51 MACRO ASSEMBLER  CONSOLE                                                              11/09/2018 17:18:31 PAGE     2
+                     241             ;process status [cons,a,b]
+0003 755902          242             mov 0x59,#statusRunning
+0006 755A00          243             mov 0x5a,#statusNotRunning
+0009 755B00          244             mov 0x5b,#statusNotRunning
+                     245             
+                     246             ;next adress [cons,a,b]
+000C 755C00          247             mov 0x5c,#0;#consoleProcess causes improper fixup error
+A51 MACRO ASSEMBLER  INIT                                                                 11/09/2018 19:29:02 PAGE     2
 
-                     249             
-                     250             
-                     251     
-0025                 252     inpIsA:
-                     253             ;load status proc A in Reg A
-0025 E560            254             mov A,0x60
-                     255             
-                     256             ;check if A is not running already
-0027 B40019          257             cjne A,#0,readMoreInput
+000F 755D00          248             mov 0x5d,#0
+0012 755E00          249             mov 0x5e,#0     
+0015 755F00          250             mov 0x5f,#0     
+0018 756000          251             mov 0x60,#0     
+001B 756100          252             mov 0x61,#0     
+                     253                     
+                     254             ;save area for registers
+                     255             ;....
+                     256             
+001E 120000   F      257             call scheduler
                      258             
-                     259             ;check if A is not queued for being ready
-002A B40116          260             cjne A,#1,readMoreInput
-                     261             
-                     262             ;change status to request starting
-002D 756002          263             mov 0x60,#2
-                     264             
-                     265     ;       call processA
-0030 8011            266             jmp readMoreInput
-                     267     
-0032                 268     inpIsB:
-                     269             ;load status proc A in Reg A
-0032 E561            270             mov A,0x61
-                     271             
-                     272             ;check if A is not running already
-0034 B4000C          273             cjne A,#0,readMoreInput
-                     274             
-                     275             ;check if A is not queued for being ready
-0037 B40109          276             cjne A,#1,readMoreInput
-                     277             
-                     278             ;change status to request starting
-003A 756102          279             mov 0x61,#2     
-                     280             
-                     281             ;call process b
-003D 8004            282             jmp readMoreInput
-                     283     
-003F                 284     inpIsC:
-003F 8002            285             jmp readMoreInput
-                     286     
-0041                 287     inpIsZ:
-0041 8000            288             jmp readMoreInput
-                     289     
-0043                 290     readMoreInput:
-0043 C298            291             clr RI0
-0045 8000            292             jmp endloop
-                     293             
-0047                 294     endloop:
-0047 00              295             nop
-0048 D2AE            296             setb wdt
-004A D2BE            297             setb swdt
-004C 80F9            298             jmp endloop
-                     299             end
-A51 MACRO ASSEMBLER  CONSOLE                                                              11/09/2018 17:18:31 PAGE     3
+                     259             end
+A51 MACRO ASSEMBLER  INIT                                                                 11/09/2018 19:29:02 PAGE     3
 
 SYMBOL TABLE LISTING
 ------ ----- -------
@@ -172,8 +133,6 @@ COMCLRH. . . . . .  D ADDR   00A4H   A
 COMCLRL. . . . . .  D ADDR   00A3H   A   
 COMSETH. . . . . .  D ADDR   00A2H   A   
 COMSETL. . . . . .  D ADDR   00A1H   A   
-CONSOLEPROCESS . .  C ADDR   0000H   R   SEG=CONSOLESEGMENT
-CONSOLESEGMENT . .  C SEG    004EH       REL=UNIT
 CRCH . . . . . . .  D ADDR   00CBH   A   
 CRCL . . . . . . .  D ADDR   00CAH   A   
 CTCON. . . . . . .  D ADDR   00E1H   A   
@@ -185,12 +144,11 @@ DPL. . . . . . . .  D ADDR   0082H   A
 DPSEL. . . . . . .  D ADDR   0092H   A   
 EADC . . . . . . .  B ADDR   00B8H.0 A   
 EAL. . . . . . . .  B ADDR   00A8H.7 A   
-ENDLOOP. . . . . .  C ADDR   0047H   R   SEG=CONSOLESEGMENT
-A51 MACRO ASSEMBLER  CONSOLE                                                              11/09/2018 17:18:31 PAGE     4
-
 ES . . . . . . . .  B ADDR   00A8H.4 A   
 ET0. . . . . . . .  B ADDR   00A8H.1 A   
 ET1. . . . . . . .  B ADDR   00A8H.3 A   
+A51 MACRO ASSEMBLER  INIT                                                                 11/09/2018 19:29:02 PAGE     4
+
 ET2. . . . . . . .  B ADDR   00A8H.5 A   
 EX0. . . . . . . .  B ADDR   00A8H.0 A   
 EX1. . . . . . . .  B ADDR   00A8H.2 A   
@@ -216,10 +174,6 @@ IEX3 . . . . . . .  B ADDR   00C0H.2 A
 IEX4 . . . . . . .  B ADDR   00C0H.3 A   
 IEX5 . . . . . . .  B ADDR   00C0H.4 A   
 IEX6 . . . . . . .  B ADDR   00C0H.5 A   
-INPISA . . . . . .  C ADDR   0025H   R   SEG=CONSOLESEGMENT
-INPISB . . . . . .  C ADDR   0032H   R   SEG=CONSOLESEGMENT
-INPISC . . . . . .  C ADDR   003FH   R   SEG=CONSOLESEGMENT
-INPISZ . . . . . .  C ADDR   0041H   R   SEG=CONSOLESEGMENT
 INT0 . . . . . . .  B ADDR   00B0H.2 A   
 INT1 . . . . . . .  B ADDR   00B0H.3 A   
 IP0. . . . . . . .  D ADDR   00A9H   A   
@@ -249,14 +203,10 @@ P6 . . . . . . . .  D ADDR   00FAH   A
 P7 . . . . . . . .  D ADDR   00DBH   A   
 P8 . . . . . . . .  D ADDR   00DDH   A   
 PCON . . . . . . .  D ADDR   0087H   A   
-PROCESSA . . . . .  C ADDR   -----       EXT
-PROCESSB . . . . .  C ADDR   -----       EXT
+PROGRAMCODE. . . .  C SEG    0021H       REL=UNIT
 PSW. . . . . . . .  D ADDR   00D0H   A   
 RB80 . . . . . . .  B ADDR   0098H.2 A   
 RD . . . . . . . .  B ADDR   00B0H.7 A   
-A51 MACRO ASSEMBLER  CONSOLE                                                              11/09/2018 17:18:31 PAGE     5
-
-READMOREINPUT. . .  C ADDR   0043H   R   SEG=CONSOLESEGMENT
 REN0 . . . . . . .  B ADDR   0098H.4 A   
 RI0. . . . . . . .  B ADDR   0098H.0 A   
 RS0. . . . . . . .  B ADDR   00D0H.3 A   
@@ -265,16 +215,20 @@ RXD. . . . . . . .  B ADDR   00B0H.0 A
 S0BUF. . . . . . .  D ADDR   0099H   A   
 S0CON. . . . . . .  D ADDR   0098H   A   
 S0RELH . . . . . .  D ADDR   00BAH   A   
+A51 MACRO ASSEMBLER  INIT                                                                 11/09/2018 19:29:02 PAGE     5
+
 S0RELL . . . . . .  D ADDR   00AAH   A   
 S1BUF. . . . . . .  D ADDR   009CH   A   
 S1CON. . . . . . .  D ADDR   009BH   A   
 S1RELH . . . . . .  D ADDR   00BBH   A   
 S1RELL . . . . . .  D ADDR   009DH   A   
+SCHEDULER. . . . .  C ADDR   -----       EXT
 SETMSK . . . . . .  D ADDR   00A5H   A   
 SM0. . . . . . . .  B ADDR   0098H.7 A   
 SM1. . . . . . . .  B ADDR   0098H.6 A   
 SM20 . . . . . . .  B ADDR   0098H.5 A   
 SP . . . . . . . .  D ADDR   0081H   A   
+START. . . . . . .  C ADDR   0000H   R   SEG=PROGRAMCODE
 STATUSNOTRUNNING .  N NUMB   0000H   A   
 STATUSRUNNING. . .  N NUMB   0002H   A   
 STATUSSTARTREQ . .  N NUMB   0001H   A   
@@ -305,7 +259,6 @@ TMOD . . . . . . .  D ADDR   0089H   A
 TR0. . . . . . . .  B ADDR   0088H.4 A   
 TR1. . . . . . . .  B ADDR   0088H.6 A   
 TXD. . . . . . . .  B ADDR   00B0H.1 A   
-WAITLOOP . . . . .  C ADDR   000CH   R   SEG=CONSOLESEGMENT
 WDT. . . . . . . .  B ADDR   00A8H.6 A   
 WDTH . . . . . . .  D ADDR   0085H   A   
 WDTL . . . . . . .  D ADDR   0084H   A   

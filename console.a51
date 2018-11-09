@@ -15,13 +15,7 @@ consoleSegment SEGMENT CODE
 	statusStartReq equ 1
 	statusRunning equ 2
 
-consoleProcess:
-
-	;set default values for process status
-	;proc_a is @ 0x60
-	mov 0x60,#statusNotRunning
-	;proc_b is @0x61
-	mov 0x61,#statusNotRunning
+consoleProcess:	
 
 ;configure seriel port 0
 	mov s0con,#01010000b
@@ -96,7 +90,7 @@ inpIsZ:
 
 readMoreInput:
 	clr RI0
-	jmp waitloop
+	jmp endloop
 	
 endloop:
 	nop

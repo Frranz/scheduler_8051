@@ -396,6 +396,11 @@
               <FileType>2</FileType>
               <FilePath>.\scheduler.a51</FilePath>
             </File>
+            <File>
+              <FileName>init.a51</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\init.a51</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
