@@ -1,4 +1,4 @@
-A51 MACRO ASSEMBLER  PROC_B                                                               11/08/2018 13:06:38 PAGE     1
+A51 MACRO ASSEMBLER  PROC_B                                                               11/10/2018 12:01:21 PAGE     1
 
 
 MACRO ASSEMBLER A51 V8.2.7.0
@@ -22,64 +22,69 @@ LOC  OBJ            LINE     SOURCE
                      203     NAME processB
                      204     PUBLIC processB
                      205             
-                     206     processBSegment SEGMENT CODE
-                     207             ; switch to the created relocatable segment
-----                 208             RSEG processBSegment    
-                     209             
-0000                 210             org 0000h
-                     211                     
-                     212     ;do random stuff
-0000                 213     processB:
-                     214     
-                     215             ;prepare timer
-0000 D2AF            216             setb eal
-                     217     ;       setb et0
-                     218             
-                     219             ;configuring timer for 0.75 seconds
-0002 758C00          220             mov th0,#0
-0005 758A00          221             mov tl0,#0
-                     222             
-                     223             ;15 cuz on timer runs 0,065536s
-0008 79A8            224             mov r1,#0xa8
-                     225     
-                     226             ;starting timer
-000A D28C            227             setb tr0
-                     228             
-                     229             
-000C                 230     checktf:
-000C D2AE            231             setb wdt
-000E D2BE            232             setb swdt
-0010 308DF9          233             jnb tf0,checktf
-                     234     ;       clr tf0
-                     235     ;       setb tr0
-                     236             
-0013 19              237             dec r1
-0014 C28D            238             clr tf0
-0016 D9F4            239             djnz r1,checktf
-                     240             
-0018 7B11            241             mov r3,#11h             
-                     242             
-                     243             ;mark proc_b as done
-001A 756100          244             mov 0x61,#0
-001D                 245     endloop:
-001D 00              246             nop
-001E D2AE            247             setb wdt
-0020 D2BE            248             setb swdt
-A51 MACRO ASSEMBLER  PROC_B                                                               11/08/2018 13:06:38 PAGE     2
+                     206             ;define process status values
+  0000               207             statusNotRunning equ 0
+  0001               208             statusStartReq equ 1
+  0002               209             statusRunning equ 2     
+                     210             
+                     211     processBSegment SEGMENT CODE
+                     212             ; switch to the created relocatable segment
+----                 213             RSEG processBSegment    
+                     214             
+0000                 215             org 0000h       
+                     216                     
+                     217     ;do random stuff
+0000                 218     processB:
+                     219     
+                     220             ;prepare timer
+0000 D2AF            221             setb eal
+                     222     ;       setb et0
+                     223             
+                     224             ;configuring timer for 0.75 seconds
+0002 758C00          225             mov th0,#0
+0005 758A00          226             mov tl0,#0
+                     227             
+                     228             ;15 cuz on timer runs 0,065536s
+0008 79A8            229             mov r1,#0xa8
+                     230     
+                     231             ;starting timer
+000A D28C            232             setb tr0
+                     233             
+                     234             
+000C                 235     checktf:
+000C D2AE            236             setb wdt
+000E D2BE            237             setb swdt
+0010 308DF9          238             jnb tf0,checktf
+                     239     ;       clr tf0
+                     240     ;       setb tr0
+                     241             
+0013 19              242             dec r1
+0014 C28D            243             clr tf0
+0016 D9F4            244             djnz r1,checktf
+                     245             
+0018 7B11            246             mov r3,#11h             
+                     247             
+                     248             ;mark proc_b as done
+A51 MACRO ASSEMBLER  PROC_B                                                               11/10/2018 12:01:21 PAGE     2
 
-0022 80F9            249             jmp endloop
-                     250             
-0024 22              251             ret
-                     252     
-0025                 253     tihandler:
-0025 19              254             dec r1
-0026 D9E4            255             djnz r1,checktf
-                     256             
-0028 7B11            257             mov r3,#11h             
-                     258             
-                     259     
-                     260             end
-A51 MACRO ASSEMBLER  PROC_B                                                               11/08/2018 13:06:38 PAGE     3
+001A 755B00          249             mov 0x5b,#statusNotRunning
+001D                 250     endloop:
+001D 00              251             nop
+001E D2AE            252             setb wdt
+0020 D2BE            253             setb swdt
+0022 80F9            254             jmp endloop
+                     255             
+0024 22              256             ret
+                     257     
+0025                 258     tihandler:
+0025 19              259             dec r1
+0026 D9E4            260             djnz r1,checktf
+                     261             
+0028 7B11            262             mov r3,#11h             
+                     263             
+                     264     
+                     265             end
+A51 MACRO ASSEMBLER  PROC_B                                                               11/10/2018 12:01:21 PAGE     3
 
 SYMBOL TABLE LISTING
 ------ ----- -------
@@ -147,7 +152,7 @@ EADC . . . . . . .  B ADDR   00B8H.0 A
 EAL. . . . . . . .  B ADDR   00A8H.7 A   
 ENDLOOP. . . . . .  C ADDR   001DH   R   SEG=PROCESSBSEGMENT
 ES . . . . . . . .  B ADDR   00A8H.4 A   
-A51 MACRO ASSEMBLER  PROC_B                                                               11/08/2018 13:06:38 PAGE     4
+A51 MACRO ASSEMBLER  PROC_B                                                               11/10/2018 12:01:21 PAGE     4
 
 ET0. . . . . . . .  B ADDR   00A8H.1 A   
 ET1. . . . . . . .  B ADDR   00A8H.3 A   
@@ -215,7 +220,7 @@ RI0. . . . . . . .  B ADDR   0098H.0 A
 RS0. . . . . . . .  B ADDR   00D0H.3 A   
 RS1. . . . . . . .  B ADDR   00D0H.4 A   
 RXD. . . . . . . .  B ADDR   00B0H.0 A   
-A51 MACRO ASSEMBLER  PROC_B                                                               11/08/2018 13:06:38 PAGE     5
+A51 MACRO ASSEMBLER  PROC_B                                                               11/10/2018 12:01:21 PAGE     5
 
 S0BUF. . . . . . .  D ADDR   0099H   A   
 S0CON. . . . . . .  D ADDR   0098H   A   
@@ -230,6 +235,9 @@ SM0. . . . . . . .  B ADDR   0098H.7 A
 SM1. . . . . . . .  B ADDR   0098H.6 A   
 SM20 . . . . . . .  B ADDR   0098H.5 A   
 SP . . . . . . . .  D ADDR   0081H   A   
+STATUSNOTRUNNING .  N NUMB   0000H   A   
+STATUSRUNNING. . .  N NUMB   0002H   A   
+STATUSSTARTREQ . .  N NUMB   0001H   A   
 SWDT . . . . . . .  B ADDR   00B8H.6 A   
 SYSCON . . . . . .  D ADDR   00B1H   A   
 T0 . . . . . . . .  B ADDR   00B0H.4 A   

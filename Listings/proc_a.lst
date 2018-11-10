@@ -1,4 +1,4 @@
-A51 MACRO ASSEMBLER  PROC_A                                                               11/08/2018 13:06:37 PAGE     1
+A51 MACRO ASSEMBLER  PROC_A                                                               11/10/2018 12:00:51 PAGE     1
 
 
 MACRO ASSEMBLER A51 V8.2.7.0
@@ -26,41 +26,44 @@ LOC  OBJ            LINE     SOURCE
                      207             ; switch to the created relocatable segment
 ----                 208             RSEG processASegment
                      209             
-                     210     
-                     211             
-                     212     ;do random stuff
-0000                 213     processA:
-                     214             ;prep counting up A from 117 => u
-0000 7475            215             mov A,#117
-                     216             ;send: 
-                     217             
-0002                 218     sendloop:
-0002 F599            219             mov s0buf,A
-0004 439801          220             orl s0con,#00000001b
-                     221     
-0007 F8              222             mov r0,A
-0008                 223             waitNextSend:   
-                     224                     ;wartet bis bit abgesendet
-0008 E598            225                     mov A,s0con
-000A 30E1FB          226                     jnb acc.1,waitNextSend
-000D 5398FD          227                     anl s0con,#11111101b
-                     228     
-0010 C8              229             xch A,r0
-0011 04              230             inc A
-0012 B47BED          231             cjne A,#123,sendloop
-                     232     
-                     233             ;mark proc_a as done
-0015 756100          234             mov 0x61,#0
+                     210             ;define process status values
+  0000               211             statusNotRunning equ 0
+  0001               212             statusStartReq equ 1
+  0002               213             statusRunning equ 2
+                     214             
+                     215     ;do random stuff
+0000                 216     processA:
+                     217             ;prep counting up A from 117 => u
+0000 7475            218             mov A,#117
+                     219             ;send: 
+                     220             
+0002                 221     sendloop:
+0002 F599            222             mov s0buf,A
+0004 439801          223             orl s0con,#00000001b
+                     224     
+0007 F8              225             mov r0,A
+0008                 226             waitNextSend:   
+                     227                     ;wartet bis bit abgesendet
+0008 E598            228                     mov A,s0con
+000A 30E1FB          229                     jnb acc.1,waitNextSend
+000D 5398FD          230                     anl s0con,#11111101b
+                     231     
+0010 C8              232             xch A,r0
+0011 04              233             inc A
+0012 B47BED          234             cjne A,#123,sendloop
                      235     
-0018                 236     endloop:
-0018 00              237             nop
-0019 D2AE            238             setb wdt
-001B D2BE            239             setb swdt
-001D 80F9            240             jmp endloop
-                     241             
-                     242             
-                     243             end
-A51 MACRO ASSEMBLER  PROC_A                                                               11/08/2018 13:06:37 PAGE     2
+                     236             ;mark proc_a as done
+0015 755A00          237             mov 0x5a,#statusNotRunning
+                     238     
+0018                 239     endloop:
+0018 00              240             nop
+0019 D2AE            241             setb wdt
+001B D2BE            242             setb swdt
+001D 80F9            243             jmp endloop
+                     244             
+                     245             
+                     246             end
+A51 MACRO ASSEMBLER  PROC_A                                                               11/10/2018 12:00:51 PAGE     2
 
 SYMBOL TABLE LISTING
 ------ ----- -------
@@ -128,7 +131,7 @@ EAL. . . . . . . .  B ADDR   00A8H.7 A
 ENDLOOP. . . . . .  C ADDR   0018H   R   SEG=PROCESSASEGMENT
 ES . . . . . . . .  B ADDR   00A8H.4 A   
 ET0. . . . . . . .  B ADDR   00A8H.1 A   
-A51 MACRO ASSEMBLER  PROC_A                                                               11/08/2018 13:06:37 PAGE     3
+A51 MACRO ASSEMBLER  PROC_A                                                               11/10/2018 12:00:51 PAGE     3
 
 ET1. . . . . . . .  B ADDR   00A8H.3 A   
 ET2. . . . . . . .  B ADDR   00A8H.5 A   
@@ -196,7 +199,7 @@ RS0. . . . . . . .  B ADDR   00D0H.3 A
 RS1. . . . . . . .  B ADDR   00D0H.4 A   
 RXD. . . . . . . .  B ADDR   00B0H.0 A   
 S0BUF. . . . . . .  D ADDR   0099H   A   
-A51 MACRO ASSEMBLER  PROC_A                                                               11/08/2018 13:06:37 PAGE     4
+A51 MACRO ASSEMBLER  PROC_A                                                               11/10/2018 12:00:51 PAGE     4
 
 S0CON. . . . . . .  D ADDR   0098H   A   
 S0RELH . . . . . .  D ADDR   00BAH   A   
@@ -211,6 +214,9 @@ SM0. . . . . . . .  B ADDR   0098H.7 A
 SM1. . . . . . . .  B ADDR   0098H.6 A   
 SM20 . . . . . . .  B ADDR   0098H.5 A   
 SP . . . . . . . .  D ADDR   0081H   A   
+STATUSNOTRUNNING .  N NUMB   0000H   A   
+STATUSRUNNING. . .  N NUMB   0002H   A   
+STATUSSTARTREQ . .  N NUMB   0001H   A   
 SWDT . . . . . . .  B ADDR   00B8H.6 A   
 SYSCON . . . . . .  D ADDR   00B1H   A   
 T0 . . . . . . . .  B ADDR   00B0H.4 A   
