@@ -8,7 +8,10 @@ processASegment SEGMENT CODE
 	; switch to the created relocatable segment
 	RSEG processASegment
 	
-
+	;define process status values
+	statusNotRunning equ 0
+	statusStartReq equ 1
+	statusRunning equ 2
 	
 ;do random stuff
 processA:
@@ -32,7 +35,7 @@ sendloop:
 	cjne A,#123,sendloop
 
 	;mark proc_a as done
-	mov 0x61,#0
+	mov 0x5a,#statusNotRunning
 
 endloop:
 	nop

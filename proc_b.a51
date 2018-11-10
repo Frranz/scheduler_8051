@@ -4,11 +4,16 @@ $NOMOD51
 NAME processB
 PUBLIC processB
 	
+	;define process status values
+	statusNotRunning equ 0
+	statusStartReq equ 1
+	statusRunning equ 2	
+	
 processBSegment SEGMENT CODE
 	; switch to the created relocatable segment
  	RSEG processBSegment	
 	
-	org 0000h
+	org 0000h	
 		
 ;do random stuff
 processB:
@@ -42,7 +47,7 @@ checktf:
 	mov r3,#11h	 	
 	
 	;mark proc_b as done
-	mov 0x61,#0
+	mov 0x5b,#statusNotRunning
 endloop:
 	nop
 	setb wdt

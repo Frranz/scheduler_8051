@@ -1,4 +1,4 @@
-A51 MACRO ASSEMBLER  CONSOLE                                                              11/09/2018 17:18:31 PAGE     1
+A51 MACRO ASSEMBLER  CONSOLE                                                              11/10/2018 12:00:51 PAGE     1
 
 
 MACRO ASSEMBLER A51 V8.2.7.0
@@ -55,70 +55,70 @@ LOC  OBJ            LINE     SOURCE
                      236             
                      237             ;check if input was b
 001A 14              238             dec A
-001B 6015            239             jz  inpIsB
+001B 601B            239             jz  inpIsB
                      240             
                      241             ;check if input was c
 001D 14              242             dec A
-001E 601F            243             jz  inpIsC
+001E 602B            243             jz  inpIsC
                      244             
                      245             ;check if input was z
 0020 29              246             add A,r1
 0021 947A            247             subb A,#122
-0023 601C            248             jz  inpIsZ
-A51 MACRO ASSEMBLER  CONSOLE                                                              11/09/2018 17:18:31 PAGE     2
+0023 6028            248             jz  inpIsZ
+A51 MACRO ASSEMBLER  CONSOLE                                                              11/10/2018 12:00:51 PAGE     2
 
                      249             
                      250             
                      251     
 0025                 252     inpIsA:
                      253             ;load status proc A in Reg A
-0025 E560            254             mov A,0x60
+0025 E55A            254             mov A,0x5a
                      255             
                      256             ;check if A is not running already
-0027 B40019          257             cjne A,#0,readMoreInput
+0027 B40025          257             cjne A,#statusNotRunning,readMoreInput
                      258             
-                     259             ;check if A is not queued for being ready
-002A B40116          260             cjne A,#1,readMoreInput
-                     261             
-                     262             ;change status to request starting
-002D 756002          263             mov 0x60,#2
+                     259             ;queue in for start by changing status and setting start adress
+002A 755A02          260             mov 0x5a,#statusRunning
+002D 900000   F      261             mov dptr,#processA
+0030 85825E          262             mov 0x5e,dpl
+0033 85835F          263             mov 0x5f,dph
                      264             
                      265     ;       call processA
-0030 8011            266             jmp readMoreInput
+0036 8017            266             jmp readMoreInput
                      267     
-0032                 268     inpIsB:
-                     269             ;load status proc A in Reg A
-0032 E561            270             mov A,0x61
+0038                 268     inpIsB:
+                     269             ;load status proc B in Reg A
+0038 E55B            270             mov A,0x5b
                      271             
-                     272             ;check if A is not running already
-0034 B4000C          273             cjne A,#0,readMoreInput
+                     272             ;check if b is not running already
+003A B40012          273             cjne A,#statusNotRunning,readMoreInput
                      274             
-                     275             ;check if A is not queued for being ready
-0037 B40109          276             cjne A,#1,readMoreInput
-                     277             
-                     278             ;change status to request starting
-003A 756102          279             mov 0x61,#2     
+                     275             ;queue in for start by changing status and setting start adress
+003D 755B02          276             mov 0x5b,#statusRunning
+0040 900000   F      277             mov dptr,#processB
+0043 858260          278             mov 0x60,dpl
+0046 858361          279             mov 0x61,dph
                      280             
                      281             ;call process b
-003D 8004            282             jmp readMoreInput
+0049 8004            282             jmp readMoreInput
                      283     
-003F                 284     inpIsC:
-003F 8002            285             jmp readMoreInput
+004B                 284     inpIsC:
+004B 8002            285             jmp readMoreInput
                      286     
-0041                 287     inpIsZ:
-0041 8000            288             jmp readMoreInput
+004D                 287     inpIsZ:
+004D 8000            288             jmp readMoreInput
                      289     
-0043                 290     readMoreInput:
-0043 C298            291             clr RI0
-0045 8000            292             jmp endloop
-                     293             
-0047                 294     endloop:
-0047 00              295             nop
-0048 D2AE            296             setb wdt
-004A D2BE            297             setb swdt
-004C 80F9            298             jmp endloop
+004F                 290     readMoreInput:
+004F C298            291             clr RI0
+0051 80B9            292             jmp waitloop
+                     293     
+0053                 294     endloop:
+0053 00              295             nop
+0054 D2AE            296             setb wdt
+0056 D2BE            297             setb swdt
+0058 80F9            298             jmp endloop
                      299             end
-A51 MACRO ASSEMBLER  CONSOLE                                                              11/09/2018 17:18:31 PAGE     3
+A51 MACRO ASSEMBLER  CONSOLE                                                              11/10/2018 12:00:51 PAGE     3
 
 SYMBOL TABLE LISTING
 ------ ----- -------
@@ -173,7 +173,7 @@ COMCLRL. . . . . .  D ADDR   00A3H   A
 COMSETH. . . . . .  D ADDR   00A2H   A   
 COMSETL. . . . . .  D ADDR   00A1H   A   
 CONSOLEPROCESS . .  C ADDR   0000H   R   SEG=CONSOLESEGMENT
-CONSOLESEGMENT . .  C SEG    004EH       REL=UNIT
+CONSOLESEGMENT . .  C SEG    005AH       REL=UNIT
 CRCH . . . . . . .  D ADDR   00CBH   A   
 CRCL . . . . . . .  D ADDR   00CAH   A   
 CTCON. . . . . . .  D ADDR   00E1H   A   
@@ -185,8 +185,8 @@ DPL. . . . . . . .  D ADDR   0082H   A
 DPSEL. . . . . . .  D ADDR   0092H   A   
 EADC . . . . . . .  B ADDR   00B8H.0 A   
 EAL. . . . . . . .  B ADDR   00A8H.7 A   
-ENDLOOP. . . . . .  C ADDR   0047H   R   SEG=CONSOLESEGMENT
-A51 MACRO ASSEMBLER  CONSOLE                                                              11/09/2018 17:18:31 PAGE     4
+ENDLOOP. . . . . .  C ADDR   0053H   R   SEG=CONSOLESEGMENT
+A51 MACRO ASSEMBLER  CONSOLE                                                              11/10/2018 12:00:51 PAGE     4
 
 ES . . . . . . . .  B ADDR   00A8H.4 A   
 ET0. . . . . . . .  B ADDR   00A8H.1 A   
@@ -217,9 +217,9 @@ IEX4 . . . . . . .  B ADDR   00C0H.3 A
 IEX5 . . . . . . .  B ADDR   00C0H.4 A   
 IEX6 . . . . . . .  B ADDR   00C0H.5 A   
 INPISA . . . . . .  C ADDR   0025H   R   SEG=CONSOLESEGMENT
-INPISB . . . . . .  C ADDR   0032H   R   SEG=CONSOLESEGMENT
-INPISC . . . . . .  C ADDR   003FH   R   SEG=CONSOLESEGMENT
-INPISZ . . . . . .  C ADDR   0041H   R   SEG=CONSOLESEGMENT
+INPISB . . . . . .  C ADDR   0038H   R   SEG=CONSOLESEGMENT
+INPISC . . . . . .  C ADDR   004BH   R   SEG=CONSOLESEGMENT
+INPISZ . . . . . .  C ADDR   004DH   R   SEG=CONSOLESEGMENT
 INT0 . . . . . . .  B ADDR   00B0H.2 A   
 INT1 . . . . . . .  B ADDR   00B0H.3 A   
 IP0. . . . . . . .  D ADDR   00A9H   A   
@@ -254,9 +254,9 @@ PROCESSB . . . . .  C ADDR   -----       EXT
 PSW. . . . . . . .  D ADDR   00D0H   A   
 RB80 . . . . . . .  B ADDR   0098H.2 A   
 RD . . . . . . . .  B ADDR   00B0H.7 A   
-A51 MACRO ASSEMBLER  CONSOLE                                                              11/09/2018 17:18:31 PAGE     5
+A51 MACRO ASSEMBLER  CONSOLE                                                              11/10/2018 12:00:51 PAGE     5
 
-READMOREINPUT. . .  C ADDR   0043H   R   SEG=CONSOLESEGMENT
+READMOREINPUT. . .  C ADDR   004FH   R   SEG=CONSOLESEGMENT
 REN0 . . . . . . .  B ADDR   0098H.4 A   
 RI0. . . . . . . .  B ADDR   0098H.0 A   
 RS0. . . . . . . .  B ADDR   00D0H.3 A   

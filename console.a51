@@ -52,32 +52,32 @@ waitloop:
 
 inpIsA:
 	;load status proc A in Reg A
-	mov A,0x60
+	mov A,0x5a
 	
 	;check if A is not running already
-	cjne A,#0,readMoreInput
+	cjne A,#statusNotRunning,readMoreInput
 	
-	;check if A is not queued for being ready
-	cjne A,#1,readMoreInput
-	
-	;change status to request starting
-	mov 0x60,#2
+	;queue in for start by changing status and setting start adress
+	mov 0x5a,#statusRunning
+	mov dptr,#processA
+	mov 0x5e,dpl
+	mov 0x5f,dph
 	
 ;	call processA
 	jmp readMoreInput
 
 inpIsB:
-	;load status proc A in Reg A
-	mov A,0x61
+	;load status proc B in Reg A
+	mov A,0x5b
 	
-	;check if A is not running already
-	cjne A,#0,readMoreInput
+	;check if b is not running already
+	cjne A,#statusNotRunning,readMoreInput
 	
-	;check if A is not queued for being ready
-	cjne A,#1,readMoreInput
-	
-	;change status to request starting
-	mov 0x61,#2	
+	;queue in for start by changing status and setting start adress
+	mov 0x5b,#statusRunning
+	mov dptr,#processB
+	mov 0x60,dpl
+	mov 0x61,dph
 	
 	;call process b
 	jmp readMoreInput
@@ -90,8 +90,8 @@ inpIsZ:
 
 readMoreInput:
 	clr RI0
-	jmp endloop
-	
+	jmp waitloop
+
 endloop:
 	nop
 	setb wdt
