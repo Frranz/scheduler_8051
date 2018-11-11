@@ -411,6 +411,16 @@
               <FileType>5</FileType>
               <FilePath>.\OS1.inc</FilePath>
             </File>
+            <File>
+              <FileName>OS2.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\OS2.inc</FilePath>
+            </File>
+            <File>
+              <FileName>OS3.inc</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\OS3.inc</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

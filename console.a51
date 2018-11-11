@@ -71,6 +71,7 @@ inpIsA:
 	mov dptr,#processA
 	mov 0x23,dpl
 	mov 0x24,dph
+	mov 0x93,0x92
 	
 ;	call processA
 	jmp readMoreInput
@@ -87,6 +88,7 @@ inpIsB:
 	mov dptr,#processB
 	mov 0x25,dpl
 	mov 0x26,dph
+	mov 0x95,0x94
 	
 	;call process b
 	jmp readMoreInput
@@ -108,6 +110,7 @@ inpIsZ:
 	mov dptr,#fkt_text
 	mov 0x27,dpl
 	mov 0x28,dph
+	mov 0x97,0x96
 	jmp readMoreInput
 
 stopZ:

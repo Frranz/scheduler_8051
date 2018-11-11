@@ -1,4 +1,4 @@
-A51 MACRO ASSEMBLER  INIT                                                                 11/11/2018 18:30:02 PAGE     1
+A51 MACRO ASSEMBLER  INIT                                                                 11/11/2018 20:34:47 PAGE     1
 
 
 MACRO ASSEMBLER A51 V8.2.7.0
@@ -65,7 +65,7 @@ LOC  OBJ            LINE     SOURCE
 0003 751D02          245             mov 0x1d,#statusRunning
 0006 751E00          246             mov 0x1e,#statusNotRunning
 0009 751F00          247             mov 0x1f,#statusNotRunning
-A51 MACRO ASSEMBLER  INIT                                                                 11/11/2018 18:30:02 PAGE     2
+A51 MACRO ASSEMBLER  INIT                                                                 11/11/2018 20:34:47 PAGE     2
 
                      248             
                      249             ;next adress [cons,a,b]
@@ -85,13 +85,19 @@ LOC  OBJ            LINE     SOURCE
 002A 756307          263             mov 0x63,#7; checken ob das passt, wegen doofer rechnung vorher
 002D 757B07          264             mov 0x7b,#7
                      265             
-                     266             ;serialisbusy byte
-0030 758F00          267             mov 0x8f,#serialNotBlocked
-                     268             
-0033 120000   F      269             call scheduler
-                     270             
-                     271             end
-A51 MACRO ASSEMBLER  INIT                                                                 11/11/2018 18:30:02 PAGE     3
+                     266             ;priorities
+0030 759003          267             mov 0x90,#3
+0033 759202          268             mov 0x92,#2
+0036 759402          269             mov 0x94,#2
+0039 759604          270             mov 0x96,#4
+                     271             
+                     272             ;serialisbusy byte
+003C 758F00          273             mov 0x8f,#serialNotBlocked
+                     274             
+003F 120000   F      275             call scheduler
+                     276             
+                     277             end
+A51 MACRO ASSEMBLER  INIT                                                                 11/11/2018 20:34:47 PAGE     3
 
 SYMBOL TABLE LISTING
 ------ ----- -------
@@ -159,7 +165,7 @@ EAL. . . . . . . .  B ADDR   00A8H.7 A
 ES . . . . . . . .  B ADDR   00A8H.4 A   
 ET0. . . . . . . .  B ADDR   00A8H.1 A   
 ET1. . . . . . . .  B ADDR   00A8H.3 A   
-A51 MACRO ASSEMBLER  INIT                                                                 11/11/2018 18:30:02 PAGE     4
+A51 MACRO ASSEMBLER  INIT                                                                 11/11/2018 20:34:47 PAGE     4
 
 ET2. . . . . . . .  B ADDR   00A8H.5 A   
 EX0. . . . . . . .  B ADDR   00A8H.0 A   
@@ -215,7 +221,7 @@ P6 . . . . . . . .  D ADDR   00FAH   A
 P7 . . . . . . . .  D ADDR   00DBH   A   
 P8 . . . . . . . .  D ADDR   00DDH   A   
 PCON . . . . . . .  D ADDR   0087H   A   
-PROGRAMCODE. . . .  C SEG    0036H       REL=UNIT
+PROGRAMCODE. . . .  C SEG    0042H       REL=UNIT
 PSW. . . . . . . .  D ADDR   00D0H   A   
 RB80 . . . . . . .  B ADDR   0098H.2 A   
 RD . . . . . . . .  B ADDR   00B0H.7 A   
@@ -227,7 +233,7 @@ RXD. . . . . . . .  B ADDR   00B0H.0 A
 S0BUF. . . . . . .  D ADDR   0099H   A   
 S0CON. . . . . . .  D ADDR   0098H   A   
 S0RELH . . . . . .  D ADDR   00BAH   A   
-A51 MACRO ASSEMBLER  INIT                                                                 11/11/2018 18:30:02 PAGE     5
+A51 MACRO ASSEMBLER  INIT                                                                 11/11/2018 20:34:47 PAGE     5
 
 S0RELL . . . . . .  D ADDR   00AAH   A   
 S1BUF. . . . . . .  D ADDR   009CH   A   

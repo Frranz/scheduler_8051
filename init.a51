@@ -64,6 +64,12 @@ start:
 	mov 0x63,#7; checken ob das passt, wegen doofer rechnung vorher
 	mov 0x7b,#7
 	
+	;priorities
+	mov 0x90,#3
+	mov 0x92,#2
+	mov 0x94,#2
+	mov 0x96,#4
+	
 	;serialisbusy byte
 	mov 0x8f,#serialNotBlocked
 	

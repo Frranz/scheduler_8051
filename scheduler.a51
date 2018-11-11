@@ -49,6 +49,76 @@ tihandler:
 	mov 0x1a,r0
 	mov 0x1b,A
 	
+	;check priorites
+	mov A,0x1c
+	xrl A,#0
+	jz prioCons
+	mov A,0x1c
+	xrl A,#1
+	jz prioA
+	mov A,0x1c
+	xrl A,#2
+	jz prioB
+	mov A,0x1c
+	xrl A,#3
+	jz prioZ
+	
+	prioCons:
+		mov A,0x91
+		jnz decPrioCons
+		mov 0x91,0x90
+		jmp changeProcess
+		decPrioCons:
+			mov A,0x91
+			dec A
+			mov 0x91,A
+			jmp returnToProcess
+	prioA:
+		mov A,0x93
+		jnz decPrioA
+		mov 0x93,0x92
+		jmp changeProcess
+		decPrioA:
+			mov A,0x93
+			dec A
+			mov 0x93,A
+			jmp returnToProcess
+	prioB:
+		mov A,0x95
+		jnz decPrioB
+		mov 0x95,0x94
+		jmp changeProcess
+		decPrioB:
+			mov A,0x95
+			dec A
+			mov 0x95,A
+			jmp returnToProcess
+		
+	prioZ:
+		mov A,0x97
+		jnz decPrioZ
+		mov 0x97,0x96
+		jmp changeProcess
+		decPrioZ:
+			mov A,0x97
+			dec A
+			mov 0x97,A
+			jmp returnToProcess
+		
+	
+	returnToProcess:
+		mov r0,0x1a
+		mov a,0x1b
+		reti
+	
+	changeProcess:
+	;reset priority
+	dec r0
+	mov A,@r0
+	inc r0
+	mov @r0,A
+	
+	
 	;save next adress of interruped process
 	;find next adress space for the process
 	mov A,0x1c	;moves process id in a
@@ -262,7 +332,7 @@ tihandler:
 		jnz restoreStack
 	
 	restoreStackComplete:
-	;push return adress onto stack				probably not necessary, because stack is saved anyways
+	;push return adress onto stack				
 	mov A,0x1c
 	rl  A
 	add A,#21h
@@ -274,12 +344,6 @@ tihandler:
 	push 0x18
 	push 0x19
 	
-;	mov r0,A
-;	mov dpl,@r0
-;	push dpl
-;	inc r0
-;	mov dph,@r0
-;	push dph
 	
 	;switch register bank back to 0
 	mov A,r2
@@ -290,11 +354,6 @@ tihandler:
 	reti
 	
 	jmp realend
-	
-findNextProg:
-;	cjne r0,statusRunning,
-	
-	reti
 	
 endloop:
 	nop
