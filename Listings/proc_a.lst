@@ -1,4 +1,4 @@
-A51 MACRO ASSEMBLER  PROC_A                                                               11/10/2018 18:43:10 PAGE     1
+A51 MACRO ASSEMBLER  PROC_A                                                               11/11/2018 13:52:27 PAGE     1
 
 
 MACRO ASSEMBLER A51 V8.2.7.0
@@ -46,14 +46,15 @@ LOC  OBJ            LINE     SOURCE
                      227                     ;wartet bis bit abgesendet
 0008 E598            228                     mov A,s0con
 000A 30E1FB          229                     jnb acc.1,waitNextSend
-000D 5398FD          230                     anl s0con,#11111101b
+000D 5398FC          230                     anl s0con,#11111100b                    ;reset transmitter and receiver int
+                             errupt flag
                      231     
 0010 C8              232             xch A,r0
 0011 04              233             inc A
 0012 B47BED          234             cjne A,#123,sendloop
                      235     
                      236             ;mark proc_a as done
-0015 755A00          237             mov 0x5a,#statusNotRunning
+0015 752D00          237             mov 0x2d,#statusNotRunning
                      238     
 0018                 239     endloop:
 0018 00              240             nop
@@ -63,7 +64,7 @@ LOC  OBJ            LINE     SOURCE
                      244             
                      245             
                      246             end
-A51 MACRO ASSEMBLER  PROC_A                                                               11/10/2018 18:43:10 PAGE     2
+A51 MACRO ASSEMBLER  PROC_A                                                               11/11/2018 13:52:27 PAGE     2
 
 SYMBOL TABLE LISTING
 ------ ----- -------
@@ -131,7 +132,7 @@ EAL. . . . . . . .  B ADDR   00A8H.7 A
 ENDLOOP. . . . . .  C ADDR   0018H   R   SEG=PROCESSASEGMENT
 ES . . . . . . . .  B ADDR   00A8H.4 A   
 ET0. . . . . . . .  B ADDR   00A8H.1 A   
-A51 MACRO ASSEMBLER  PROC_A                                                               11/10/2018 18:43:10 PAGE     3
+A51 MACRO ASSEMBLER  PROC_A                                                               11/11/2018 13:52:27 PAGE     3
 
 ET1. . . . . . . .  B ADDR   00A8H.3 A   
 ET2. . . . . . . .  B ADDR   00A8H.5 A   
@@ -199,7 +200,7 @@ RS0. . . . . . . .  B ADDR   00D0H.3 A
 RS1. . . . . . . .  B ADDR   00D0H.4 A   
 RXD. . . . . . . .  B ADDR   00B0H.0 A   
 S0BUF. . . . . . .  D ADDR   0099H   A   
-A51 MACRO ASSEMBLER  PROC_A                                                               11/10/2018 18:43:10 PAGE     4
+A51 MACRO ASSEMBLER  PROC_A                                                               11/11/2018 13:52:27 PAGE     4
 
 S0CON. . . . . . .  D ADDR   0098H   A   
 S0RELH . . . . . .  D ADDR   00BAH   A   

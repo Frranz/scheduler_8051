@@ -26,12 +26,13 @@ new:
 0x2f/30		next adress to execute for console process
 0x31/32		next adress to execute for process a
 0x33/34		next adress to execute for process b
-0x35-0x4d	saved context console proess
-0x4e-0x66	saved context proess a
-0x67-0x7f	saved context proess b
+0x35-0x4c	saved context console proess
+0x4d-0x64	saved context proess a
+0x65-0x7d	saved context proess b
 
 
-
+manche register werden nicht vernünftig gesaved
+schauen, dass a nur aufgerufen wird, wenn es soll, statusänderung
 
 
 

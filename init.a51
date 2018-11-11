@@ -37,26 +37,26 @@ start:
 	
 	;set default values for process control
 	;set console as first process to start
-	mov 0x58,#0	;so the scheduler knows which process was running (console is started by hand as first)			;2+1%3 = 0 ==> id of console process
+	mov 0x2b,#0	;so the scheduler knows which process was running (console is started by hand as first)			;2+1%3 = 0 ==> id of console process
 	
 	;process status [cons,a,b]
-	mov 0x59,#statusRunning
-	mov 0x5a,#statusNotRunning
-	mov 0x5b,#statusNotRunning
+	mov 0x2c,#statusRunning
+	mov 0x2d,#statusNotRunning
+	mov 0x2e,#statusNotRunning
 	
 	;next adress [cons,a,b]
-	mov 0x5c,#0;#consoleProcess causes improper fixup error
-	mov 0x5d,#0
-	mov 0x5e,#0	
-	mov 0x5f,#0	
-	mov 0x60,#0	
-	mov 0x61,#0	
+	mov 0x2f,#0;#consoleProcess causes improper fixup error
+	mov 0x30,#0
+	mov 0x31,#0	
+	mov 0x32,#0	
+	mov 0x33,#0	
+	mov 0x34,#0	
 		
 	;save area for registers
 	;set default stack pointers to 0x07
-	mov 0x72,#7
-	mov 0x92,#7
-	mov 0xa2,#7
+	mov 0x3f,#7
+	mov 0x57,#7
+	mov 0x60,#7; checken ob das passt, wegen doofer rechnung vorher
 	
 	call scheduler
 	

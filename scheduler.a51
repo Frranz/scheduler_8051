@@ -24,8 +24,8 @@ scheduler:
 	org 0000h
 		
 	mov dptr,#consoleProcess
-	mov 0x5c,dpl
-	mov 0x5d,dph
+	mov 0x2f,dpl
+	mov 0x30,dph
 	
 	;enable all interrupts
 	setb eal
@@ -46,14 +46,14 @@ tihandler:
 	
 	;save old adress
 	;put accu & r0 in save space to do some basic calc
-	mov 0x56,r0
-	mov 0x57,A
+	mov 0x29,r0
+	mov 0x2a,A
 	
 	;save next adress of interruped process
 	;find next adress space for the process
-	mov A,0x58	;moves process id in a
+	mov A,0x2b	;moves process id in a
 	rl	A		;quick multiply A by two, because adress is 2 bits long
-	add A,#5ch	;add offset to beginning of next adress area
+	add A,#2fh	;add offset to beginning of next adress area
 	
 ;	;move adress from stack to calculated adress					dont save return adress, cuz we save whole stack afterwards
 	mov r0,A
@@ -67,20 +67,31 @@ tihandler:
 	mov @r0,A
 	
 	;save rest of context
-	mov A,0x58
+	mov A,0x2b
+	mov r0,0x2b
 	
 	;calculate offset in register safe (id * size of one register store[32])
 	rl A
 	rl A
 	rl A
 	rl A
-	rl A
+	;adding stack size
+	cjne r0,#0,is1or2
+	jmp afterCalculatingOffset
+	is1or2:
+		add A,#8
+		cjne r0,#2,afterCalculatingOffset
+		add A,#8
+	
+
+
+	afterCalculatingOffset:	
 	;add start adress of register safe
-	add A,#68h
+	add A,#35h
 	mov r0,A
 	
 	;actually save registers
-	mov @r0,0x56 ;r0 from register save space
+	mov @r0,0x29 ;r0 from register save space
 	inc r0
 	mov @r0,1
 	inc r0
@@ -96,7 +107,7 @@ tihandler:
 	inc r0
 	mov @r0,7
 	inc r0
-	mov @r0,0x57 ;reg A from save space
+	mov @r0,0x2a ;reg A from save space
 	inc r0
 	mov @r0,b
 	inc r0
@@ -125,7 +136,7 @@ tihandler:
 	
 	findNextProcess:
 		;find next program to execute
-		mov A,0x58
+		mov A,0x2b
 		inc A
 		
 		;build modulo 3 (making 0 if its 3)
@@ -134,10 +145,10 @@ tihandler:
 		
 		justSkipTheLineBefore:
 		;save new current process
-		mov 0x58,A
+		mov 0x2b,A
 		
 		;check if started
-		add A,#59h
+		add A,#2ch
 		mov r0,A
 		mov A,@r0
 		xrl A,#statusNotRunning
@@ -155,13 +166,23 @@ tihandler:
 ;	mov r0,A
 	
 	;get start adress of saved context
-	mov A,0x58
+	mov A,0x2b
+	mov r0,A
 	rl A
 	rl A
 	rl A
 	rl A
-	rl A
-	add A,#68h
+	cjne r0,#0,is1or2v2
+	jmp afterCalculatingOffset2
+	is1or2v2:
+		add A,#8
+		cjne r0,#2,afterCalculatingOffset2
+		add A,#8
+	
+
+
+	afterCalculatingOffset2:	
+	add A,#35h
 	mov r0,A
 	
 	;restore registers
@@ -193,7 +214,7 @@ tihandler:
 	inc r0
 	
 	;resave A,0
-	mov 0x57,A
+	mov 0x2a,A
 	
 	;restore psw later to stay in register bank 3
 	mov A,r0
@@ -204,9 +225,12 @@ tihandler:
 	mov r1,#7
 	
 	;if process is in status start request make sp manually #7
-	mov A,0x58
+	mov A,0x2b
 	cjne A,#statusStartReq,beforeRestoreStack
-	mov sp,#7	;set default for sp
+	mov sp,#7	;set default for sp & change status
+	add A,#2ch
+	mov r0
+	mov A,#statusRunning
 	
 	
 	beforeRestoreStack:
@@ -226,16 +250,16 @@ tihandler:
 	
 	restoreStackComplete:
 	;push return adress onto stack				probably not necessary, because stack is saved anyways
-	mov A,0x58
+	mov A,0x2b
 	rl  A
-	add A,#5ch
+	add A,#2fh
 	mov r0,A
 	
-	mov 0x54,@r0
+	mov 0x27,@r0
 	inc r0
-	mov 0x55,@r0
-	push 0x54
-	push 0x55
+	mov 0x28,@r0
+	push 0x27
+	push 0x28
 	
 ;	mov r0,A
 ;	mov dpl,@r0
@@ -248,7 +272,7 @@ tihandler:
 	mov A,r2
 	mov r0,A
 	mov psw,@r0
-	mov A,0x57
+	mov A,0x2a
 ;	anl psw,#11100111b
 	reti
 	

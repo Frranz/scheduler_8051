@@ -27,7 +27,7 @@ processB:
 	mov tl0,#0
 	
 	;15 cuz on timer runs 0,065536s
-	mov r1,#0xa8
+	mov r1,#0ah
 
 	;starting timer
 	setb tr0
@@ -39,15 +39,20 @@ checktf:
 	jnb tf0,checktf
 ;	clr tf0
 ;	setb tr0
-	
-	dec r1
 	clr tf0
 	djnz r1,checktf
 	
-	mov r3,#11h	 	
+	mov s0buf,#42
+	orl s0con,#00000001b
+	waitNextSend:	
+		;wartet bis bit abgesendet
+		mov A,s0con
+		jnb acc.1,waitNextSend
+		anl s0con,#11111100b			;reset transmitter and receiver interrupt flag
 	
 	;mark proc_b as done
-	mov 0x5b,#statusNotRunning
+	jmp processB
+;	mov 0x2e,#statusNotRunning
 endloop:
 	nop
 	setb wdt

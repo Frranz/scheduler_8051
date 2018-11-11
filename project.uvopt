@@ -144,25 +144,25 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>31</LineNumber>
+          <LineNumber>43</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>0</Address>
+          <Address>-16774779</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>0</BreakIfRCount>
-          <Filename>C:\Users\BUBELF\Documents\uni\rechnerarchitektur\gimme dat ass\Scheduler\proc_a.a51</Filename>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>proc_b.a51</Filename>
           <ExecCommand></ExecCommand>
-          <Expression></Expression>
+          <Expression>\\project\PROCESSB\43</Expression>
         </Bp>
       </Breakpoint>
       <MemoryWindow1>
         <Mm>
           <WinNumber>1</WinNumber>
           <SubType>0</SubType>
-          <ItemText>d:5ah</ItemText>
+          <ItemText>d:2ch</ItemText>
           <AccSizeX>0</AccSizeX>
         </Mm>
       </MemoryWindow1>
@@ -170,7 +170,7 @@
         <Mm>
           <WinNumber>2</WinNumber>
           <SubType>0</SubType>
-          <ItemText>d:92h</ItemText>
+          <ItemText>d:09h</ItemText>
           <AccSizeX>0</AccSizeX>
         </Mm>
       </MemoryWindow2>
@@ -178,7 +178,7 @@
         <Mm>
           <WinNumber>3</WinNumber>
           <SubType>0</SubType>
-          <ItemText>d:00h</ItemText>
+          <ItemText>d:2fh</ItemText>
           <AccSizeX>0</AccSizeX>
         </Mm>
       </MemoryWindow3>

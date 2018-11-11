@@ -28,14 +28,14 @@ sendloop:
 		;wartet bis bit abgesendet
 		mov A,s0con
 		jnb acc.1,waitNextSend
-		anl s0con,#11111101b
+		anl s0con,#11111100b			;reset transmitter and receiver interrupt flag
 
 	xch A,r0
 	inc A
 	cjne A,#123,sendloop
 
 	;mark proc_a as done
-	mov 0x5a,#statusNotRunning
+	mov 0x2d,#statusNotRunning
 
 endloop:
 	nop

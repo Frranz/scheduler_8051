@@ -59,32 +59,32 @@ waitloop:
 
 inpIsA:
 	;load status proc A in Reg A
-	mov A,0x5a
+	mov A,0x2d
 	
 	;check if A is not running already
 	cjne A,#statusNotRunning,readMoreInput
 	
 	;queue in for start by changing status and setting start adress
-	mov 0x5a,#statusStartReq
+	mov 0x2d,#statusStartReq
 	mov dptr,#processA
-	mov 0x5e,dpl
-	mov 0x5f,dph
+	mov 0x31,dpl
+	mov 0x32,dph
 	
 ;	call processA
 	jmp readMoreInput
 
 inpIsB:
 	;load status proc B in Reg A
-	mov A,0x5b
+	mov A,0x2e
 	
 	;check if b is not running already
 	cjne A,#statusNotRunning,readMoreInput
 	
 	;queue in for start by changing status and setting start adress
-	mov 0x5b,#statusStartReq
+	mov 0x2e,#statusStartReq
 	mov dptr,#processB
-	mov 0x60,dpl
-	mov 0x61,dph
+	mov 0x33,dpl
+	mov 0x34,dph
 	
 	;call process b
 	jmp readMoreInput
