@@ -6,7 +6,7 @@ PUBLIC scheduler
 	
 EXTRN CODE(consoleProcess)	
 	
-	;define timer1 interupt routine
+	;definiere timer1 Interrupt-Routine
 	cseg at 001bh
 	jmp tihandler	
 	
@@ -14,7 +14,7 @@ schedulerSegment SEGMENT CODE
 	RSEG schedulerSegment
 	
 scheduler:
-	;define process status values
+	;definiere Prozess-Statuswerte
 	statusNotRunning equ 0
 	statusStartReq equ 1
 	statusRunning equ 2
@@ -22,30 +22,30 @@ scheduler:
 	;start
 	org 0000h
 	
-	;enable all interrupts
+	;Interupts freischalten
 	setb eal
 	
-	;configure timer1
+	;Einstellen von Timer1
 	mov th1,#0
 	mov tl1,#0
 	
-	;enable and start timer 1
+	;aktivieren und starten von Timer1
 	setb et1
 	setb tr1
 	
-	;start console process
+	;starte Consolenprocess
 	call consoleProcess
-	jmp endloop					;should not be reached
+	jmp endloop					;sollte nicht erreicht werden
 	
 	
 tihandler:
 	
-	;save accu and r0
+	;sichere Akku und r0
 	mov 0x1a,r0
 	mov 0x1b,A
 	
-	;check priorites
-	;if left timeslots are 0 reset them and change to the next processs
+	;check Prioritäten
+	;wenn übrige Zeitscheiben=0, reset und wechseln zu anderen Prozess
 	mov A,0x1c
 	xrl A,#0
 	jz prioCons
@@ -103,41 +103,41 @@ tihandler:
 		
 	
 	returnToProcess:
-		;reload r0 and acc from save area
+		;Wiederherstellen von r0 und Akku aus Sicherungsbereich
 		mov r0,0x1a
 		mov a,0x1b
 		reti
 	
 	changeProcess:
 	
-	;save next adress of interruped process
-	;find next adress space for the process
-	mov A,0x1c	;moves process id in a
-	rl	A		;quick multiply A by two, because adress is 2 bits long
-	add A,#21h	;add offset to beginning of next adress area
+	;sichere nächste Adresse von unterbrochenem Prozess
+	;berechne Bereich für nächste Adressse von Prozess
+	mov A,0x1c	;moved process id in a
+	rl	A		;multiplizieren * 2, weil Adresslänge=2byte
+	add A,#21h	;addiere Offset des Beginnes des Sicherungsbereichs
 	
-	;move adress from stack to calculated adress
+	;Rücksprungadresse vom Stack zu berechneter Adresse schreiben
 	mov r0,A
-	;first pop high
+	;zuerst pop high
 	inc r0
 	pop ACC
 	mov @r0,A
-	;then low
+	;dann low
 	dec r0
 	pop ACC
 	mov @r0,A
 	
-	;save rest of context
+	;sichere den restlichen Kontext
 	mov A,0x1c
 	mov r0,0x1c
 	
-	;calculate offset in register safe (id * size of one register store[20])
-	;using rl A for convenience of multiplaying by 2
+	;berechne Offset innerhalb der Registersicherung (id * größe eines Registerspeichers[20])
+	;multipliziern mit 16 über rl a 16=2^4
 	rl A
 	rl A
 	rl A
 	rl A
-	;adding stack size
+	;Stackgröße hinzufügen
 	cjne r0,#0,is1or2
 	jmp afterCalculatingOffset
 	is1or2:
@@ -154,12 +154,12 @@ tihandler:
 
 
 	afterCalculatingOffset:	
-	;add start adress of register safe
+	;Startadresse des Sicherungsbereiches addieren
 	add A,#29h
 	mov r0,A
 	
-	;save registers
-	mov @r0,0x1a ;r0 from register save space
+	;Register sichern
+	mov @r0,0x1a ;r0 aus gesondertem Sicherungsbereich für r0
 	inc r0
 	mov @r0,1
 	inc r0
@@ -175,7 +175,7 @@ tihandler:
 	inc r0
 	mov @r0,7
 	inc r0
-	mov @r0,0x1b ;reg A from save space
+	mov @r0,0x1b ;A aus gesondertem Sicherungsbereich für r0
 	inc r0
 	mov @r0,b
 	inc r0
@@ -188,36 +188,36 @@ tihandler:
 	mov @r0,psw
 	inc r0
 	
-	;save stack
+	;sichere stack
 	mov r1,#7
 	mov r2,SP
 	inc r2
-	;saves up from 7 until sp value is reached
+	;sichert von 7 hoch, bis SP erreicht
 	saveStack:	
 		mov A,@r1
 		mov @r0,A
 		inc r1
 		inc r0
 		mov A,r1
-		xrl A,r2 ;to act like compare equal
+		xrl A,r2 ; vergleich r1,r2 auf gleichheit
 		jnz saveStack
 	
 
 	
 	findNextProcess:
-		;find next program to execute
+		;finde nächsten Prozess
 		mov A,0x1c
 		inc A
 		
-		;build modulo 4 (making 0 if its 4)
+		; modulo 4 (macht 0 wenn =4)
 		cjne A,#4,justSkipTheLineBefore
 		clr A
 		
 		justSkipTheLineBefore:
-		;save new current process
+		;sicheren des neuen aktuellen Prozesses
 		mov 0x1c,A
 		
-		;check if process has status running or start request
+		;überprüfen, dass Prozessstatus=Running oder ReqStart
 		add A,#1dh
 		mov r0,A
 		mov A,@r0
@@ -225,19 +225,19 @@ tihandler:
 		jz findNextProcess
 
 	
-	;load context of next process	
+	;lade Kontext des nächsten Prozesses
 	
-	;switch register bank to 2
+	;wechsele Registerbank auf 2
 	orl psw,#00010000b
 	
-	;get start adress of saved context
+	;Startadresse des gesicherten Kontext berechnen
 	mov A,0x1c
 	mov r0,A
 	rl A
 	rl A
 	rl A
 	rl A
-	;adding stack size
+	;Stack-Größe addieren
 	cjne r0,#0,is1or2v2
 	jmp afterCalculatingOffset2
 	is1or2v2:
@@ -254,11 +254,11 @@ tihandler:
 
 
 	afterCalculatingOffset2:
-	;adding start adress of register safe
+	;Startadresse des Register-Sicherungsbereiches hinzufügen
 	add A,#29h
 	mov r0,A
 	
-	;restore registers
+	;Register wiederherstellen
 	mov 0,@r0
 	inc r0
 	mov 1,@r0
@@ -286,16 +286,16 @@ tihandler:
 	mov dph,@r0
 	inc r0
 	
-	;resave A,0
+	;sichern von A,0
 	mov 0x1b,A
 	
-	;restore psw later to stay in register bank 2
+	;sichere psw um in Registerbank 2 zu bleiben (PSW wird später ersetzt)
 	mov A,r0
 	mov r2,A
 	inc r0
 	
-	;if process is in status start request set sp manually #7
-	mov A,0x1c
+	;Wenn Prozessstatus 1 oder 2, SP manuel auf #7 setzen
+ 	mov A,0x1c
 	add A,#1dh
 	cjne A,#statusStartReq,beforeRestoreStack
 	mov sp,#7	;set default for sp & change status
@@ -321,7 +321,7 @@ tihandler:
 		jnz restoreStack
 	
 	restoreStackComplete:
-	;push return adress onto stack				
+	;Rücksprungadresse auf Stack legen				
 	mov A,0x1c
 	rl  A
 	add A,#21h
@@ -334,7 +334,7 @@ tihandler:
 	push 0x19
 	
 	
-	;restore psw to swtich back to reg-bank 0
+	;psw auf Prozesswert ändern
 	mov A,r2
 	mov r0,A
 	mov psw,@r0

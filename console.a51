@@ -6,62 +6,62 @@ PUBLIC consoleProcess
 
 EXTRN CODE (processA,processB,fkt_text)
 
-;define program as relocatable
+
 consoleSegment SEGMENT CODE
 	RSEG consoleSegment
 		
-	;define process status values
+	;definiere Statuswerte
 	statusNotRunning equ 0
 	statusStartReq equ 1
 	statusRunning equ 2
 
 consoleProcess:	
 
-;configure seriel port 0
+;konfiguriere seriel port 0
 	mov s0con,#01010000b
 	mov adcon0,#11000000b
 	mov s0relh,#00000011b
 	mov s0rell,#11011001b
 
 waitloop:
-	;check if receive interrupt flag is set
+	;interupt flag überprüfen
 	setb wdt
 	setb swdt
 	mov A,0x8f
-	jnz waitloop			;wait until ser0 isnt blocked anymore
+	jnz waitloop			;warten bis ser0 nicht mehr geblockt
 	jnb RI0,waitloop
 	mov r1,s0buf
 	
-	;check if input was a
+	;überprüfen ob a eingegeben
 	mov A,r1
 	SUBB A,#97
 	jz  inpIsA
 	
-	;check if input was b
+	;überprüfen ob b eingegeben
 	dec A
 	jz  inpIsB
 	
-	;check if input was c
+	;überprüfen ob c eingegeben
 	dec A
 	jz  inpIsC
 	
-	;check if input was z
+	;überprüfen ob z eingegeben
 	subb A,#23
 	jz  inpIsZ
 	
-	;if none of the above just continue reading
+	;sonstige Eingabe
 	jmp readMoreInput
 	
 	
 
 inpIsA:
-	;load status of proc A in Reg A
+	;lade Status von Proc_A in Akku
 	mov A,0x1e
 	
-	;check if A is not running already
+	;überprüfen ob Proc_A schon läuft
 	cjne A,#statusNotRunning,readMoreInput
 	
-	;queue in for start by changing status, setting start adress and setting priority
+	;Status ändern, Startadresse eintragen, Sriorität setzen
 	mov 0x1e,#statusStartReq
 	mov dptr,#processA
 	mov 0x23,dpl
@@ -72,13 +72,13 @@ inpIsA:
 	jmp readMoreInput
 
 inpIsB:
-	;load status of proc B in Reg A
+	;lade Status von Proc_B in Akku
 	mov A,0x1f
 	
-	;check if b is not running already
+	;überprüfen ob Proc_B schon läuft
 	cjne A,#statusNotRunning,readMoreInput
 	
-	;queue in for start by changing status, setting start adress and setting priority
+	;Status ändern, Startadresse eintragen, Priorität setzen
 	mov 0x1f,#statusStartReq
 	mov dptr,#processB
 	mov 0x25,dpl
@@ -89,18 +89,18 @@ inpIsB:
 	jmp readMoreInput
 
 inpIsC:
-	;change status of proc B
+	;Status von b auf notrunning setzen
 	mov 0x1f,#statusNotRunning
 	jmp readMoreInput
 
 inpIsZ:
-	;load status fkttext in Reg A
+	;lade Status von fkt_text in Akku
 	mov A,0x20
 	
-	;check if fkt_Text is running already
+	;überprüfen ob fkt_txt schon läuft
 	cjne A,#statusNotRunning,stopZ
 	
-	;queue in for start by changing status and setting start adress
+	;Status ändern, Startadresse eintragen, Priorität setzen
 	mov 0x20,#statusStartReq
 	mov dptr,#fkt_text
 	mov 0x27,dpl
@@ -109,7 +109,7 @@ inpIsZ:
 	jmp readMoreInput
 
 stopZ:
-	;change status of fkt_text
+	;Status von fkt_text ändern
 	mov 0x20,#statusNotRunning
 	jmp readMoreInput
 

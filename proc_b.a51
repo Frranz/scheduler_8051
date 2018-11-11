@@ -4,12 +4,12 @@ $NOMOD51
 NAME processB
 PUBLIC processB
 	
-	;define process status values
+	;definiere Prozess-Statuswerte
 	statusNotRunning equ 0
 	statusStartReq equ 1
 	statusRunning equ 2	
 	
-	;serial0 values
+	;serial0 Statuswerte
 	serialNotBlocked equ 0
 	serialBlocked equ 1
 	
@@ -20,44 +20,44 @@ processBSegment SEGMENT CODE
 		
 processB:
 
-	;prepare timer
+	;Timer vorbereiten
 	setb eal
 	
-	;configuring timer for 0.75 seconds
+	;Einstellen auf 0.75 Sekunden
 	mov th0,#0
 	mov tl0,#0
 	
 	mov r1,#0xa8
 
-	;starting timer0
+	;timer0 starten
 	setb tr0
 	
 	
 checktf:
 	setb wdt
 	setb swdt
-	jnb tf0,checktf		;wait till timer 0 overflows
+	jnb tf0,checktf		;warten bis Timer 0 Überlauf
 	
 	
 	clr tf0
 	djnz r1,checktf
 	
-	;wait for ser0 to be ready
+	;warten bis ser0 frei
 	waitForSerial:
 		mov A,0x8f
 		jnz	waitForSerial
-		mov 0x8f,#serialBlocked			;block ser0
+		mov 0x8f,#serialBlocked			;blockiere ser0
 		
 	
-	;push * sign to buffer
+	;schreibe * in buffer
 	mov s0buf,#42
 	orl s0con,#00000001b
 	
 	waitNextSend:	
-		;wait till byte is sent
+		;warten bis Byte gesendet
 		mov A,s0con
 		jnb acc.0,waitNextSend
-		anl s0con,#11111100b			;reset transmitter and receiver interrupt flag
+		anl s0con,#11111100b			;resetten von Transmitter und Receiver Interrupt Flag
 		mov 0x8f,#serialNotBlocked
 	
 	
@@ -71,12 +71,6 @@ endloop:
 	jmp endloop
 	
 	ret
-
-;tihandler:
-;	dec r1
-;	djnz r1,checktf
-;	
-;	mov r3,#11h	 	
 	
 
 	end

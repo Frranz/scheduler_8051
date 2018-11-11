@@ -7,12 +7,12 @@ $NOMOD51
 EXTRN CODE (scheduler,consoleProcess)
 	
 	
-	;define process status values
+	;definiere Prozess Statuswerte
 	statusNotRunning equ 0
 	statusStartReq equ 1
 	statusRunning equ 2
 		
-	;serial  values
+	;Werte für ser0 Status
 	serialNotBlocked equ 0
 	serialBlocked equ 1
 		
@@ -24,22 +24,22 @@ EXTRN CODE (scheduler,consoleProcess)
 	
 start:	
 	
-;set default values for process control
+;Standardwerte für Prozesskontrolle setzen
 	
-	;set console as first process to start
-	mov 0x1c,#0	;so the scheduler knows which process was running (console is started by hand as first)			;2+1%3 = 0 ==> id of console process
+	;Konsole als Startprozess wählen
+	mov 0x1c,#0	
 	
-	;set start adress for console process
+	;Startadresse für Konsolenprozess setzen
 	mov dptr,#consoleProcess
 	mov 0x21,dpl
 	mov 0x22,dph
 	
-	;process status [cons,a,b]
+	;Prozessstatus'	[cons,a,b]
 	mov 0x1d,#statusRunning
 	mov 0x1e,#statusNotRunning
 	mov 0x1f,#statusNotRunning
 	
-	;next adress [cons,a,b]
+	;nächsten Adreessen [cons,a,b] 2-byte jeweils
 	mov 0x21,#0;
 	mov 0x22,#0
 	mov 0x23,#0	
@@ -49,20 +49,19 @@ start:
 	mov 0x27,#0
 	mov 0x28,#0
 		
-	;save area for registers
-	;set default stack pointers to 0x07
+	;Standardstackpointer auf 0x07
 	mov 0x3f,#7
 	mov 0x4b,#7
-	mov 0x63,#7; checken ob das passt, wegen doofer rechnung vorher
+	mov 0x63,#7
 	mov 0x7b,#7
 	
-	;priorities
+	;Prioritäten
 	mov 0x90,#3
 	mov 0x92,#2
 	mov 0x94,#2
 	mov 0x96,#4
 	
-	;serialisbusy byte
+	;ser0 Status byte
 	mov 0x8f,#serialNotBlocked
 	
 	call scheduler

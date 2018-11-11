@@ -7,17 +7,17 @@ PUBLIC processA
 processASegment SEGMENT CODE
 	RSEG processASegment
 	
-	;define process status values
+	;definiere Prozess-Statuswerte
 	statusNotRunning equ 0
 	statusStartReq equ 1
 	statusRunning equ 2
 	
-	;serial0 values
+	;serial0 Statuswerte
 	serialNotBlocked equ 0
 	serialBlocked equ 1
 	
 processA:
-	;prepare counting up A from 117 => u
+	;hochzählen vorbereiten 117 => u
 	mov r4,#117
 	
 	
@@ -26,13 +26,13 @@ sendloop:
 	setb swdt
 	mov r3,A
 	mov A,0x8f
-	jnz sendloop			;wait till ser0 is free
+	jnz sendloop			;warten bis ser0 frei
 	
 	
-	;block serial
+	; serial blocken
 	mov 0x8f,#serialBlocked
 
-	;mov char to buffer
+	;Zeichen in Buffer schieben
 	mov A,r4
 	mov s0buf,A
 	
@@ -41,18 +41,18 @@ sendloop:
 
 	mov r0,A
 	waitNextSend:	
-		;wait till bit is send
+		;warten bis Byte gesendet
 		mov A,s0con
 		jnb acc.1,waitNextSend
-		anl s0con,#11111100b			;reset transmitter and receiver interrupt flag
+		anl s0con,#11111100b			;resetten von Transmitter und Receiver Interrupt Flag
 		mov 0x8f,#serialNotBlocked
 
 	xch A,r0
 	inc A
 	mov r4,A
-	cjne A,#123,sendloop				;increment until letter z + 1 = (#123)
+	cjne A,#123,sendloop				;erhöhen bis z + 1 = (#123)
 
-	;mark proc_a as done
+	;Proc_A Status auf beendet
 	mov 0x1e,#statusNotRunning
 	mov 0x8f,#serialNotBlocked
 
