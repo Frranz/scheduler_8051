@@ -13,14 +13,28 @@ processASegment SEGMENT CODE
 	statusStartReq equ 1
 	statusRunning equ 2
 	
+	;serial0 values
+	serialNotBlocked equ 0
+	serialBlocked equ 1
+	
 ;do random stuff
 processA:
 	;prep counting up A from 117 => u
-	mov A,#117
-	;send: 
+	mov r4,#117
+	
 	
 sendloop:
+	setb wdt
+	setb swdt
+	mov r3,A
+	mov A,0x8f
+	jnz sendloop
+	;block serial
+	mov 0x8f,#serialBlocked
+
+	mov A,r4
 	mov s0buf,A
+	clr ti0
 	orl s0con,#00000001b
 
 	mov r0,A
@@ -28,14 +42,17 @@ sendloop:
 		;wartet bis bit abgesendet
 		mov A,s0con
 		jnb acc.1,waitNextSend
-		anl s0con,#11111100b			;reset transmitter and receiver interrupt flag
+		anl s0con,#11111100b			;reset transmitter and receiver interrupt flag	;serial0 values
+		mov 0x8f,#serialNotBlocked
 
 	xch A,r0
 	inc A
+	mov r4,A
 	cjne A,#123,sendloop
 
 	;mark proc_a as done
-	mov 0x2d,#statusNotRunning
+	mov 0x1e,#statusNotRunning
+	mov 0x8f,#serialNotBlocked
 
 endloop:
 	nop

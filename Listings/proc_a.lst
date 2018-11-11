@@ -1,4 +1,4 @@
-A51 MACRO ASSEMBLER  PROC_A                                                               11/11/2018 15:29:55 PAGE     1
+A51 MACRO ASSEMBLER  PROC_A                                                               11/11/2018 18:40:11 PAGE     1
 
 
 MACRO ASSEMBLER A51 V8.2.7.0
@@ -31,40 +31,59 @@ LOC  OBJ            LINE     SOURCE
   0001               212             statusStartReq equ 1
   0002               213             statusRunning equ 2
                      214             
-                     215     ;do random stuff
-0000                 216     processA:
-                     217             ;prep counting up A from 117 => u
-0000 7475            218             mov A,#117
-                     219             ;send: 
-                     220             
-0002                 221     sendloop:
-0002 F599            222             mov s0buf,A
-0004 439801          223             orl s0con,#00000001b
-                     224     
-0007 F8              225             mov r0,A
-0008                 226             waitNextSend:   
-                     227                     ;wartet bis bit abgesendet
-0008 E598            228                     mov A,s0con
-000A 30E1FB          229                     jnb acc.1,waitNextSend
-000D 5398FC          230                     anl s0con,#11111100b                    ;reset transmitter and receiver int
-                             errupt flag
-                     231     
-0010 C8              232             xch A,r0
-0011 04              233             inc A
-0012 B47BED          234             cjne A,#123,sendloop
-                     235     
-                     236             ;mark proc_a as done
-0015 752D00          237             mov 0x2d,#statusNotRunning
+                     215             ;serial0 values
+  0000               216             serialNotBlocked equ 0
+  0001               217             serialBlocked equ 1
+                     218             
+                     219     ;do random stuff
+0000                 220     processA:
+                     221             ;prep counting up A from 117 => u
+0000 7C75            222             mov r4,#117
+                     223             
+                     224             
+0002                 225     sendloop:
+0002 D2AE            226             setb wdt
+0004 D2BE            227             setb swdt
+0006 FB              228             mov r3,A
+0007 E58F            229             mov A,0x8f
+0009 70F7            230             jnz sendloop
+                     231             ;block serial
+000B 758F01          232             mov 0x8f,#serialBlocked
+                     233     
+000E EC              234             mov A,r4
+000F F599            235             mov s0buf,A
+0011 C299            236             clr ti0
+0013 439801          237             orl s0con,#00000001b
                      238     
-0018                 239     endloop:
-0018 00              240             nop
-0019 D2AE            241             setb wdt
-001B D2BE            242             setb swdt
-001D 80F9            243             jmp endloop
-                     244             
-                     245             
-                     246             end
-A51 MACRO ASSEMBLER  PROC_A                                                               11/11/2018 15:29:55 PAGE     2
+0016 F8              239             mov r0,A
+0017                 240             waitNextSend:   
+                     241                     ;wartet bis bit abgesendet
+0017 E598            242                     mov A,s0con
+0019 30E1FB          243                     jnb acc.1,waitNextSend
+001C 5398FC          244                     anl s0con,#11111100b                    ;reset transmitter and receiver int
+                             errupt flag  ;serial0 values
+001F 758F00          245                     mov 0x8f,#serialNotBlocked
+                     246     
+0022 C8              247             xch A,r0
+A51 MACRO ASSEMBLER  PROC_A                                                               11/11/2018 18:40:11 PAGE     2
+
+0023 04              248             inc A
+0024 FC              249             mov r4,A
+0025 B47BDA          250             cjne A,#123,sendloop
+                     251     
+                     252             ;mark proc_a as done
+0028 751E00          253             mov 0x1e,#statusNotRunning
+002B 758F00          254             mov 0x8f,#serialNotBlocked
+                     255     
+002E                 256     endloop:
+002E 00              257             nop
+002F D2AE            258             setb wdt
+0031 D2BE            259             setb swdt
+0033 80F9            260             jmp endloop
+                     261             
+                     262             
+                     263             end
+A51 MACRO ASSEMBLER  PROC_A                                                               11/11/2018 18:40:11 PAGE     3
 
 SYMBOL TABLE LISTING
 ------ ----- -------
@@ -129,10 +148,10 @@ DPL. . . . . . . .  D ADDR   0082H   A
 DPSEL. . . . . . .  D ADDR   0092H   A   
 EADC . . . . . . .  B ADDR   00B8H.0 A   
 EAL. . . . . . . .  B ADDR   00A8H.7 A   
-ENDLOOP. . . . . .  C ADDR   0018H   R   SEG=PROCESSASEGMENT
+ENDLOOP. . . . . .  C ADDR   002EH   R   SEG=PROCESSASEGMENT
 ES . . . . . . . .  B ADDR   00A8H.4 A   
 ET0. . . . . . . .  B ADDR   00A8H.1 A   
-A51 MACRO ASSEMBLER  PROC_A                                                               11/11/2018 15:29:55 PAGE     3
+A51 MACRO ASSEMBLER  PROC_A                                                               11/11/2018 18:40:11 PAGE     4
 
 ET1. . . . . . . .  B ADDR   00A8H.3 A   
 ET2. . . . . . . .  B ADDR   00A8H.5 A   
@@ -190,7 +209,7 @@ P7 . . . . . . . .  D ADDR   00DBH   A
 P8 . . . . . . . .  D ADDR   00DDH   A   
 PCON . . . . . . .  D ADDR   0087H   A   
 PROCESSA . . . . .  C ADDR   0000H   R   SEG=PROCESSASEGMENT
-PROCESSASEGMENT. .  C SEG    001FH       REL=UNIT
+PROCESSASEGMENT. .  C SEG    0035H       REL=UNIT
 PSW. . . . . . . .  D ADDR   00D0H   A   
 RB80 . . . . . . .  B ADDR   0098H.2 A   
 RD . . . . . . . .  B ADDR   00B0H.7 A   
@@ -200,7 +219,7 @@ RS0. . . . . . . .  B ADDR   00D0H.3 A
 RS1. . . . . . . .  B ADDR   00D0H.4 A   
 RXD. . . . . . . .  B ADDR   00B0H.0 A   
 S0BUF. . . . . . .  D ADDR   0099H   A   
-A51 MACRO ASSEMBLER  PROC_A                                                               11/11/2018 15:29:55 PAGE     4
+A51 MACRO ASSEMBLER  PROC_A                                                               11/11/2018 18:40:11 PAGE     5
 
 S0CON. . . . . . .  D ADDR   0098H   A   
 S0RELH . . . . . .  D ADDR   00BAH   A   
@@ -210,6 +229,8 @@ S1CON. . . . . . .  D ADDR   009BH   A
 S1RELH . . . . . .  D ADDR   00BBH   A   
 S1RELL . . . . . .  D ADDR   009DH   A   
 SENDLOOP . . . . .  C ADDR   0002H   R   SEG=PROCESSASEGMENT
+SERIALBLOCKED. . .  N NUMB   0001H   A   
+SERIALNOTBLOCKED .  N NUMB   0000H   A   
 SETMSK . . . . . .  D ADDR   00A5H   A   
 SM0. . . . . . . .  B ADDR   0098H.7 A   
 SM1. . . . . . . .  B ADDR   0098H.6 A   
@@ -245,7 +266,7 @@ TMOD . . . . . . .  D ADDR   0089H   A
 TR0. . . . . . . .  B ADDR   0088H.4 A   
 TR1. . . . . . . .  B ADDR   0088H.6 A   
 TXD. . . . . . . .  B ADDR   00B0H.1 A   
-WAITNEXTSEND . . .  C ADDR   0008H   R   SEG=PROCESSASEGMENT
+WAITNEXTSEND . . .  C ADDR   0017H   R   SEG=PROCESSASEGMENT
 WDT. . . . . . . .  B ADDR   00A8H.6 A   
 WDTH . . . . . . .  D ADDR   0085H   A   
 WDTL . . . . . . .  D ADDR   0084H   A   

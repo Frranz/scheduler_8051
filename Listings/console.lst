@@ -1,4 +1,4 @@
-A51 MACRO ASSEMBLER  CONSOLE                                                              11/11/2018 15:39:52 PAGE     1
+A51 MACRO ASSEMBLER  CONSOLE                                                              11/11/2018 18:32:23 PAGE     1
 
 
 MACRO ASSEMBLER A51 V8.2.7.0
@@ -22,7 +22,7 @@ LOC  OBJ            LINE     SOURCE
                      203     NAME consoleProcess
                      204     PUBLIC consoleProcess
                      205     
-                     206     EXTRN CODE (processA,processB)
+                     206     EXTRN CODE (processA,processB,fkt_text)
                      207     
                      208     consoleSegment SEGMENT CODE
                      209             ; switch to the created relocatable segment
@@ -52,82 +52,101 @@ LOC  OBJ            LINE     SOURCE
                      233             ;check if receive interrupt flag is set
 0016 D2AE            234             setb wdt
 0018 D2BE            235             setb swdt
-001A 3098F9          236             jnb RI0,waitloop
-001D A999            237             mov r1,s0buf
-                     238             
-                     239             ;check if input was a
-001F E9              240             mov A,r1
-0020 9461            241             SUBB A,#97
-0022 600B            242             jz  inpIsA
-                     243             
-                     244             ;check if input was b
-0024 14              245             dec A
-0025 601B            246             jz  inpIsB
-                     247             
-                     248             ;check if input was c
-A51 MACRO ASSEMBLER  CONSOLE                                                              11/11/2018 15:39:52 PAGE     2
+001A E58F            236             mov A,0x8f
+001C 70F8            237             jnz waitloop                    ;wenn serial busy ist
+001E 3098F5          238             jnb RI0,waitloop
+0021 A999            239             mov r1,s0buf
+                     240             
+                     241             ;check if input was a
+0023 E9              242             mov A,r1
+0024 9461            243             SUBB A,#97
+0026 600C            244             jz  inpIsA
+                     245             
+                     246             ;check if input was b
+0028 14              247             dec A
+0029 601C            248             jz  inpIsB
+A51 MACRO ASSEMBLER  CONSOLE                                                              11/11/2018 18:32:23 PAGE     2
 
-0027 14              249             dec A
-0028 602B            250             jz  inpIsC
-                     251             
-                     252             ;check if input was z
-002A 29              253             add A,r1
-002B 947A            254             subb A,#122
-002D 602B            255             jz  inpIsZ
-                     256             
-                     257             
-                     258     
-002F                 259     inpIsA:
-                     260             ;load status proc A in Reg A
-002F E52D            261             mov A,0x2d
-                     262             
-                     263             ;check if A is not running already
-0031 B40028          264             cjne A,#statusNotRunning,readMoreInput
-                     265             
-                     266             ;queue in for start by changing status and setting start adress
-0034 752D01          267             mov 0x2d,#statusStartReq
-0037 900000   F      268             mov dptr,#processA
-003A 858231          269             mov 0x31,dpl
-003D 858332          270             mov 0x32,dph
-                     271             
-                     272     ;       call processA
-0040 801A            273             jmp readMoreInput
-                     274     
-0042                 275     inpIsB:
-                     276             ;load status proc B in Reg A
-0042 E52E            277             mov A,0x2e
-                     278             
-                     279             ;check if b is not running already
-0044 B40015          280             cjne A,#statusNotRunning,readMoreInput
-                     281             
-                     282             ;queue in for start by changing status and setting start adress
-0047 752E01          283             mov 0x2e,#statusStartReq
-004A 900000   F      284             mov dptr,#processB
-004D 858233          285             mov 0x33,dpl
-0050 858334          286             mov 0x34,dph
-                     287             
-                     288             ;call process b
-0053 8007            289             jmp readMoreInput
-                     290     
-0055                 291     inpIsC:
-                     292             ;0x2e status of process b
-0055 752E00          293             mov 0x2e,#statusNotRunning
-0058 8002            294             jmp readMoreInput
-                     295     
-005A                 296     inpIsZ:
-005A 8000            297             jmp readMoreInput
-                     298     
-005C                 299     readMoreInput:
-005C C298            300             clr RI0
-005E 80B6            301             jmp waitloop
-                     302     
-0060                 303     endloop:
-0060 00              304             nop
-0061 D2AE            305             setb wdt
-0063 D2BE            306             setb swdt
-0065 80F9            307             jmp endloop
-                     308             end
-A51 MACRO ASSEMBLER  CONSOLE                                                              11/11/2018 15:39:52 PAGE     3
+                     249             
+                     250             ;check if input was c
+002B 14              251             dec A
+002C 602C            252             jz  inpIsC
+                     253             
+                     254             ;check if input was z
+002E 9417            255             subb A,#23
+0030 602D            256             jz  inpIsZ
+0032 8043            257             jmp readMoreInput
+                     258             
+                     259             
+                     260     
+0034                 261     inpIsA:
+                     262             ;load status proc A in Reg A
+0034 E51E            263             mov A,0x1e
+                     264             
+                     265             ;check if A is not running already
+0036 B4003E          266             cjne A,#statusNotRunning,readMoreInput
+                     267             
+                     268             ;queue in for start by changing status and setting start adress
+0039 751E01          269             mov 0x1e,#statusStartReq
+003C 900000   F      270             mov dptr,#processA
+003F 858223          271             mov 0x23,dpl
+0042 858324          272             mov 0x24,dph
+                     273             
+                     274     ;       call processA
+0045 8030            275             jmp readMoreInput
+                     276     
+0047                 277     inpIsB:
+                     278             ;load status proc B in Reg A
+0047 E51F            279             mov A,0x1f
+                     280             
+                     281             ;check if b is not running already
+0049 B4002B          282             cjne A,#statusNotRunning,readMoreInput
+                     283             
+                     284             ;queue in for start by changing status and setting start adress
+004C 751F01          285             mov 0x1f,#statusStartReq
+004F 900000   F      286             mov dptr,#processB
+0052 858225          287             mov 0x25,dpl
+0055 858326          288             mov 0x26,dph
+                     289             
+                     290             ;call process b
+0058 801D            291             jmp readMoreInput
+                     292     
+005A                 293     inpIsC:
+                     294             ;0x2e status of process b
+005A 751F00          295             mov 0x1f,#statusNotRunning
+005D 8018            296             jmp readMoreInput
+                     297     
+005F                 298     inpIsZ:
+                     299             ;load status fkttext in Reg A
+005F E520            300             mov A,0x20
+                     301             
+                     302             ;check if fkt_Text is running already
+0061 B4000E          303             cjne A,#statusNotRunning,stopZ
+                     304             
+                     305             ;queue in for start by changing status and setting start adress
+0064 752001          306             mov 0x20,#statusStartReq
+0067 900000   F      307             mov dptr,#fkt_text
+006A 858227          308             mov 0x27,dpl
+006D 858328          309             mov 0x28,dph
+0070 8005            310             jmp readMoreInput
+                     311     
+0072                 312     stopZ:
+0072 752000          313             mov 0x20,#statusNotRunning
+0075 8000            314             jmp readMoreInput
+A51 MACRO ASSEMBLER  CONSOLE                                                              11/11/2018 18:32:23 PAGE     3
+
+                     315     
+0077                 316     readMoreInput:
+0077 C298            317             clr RI0
+0079 809B            318             jmp waitloop
+                     319     
+007B                 320     endloop:
+007B 00              321             nop
+007C D2AE            322             setb wdt
+007E D2BE            323             setb swdt
+0080 80F9            324             jmp endloop
+                     325             end
+A51 MACRO ASSEMBLER  CONSOLE                                                              11/11/2018 18:32:23 PAGE     4
 
 SYMBOL TABLE LISTING
 ------ ----- -------
@@ -182,7 +201,7 @@ COMCLRL. . . . . .  D ADDR   00A3H   A
 COMSETH. . . . . .  D ADDR   00A2H   A   
 COMSETL. . . . . .  D ADDR   00A1H   A   
 CONSOLEPROCESS . .  C ADDR   0000H   R   SEG=CONSOLESEGMENT
-CONSOLESEGMENT . .  C SEG    0067H       REL=UNIT
+CONSOLESEGMENT . .  C SEG    0082H       REL=UNIT
 CRCH . . . . . . .  D ADDR   00CBH   A   
 CRCL . . . . . . .  D ADDR   00CAH   A   
 CTCON. . . . . . .  D ADDR   00E1H   A   
@@ -194,8 +213,8 @@ DPL. . . . . . . .  D ADDR   0082H   A
 DPSEL. . . . . . .  D ADDR   0092H   A   
 EADC . . . . . . .  B ADDR   00B8H.0 A   
 EAL. . . . . . . .  B ADDR   00A8H.7 A   
-ENDLOOP. . . . . .  C ADDR   0060H   R   SEG=CONSOLESEGMENT
-A51 MACRO ASSEMBLER  CONSOLE                                                              11/11/2018 15:39:52 PAGE     4
+ENDLOOP. . . . . .  C ADDR   007BH   R   SEG=CONSOLESEGMENT
+A51 MACRO ASSEMBLER  CONSOLE                                                              11/11/2018 18:32:23 PAGE     5
 
 ES . . . . . . . .  B ADDR   00A8H.4 A   
 ET0. . . . . . . .  B ADDR   00A8H.1 A   
@@ -212,6 +231,7 @@ EXEN2. . . . . . .  B ADDR   00B8H.7 A
 EXF2 . . . . . . .  B ADDR   00C0H.7 A   
 F0 . . . . . . . .  B ADDR   00D0H.5 A   
 F1 . . . . . . . .  B ADDR   00D0H.1 A   
+FKT_TEXT . . . . .  C ADDR   -----       EXT
 I2FR . . . . . . .  B ADDR   00C8H.5 A   
 I3FR . . . . . . .  B ADDR   00C8H.6 A   
 IADC . . . . . . .  B ADDR   00C0H.0 A   
@@ -225,10 +245,10 @@ IEX3 . . . . . . .  B ADDR   00C0H.2 A
 IEX4 . . . . . . .  B ADDR   00C0H.3 A   
 IEX5 . . . . . . .  B ADDR   00C0H.4 A   
 IEX6 . . . . . . .  B ADDR   00C0H.5 A   
-INPISA . . . . . .  C ADDR   002FH   R   SEG=CONSOLESEGMENT
-INPISB . . . . . .  C ADDR   0042H   R   SEG=CONSOLESEGMENT
-INPISC . . . . . .  C ADDR   0055H   R   SEG=CONSOLESEGMENT
-INPISZ . . . . . .  C ADDR   005AH   R   SEG=CONSOLESEGMENT
+INPISA . . . . . .  C ADDR   0034H   R   SEG=CONSOLESEGMENT
+INPISB . . . . . .  C ADDR   0047H   R   SEG=CONSOLESEGMENT
+INPISC . . . . . .  C ADDR   005AH   R   SEG=CONSOLESEGMENT
+INPISZ . . . . . .  C ADDR   005FH   R   SEG=CONSOLESEGMENT
 INT0 . . . . . . .  B ADDR   00B0H.2 A   
 INT1 . . . . . . .  B ADDR   00B0H.3 A   
 IP0. . . . . . . .  D ADDR   00A9H   A   
@@ -262,10 +282,10 @@ PROCESSA . . . . .  C ADDR   -----       EXT
 PROCESSB . . . . .  C ADDR   -----       EXT
 PSW. . . . . . . .  D ADDR   00D0H   A   
 RB80 . . . . . . .  B ADDR   0098H.2 A   
-RD . . . . . . . .  B ADDR   00B0H.7 A   
-A51 MACRO ASSEMBLER  CONSOLE                                                              11/11/2018 15:39:52 PAGE     5
+A51 MACRO ASSEMBLER  CONSOLE                                                              11/11/2018 18:32:23 PAGE     6
 
-READMOREINPUT. . .  C ADDR   005CH   R   SEG=CONSOLESEGMENT
+RD . . . . . . . .  B ADDR   00B0H.7 A   
+READMOREINPUT. . .  C ADDR   0077H   R   SEG=CONSOLESEGMENT
 REN0 . . . . . . .  B ADDR   0098H.4 A   
 RI0. . . . . . . .  B ADDR   0098H.0 A   
 RS0. . . . . . . .  B ADDR   00D0H.3 A   
@@ -287,6 +307,7 @@ SP . . . . . . . .  D ADDR   0081H   A
 STATUSNOTRUNNING .  N NUMB   0000H   A   
 STATUSRUNNING. . .  N NUMB   0002H   A   
 STATUSSTARTREQ . .  N NUMB   0001H   A   
+STOPZ. . . . . . .  C ADDR   0072H   R   SEG=CONSOLESEGMENT
 SWDT . . . . . . .  B ADDR   00B8H.6 A   
 SYSCON . . . . . .  D ADDR   00B1H   A   
 T0 . . . . . . . .  B ADDR   00B0H.4 A   

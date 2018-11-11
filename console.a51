@@ -4,7 +4,7 @@ $NOMOD51
 NAME consoleProcess
 PUBLIC consoleProcess
 
-EXTRN CODE (processA,processB)
+EXTRN CODE (processA,processB,fkt_text)
 
 consoleSegment SEGMENT CODE
 	; switch to the created relocatable segment
@@ -34,6 +34,8 @@ waitloop:
 	;check if receive interrupt flag is set
 	setb wdt
 	setb swdt
+	mov A,0x8f
+	jnz waitloop			;wenn serial busy ist
 	jnb RI0,waitloop
 	mov r1,s0buf
 	
@@ -51,50 +53,65 @@ waitloop:
 	jz  inpIsC
 	
 	;check if input was z
-	add A,r1
-	subb A,#122
+	subb A,#23
 	jz  inpIsZ
+	jmp readMoreInput
 	
 	
 
 inpIsA:
 	;load status proc A in Reg A
-	mov A,0x2d
+	mov A,0x1e
 	
 	;check if A is not running already
 	cjne A,#statusNotRunning,readMoreInput
 	
 	;queue in for start by changing status and setting start adress
-	mov 0x2d,#statusStartReq
+	mov 0x1e,#statusStartReq
 	mov dptr,#processA
-	mov 0x31,dpl
-	mov 0x32,dph
+	mov 0x23,dpl
+	mov 0x24,dph
 	
 ;	call processA
 	jmp readMoreInput
 
 inpIsB:
 	;load status proc B in Reg A
-	mov A,0x2e
+	mov A,0x1f
 	
 	;check if b is not running already
 	cjne A,#statusNotRunning,readMoreInput
 	
 	;queue in for start by changing status and setting start adress
-	mov 0x2e,#statusStartReq
+	mov 0x1f,#statusStartReq
 	mov dptr,#processB
-	mov 0x33,dpl
-	mov 0x34,dph
+	mov 0x25,dpl
+	mov 0x26,dph
 	
 	;call process b
 	jmp readMoreInput
 
 inpIsC:
 	;0x2e status of process b
-	mov 0x2e,#statusNotRunning
+	mov 0x1f,#statusNotRunning
 	jmp readMoreInput
 
 inpIsZ:
+	;load status fkttext in Reg A
+	mov A,0x20
+	
+	;check if fkt_Text is running already
+	cjne A,#statusNotRunning,stopZ
+	
+	;queue in for start by changing status and setting start adress
+	mov 0x20,#statusStartReq
+	mov dptr,#fkt_text
+	mov 0x27,dpl
+	mov 0x28,dph
+	jmp readMoreInput
+
+stopZ:
+	mov 0x20,#statusNotRunning
 	jmp readMoreInput
 
 readMoreInput:

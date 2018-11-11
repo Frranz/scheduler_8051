@@ -12,6 +12,9 @@ EXTRN CODE (scheduler)
 	statusStartReq equ 1
 	statusRunning equ 2
 		
+	;serial  values
+	serialNotBlocked equ 0
+	serialBlocked equ 1
 	org 0
 	jmp start
 	/*
@@ -37,26 +40,32 @@ start:
 	
 	;set default values for process control
 	;set console as first process to start
-	mov 0x2b,#0	;so the scheduler knows which process was running (console is started by hand as first)			;2+1%3 = 0 ==> id of console process
+	mov 0x1c,#0	;so the scheduler knows which process was running (console is started by hand as first)			;2+1%3 = 0 ==> id of console process
 	
 	;process status [cons,a,b]
-	mov 0x2c,#statusRunning
-	mov 0x2d,#statusNotRunning
-	mov 0x2e,#statusNotRunning
+	mov 0x1d,#statusRunning
+	mov 0x1e,#statusNotRunning
+	mov 0x1f,#statusNotRunning
 	
 	;next adress [cons,a,b]
-	mov 0x2f,#0;#consoleProcess causes improper fixup error
-	mov 0x30,#0
-	mov 0x31,#0	
-	mov 0x32,#0	
-	mov 0x33,#0	
-	mov 0x34,#0	
+	mov 0x21,#0;#consoleProcess causes improper fixup error
+	mov 0x22,#0
+	mov 0x23,#0	
+	mov 0x24,#0	
+	mov 0x25,#0	
+	mov 0x26,#0	
+	mov 0x27,#0
+	mov 0x28,#0
 		
 	;save area for registers
 	;set default stack pointers to 0x07
 	mov 0x3f,#7
-	mov 0x57,#7
-	mov 0x6f,#7; checken ob das passt, wegen doofer rechnung vorher
+	mov 0x4b,#7
+	mov 0x63,#7; checken ob das passt, wegen doofer rechnung vorher
+	mov 0x7b,#7
+	
+	;serialisbusy byte
+	mov 0x8f,#serialNotBlocked
 	
 	call scheduler
 	

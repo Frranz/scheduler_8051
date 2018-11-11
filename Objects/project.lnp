@@ -2,6 +2,7 @@
 ".\Objects\proc_a.obj",
 ".\Objects\proc_b.obj",
 ".\Objects\scheduler.obj",
-".\Objects\init.obj" 
+".\Objects\init.obj",
+".\Objects\fkt_text.obj" 
 TO ".\Objects\project" 
 PRINT(".\Listings\project.m51") RAMSIZE(256) 

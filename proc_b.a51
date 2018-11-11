@@ -9,6 +9,10 @@ PUBLIC processB
 	statusStartReq equ 1
 	statusRunning equ 2	
 	
+	;serial0 values
+	serialNotBlocked equ 0
+	serialBlocked equ 1
+	
 processBSegment SEGMENT CODE
 	; switch to the created relocatable segment
  	RSEG processBSegment	
@@ -42,13 +46,18 @@ checktf:
 	clr tf0
 	djnz r1,checktf
 	
+	waitForSerial:
+		mov A,0x8f
+		jnz	waitForSerial
+		mov 0x8f,#serialBlocked
 	mov s0buf,#42
 	orl s0con,#00000001b
 	waitNextSend:	
 		;wartet bis bit abgesendet
 		mov A,s0con
-		jnb acc.1,waitNextSend
+		jnb acc.0,waitNextSend
 		anl s0con,#11111100b			;reset transmitter and receiver interrupt flag
+		mov 0x8f,#serialNotBlocked
 	
 	;mark proc_b as done
 	jmp processB

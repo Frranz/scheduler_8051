@@ -132,7 +132,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DLGD500</Key>
-          <Name>(5048=150,104,366,310,0)(98=1502,236,1836,629,0)(82=-1,-1,-1,-1,0)(83=-1,-1,-1,-1,0)(84=-1,-1,-1,-1,0)(85=-1,-1,-1,-1,0)(86=-1,-1,-1,-1,0)(87=-1,-1,-1,-1,0)(88=-1,-1,-1,-1,0)(89=-1,-1,-1,-1,0)(90=-1,-1,-1,-1,0)(102=-1,-1,-1,-1,0)(80=1367,392,1568,673,1)(81=1420,854,1621,1103,0)(91=1584,394,1794,669,1)(92=1369,110,1579,385,1)(93=-1,-1,-1,-1,0)(94=-1,-1,-1,-1,0)(100=-1,-1,-1,-1,0)(101=-1,-1,-1,-1,0)(5031=-1,-1,-1,-1,0)(104=180,137,381,374,0)</Name>
+          <Name>(5048=150,104,366,310,0)(98=1502,236,1836,629,0)(82=-1,-1,-1,-1,0)(83=-1,-1,-1,-1,0)(84=-1,-1,-1,-1,0)(85=-1,-1,-1,-1,0)(86=-1,-1,-1,-1,0)(87=-1,-1,-1,-1,0)(88=-1,-1,-1,-1,0)(89=-1,-1,-1,-1,0)(90=-1,-1,-1,-1,0)(102=-1,-1,-1,-1,0)(80=1372,383,1573,664,1)(81=1420,854,1621,1103,0)(91=1678,244,1888,519,1)(92=1369,110,1579,385,1)(93=-1,-1,-1,-1,0)(94=-1,-1,-1,-1,0)(100=-1,-1,-1,-1,0)(101=-1,-1,-1,-1,0)(5031=-1,-1,-1,-1,0)(104=180,137,381,374,0)</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -140,12 +140,29 @@
           <Name>200,50,700</Name>
         </SetRegEntry>
       </TargetDriverDllRegistry>
-      <Breakpoint/>
+      <Breakpoint>
+        <Bp>
+          <Number>0</Number>
+          <Type>0</Type>
+          <LineNumber>33</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>-16774329</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>proc_a.a51</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\project\PROCESSA\33</Expression>
+        </Bp>
+      </Breakpoint>
       <MemoryWindow1>
         <Mm>
           <WinNumber>1</WinNumber>
           <SubType>0</SubType>
-          <ItemText>d:2bh</ItemText>
+          <ItemText>d:1ch</ItemText>
           <AccSizeX>0</AccSizeX>
         </Mm>
       </MemoryWindow1>
@@ -161,7 +178,7 @@
         <Mm>
           <WinNumber>3</WinNumber>
           <SubType>0</SubType>
-          <ItemText>d:2fh</ItemText>
+          <ItemText>d:7fh</ItemText>
           <AccSizeX>0</AccSizeX>
         </Mm>
       </MemoryWindow3>
@@ -273,6 +290,18 @@
       <bDave2>0</bDave2>
       <PathWithFileName>.\init.a51</PathWithFileName>
       <FilenameWithoutPath>init.a51</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>1</GroupNumber>
+      <FileNumber>6</FileNumber>
+      <FileType>2</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>.\fkt_text.a51</PathWithFileName>
+      <FilenameWithoutPath>fkt_text.a51</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
