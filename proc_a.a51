@@ -5,7 +5,6 @@ NAME processA
 PUBLIC processA
 	
 processASegment SEGMENT CODE
-	; switch to the created relocatable segment
 	RSEG processASegment
 	
 	;define process status values
@@ -17,9 +16,8 @@ processASegment SEGMENT CODE
 	serialNotBlocked equ 0
 	serialBlocked equ 1
 	
-;do random stuff
 processA:
-	;prep counting up A from 117 => u
+	;prepare counting up A from 117 => u
 	mov r4,#117
 	
 	
@@ -28,27 +26,31 @@ sendloop:
 	setb swdt
 	mov r3,A
 	mov A,0x8f
-	jnz sendloop
+	jnz sendloop			;wait till ser0 is free
+	
+	
 	;block serial
 	mov 0x8f,#serialBlocked
 
+	;mov char to buffer
 	mov A,r4
 	mov s0buf,A
+	
 	clr ti0
 	orl s0con,#00000001b
 
 	mov r0,A
 	waitNextSend:	
-		;wartet bis bit abgesendet
+		;wait till bit is send
 		mov A,s0con
 		jnb acc.1,waitNextSend
-		anl s0con,#11111100b			;reset transmitter and receiver interrupt flag	;serial0 values
+		anl s0con,#11111100b			;reset transmitter and receiver interrupt flag
 		mov 0x8f,#serialNotBlocked
 
 	xch A,r0
 	inc A
 	mov r4,A
-	cjne A,#123,sendloop
+	cjne A,#123,sendloop				;increment until letter z + 1 = (#123)
 
 	;mark proc_a as done
 	mov 0x1e,#statusNotRunning

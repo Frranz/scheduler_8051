@@ -1,4 +1,4 @@
-A51 MACRO ASSEMBLER  PROC_B                                                               11/11/2018 18:30:02 PAGE     1
+A51 MACRO ASSEMBLER  PROC_B                                                               11/11/2018 21:02:08 PAGE     1
 
 
 MACRO ASSEMBLER A51 V8.2.7.0
@@ -32,74 +32,76 @@ LOC  OBJ            LINE     SOURCE
   0001               213             serialBlocked equ 1
                      214             
                      215     processBSegment SEGMENT CODE
-                     216             ; switch to the created relocatable segment
-----                 217             RSEG processBSegment    
-                     218             
-0000                 219             org 0000h       
-                     220                     
-                     221     ;do random stuff
-0000                 222     processB:
-                     223     
-                     224             ;prepare timer
-0000 D2AF            225             setb eal
-                     226     ;       setb et0
-                     227             
-                     228             ;configuring timer for 0.75 seconds
-0002 758C00          229             mov th0,#0
-0005 758A00          230             mov tl0,#0
-                     231             
-                     232             ;15 cuz on timer runs 0,065536s
-0008 79A8            233             mov r1,#0xa8
-                     234     
-                     235             ;starting timer
-000A D28C            236             setb tr0
-                     237             
-                     238             
-000C                 239     checktf:
-000C D2AE            240             setb wdt
-000E D2BE            241             setb swdt
-0010 308DF9          242             jnb tf0,checktf
-                     243     ;       clr tf0
-                     244     ;       setb tr0
-0013 C28D            245             clr tf0
-0015 D9F5            246             djnz r1,checktf
-                     247             
-0017                 248             waitForSerial:
-A51 MACRO ASSEMBLER  PROC_B                                                               11/11/2018 18:30:02 PAGE     2
+----                 216             RSEG processBSegment    
+                     217             
+0000                 218             org 0000h       
+                     219                     
+0000                 220     processB:
+                     221     
+                     222             ;prepare timer
+0000 D2AF            223             setb eal
+                     224             
+                     225             ;configuring timer for 0.75 seconds
+0002 758C00          226             mov th0,#0
+0005 758A00          227             mov tl0,#0
+                     228             
+0008 79A8            229             mov r1,#0xa8
+                     230     
+                     231             ;starting timer0
+000A D28C            232             setb tr0
+                     233             
+                     234             
+000C                 235     checktf:
+000C D2AE            236             setb wdt
+000E D2BE            237             setb swdt
+0010 308DF9          238             jnb tf0,checktf         ;wait till timer 0 overflows
+                     239             
+                     240             
+0013 C28D            241             clr tf0
+0015 D9F5            242             djnz r1,checktf
+                     243             
+                     244             ;wait for ser0 to be ready
+0017                 245             waitForSerial:
+0017 E58F            246                     mov A,0x8f
+0019 70FC            247                     jnz     waitForSerial
+001B 758F01          248                     mov 0x8f,#serialBlocked                 ;block ser0
+A51 MACRO ASSEMBLER  PROC_B                                                               11/11/2018 21:02:08 PAGE     2
 
-0017 E58F            249                     mov A,0x8f
-0019 70FC            250                     jnz     waitForSerial
-001B 758F01          251                     mov 0x8f,#serialBlocked
+                     249                     
+                     250             
+                     251             ;push * sign to buffer
 001E 75992A          252             mov s0buf,#42
 0021 439801          253             orl s0con,#00000001b
-0024                 254             waitNextSend:   
-                     255                     ;wartet bis bit abgesendet
-0024 E598            256                     mov A,s0con
-0026 30E0FB          257                     jnb acc.0,waitNextSend
-0029 5398FC          258                     anl s0con,#11111100b                    ;reset transmitter and receiver int
+                     254             
+0024                 255             waitNextSend:   
+                     256                     ;wait till byte is sent
+0024 E598            257                     mov A,s0con
+0026 30E0FB          258                     jnb acc.0,waitNextSend
+0029 5398FC          259                     anl s0con,#11111100b                    ;reset transmitter and receiver int
                              errupt flag
-002C 758F00          259                     mov 0x8f,#serialNotBlocked
-                     260             
-                     261             ;mark proc_b as done
-002F 80CF            262             jmp processB
-                     263     ;       mov 0x2e,#statusNotRunning
-0031                 264     endloop:
-0031 00              265             nop
-0032 D2AE            266             setb wdt
-0034 D2BE            267             setb swdt
-0036 80F9            268             jmp endloop
-                     269             
-0038 22              270             ret
-                     271     
-0039                 272     tihandler:
-0039 19              273             dec r1
-003A D9D0            274             djnz r1,checktf
-                     275             
-003C 7B11            276             mov r3,#11h             
-                     277             
-                     278     
-                     279             end
-A51 MACRO ASSEMBLER  PROC_B                                                               11/11/2018 18:30:02 PAGE     3
+002C 758F00          260                     mov 0x8f,#serialNotBlocked
+                     261             
+                     262             
+002F 80CF            263             jmp processB
+                     264             
+                     265             
+0031                 266     endloop:
+0031 00              267             nop
+0032 D2AE            268             setb wdt
+0034 D2BE            269             setb swdt
+0036 80F9            270             jmp endloop
+                     271             
+0038 22              272             ret
+                     273     
+                     274     ;tihandler:
+                     275     ;       dec r1
+                     276     ;       djnz r1,checktf
+                     277     ;       
+                     278     ;       mov r3,#11h             
+                     279             
+                     280     
+                     281             end
+A51 MACRO ASSEMBLER  PROC_B                                                               11/11/2018 21:02:08 PAGE     3
 
 SYMBOL TABLE LISTING
 ------ ----- -------
@@ -167,7 +169,7 @@ EADC . . . . . . .  B ADDR   00B8H.0 A
 EAL. . . . . . . .  B ADDR   00A8H.7 A   
 ENDLOOP. . . . . .  C ADDR   0031H   R   SEG=PROCESSBSEGMENT
 ES . . . . . . . .  B ADDR   00A8H.4 A   
-A51 MACRO ASSEMBLER  PROC_B                                                               11/11/2018 18:30:02 PAGE     4
+A51 MACRO ASSEMBLER  PROC_B                                                               11/11/2018 21:02:08 PAGE     4
 
 ET0. . . . . . . .  B ADDR   00A8H.1 A   
 ET1. . . . . . . .  B ADDR   00A8H.3 A   
@@ -226,7 +228,7 @@ P7 . . . . . . . .  D ADDR   00DBH   A
 P8 . . . . . . . .  D ADDR   00DDH   A   
 PCON . . . . . . .  D ADDR   0087H   A   
 PROCESSB . . . . .  C ADDR   0000H   R   SEG=PROCESSBSEGMENT
-PROCESSBSEGMENT. .  C SEG    003EH       REL=UNIT
+PROCESSBSEGMENT. .  C SEG    0039H       REL=UNIT
 PSW. . . . . . . .  D ADDR   00D0H   A   
 RB80 . . . . . . .  B ADDR   0098H.2 A   
 RD . . . . . . . .  B ADDR   00B0H.7 A   
@@ -235,7 +237,7 @@ RI0. . . . . . . .  B ADDR   0098H.0 A
 RS0. . . . . . . .  B ADDR   00D0H.3 A   
 RS1. . . . . . . .  B ADDR   00D0H.4 A   
 RXD. . . . . . . .  B ADDR   00B0H.0 A   
-A51 MACRO ASSEMBLER  PROC_B                                                               11/11/2018 18:30:02 PAGE     5
+A51 MACRO ASSEMBLER  PROC_B                                                               11/11/2018 21:02:08 PAGE     5
 
 S0BUF. . . . . . .  D ADDR   0099H   A   
 S0CON. . . . . . .  D ADDR   0098H   A   
@@ -275,7 +277,6 @@ TH0. . . . . . . .  D ADDR   008CH   A
 TH1. . . . . . . .  D ADDR   008DH   A   
 TH2. . . . . . . .  D ADDR   00CDH   A   
 TI0. . . . . . . .  B ADDR   0098H.1 A   
-TIHANDLER. . . . .  C ADDR   0039H   R   SEG=PROCESSBSEGMENT
 TL0. . . . . . . .  D ADDR   008AH   A   
 TL1. . . . . . . .  D ADDR   008BH   A   
 TL2. . . . . . . .  D ADDR   00CCH   A   

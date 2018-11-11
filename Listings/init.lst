@@ -1,4 +1,4 @@
-A51 MACRO ASSEMBLER  INIT                                                                 11/11/2018 20:34:47 PAGE     1
+A51 MACRO ASSEMBLER  INIT                                                                 11/11/2018 21:04:38 PAGE     1
 
 
 MACRO ASSEMBLER A51 V8.2.7.0
@@ -22,7 +22,7 @@ LOC  OBJ            LINE     SOURCE
                      203     ;NAME init
                      204     ;PUBLIC init
                      205             
-                     206     EXTRN CODE (scheduler)
+                     206     EXTRN CODE (scheduler,consoleProcess)
                      207             
                      208             
                      209             ;define process status values
@@ -33,71 +33,63 @@ LOC  OBJ            LINE     SOURCE
                      214             ;serial  values
   0000               215             serialNotBlocked equ 0
   0001               216             serialBlocked equ 1
-0000                 217             org 0
-0000 020000   F      218             jmp start
-                     219             
-                     220     
-                     221     
-                     222     
-                     223     
-                     224     
-                     225     
-                     226     
-                     227     
-                     228     
-                     229     
-                     230     
-                     231     
-                     232     
-                     233     
-                     234             
-                     235             programCode SEGMENT CODE
-----                 236                     RSEG programCode
-                     237             
-0000                 238     start:  
-                     239             
-                     240             ;set default values for process control
-                     241             ;set console as first process to start
-0000 751C00          242             mov 0x1c,#0     ;so the scheduler knows which process was running (console is start
+                     217                     
+0000                 218             org 0
+0000 020000   F      219             jmp start
+                     220             
+                     221             programCode SEGMENT CODE
+----                 222                     RSEG programCode
+                     223             
+0000                 224     start:  
+                     225             
+                     226     ;set default values for process control
+                     227             
+                     228             ;set console as first process to start
+0000 751C00          229             mov 0x1c,#0     ;so the scheduler knows which process was running (console is start
                              ed by hand as first)                 ;2+1%3 = 0 ==> id of console process
-                     243             
-                     244             ;process status [cons,a,b]
-0003 751D02          245             mov 0x1d,#statusRunning
-0006 751E00          246             mov 0x1e,#statusNotRunning
-0009 751F00          247             mov 0x1f,#statusNotRunning
-A51 MACRO ASSEMBLER  INIT                                                                 11/11/2018 20:34:47 PAGE     2
+                     230             
+                     231             ;set start adress for console process
+0003 900000   F      232             mov dptr,#consoleProcess
+0006 858221          233             mov 0x21,dpl
+0009 858322          234             mov 0x22,dph
+                     235             
+                     236             ;process status [cons,a,b]
+000C 751D02          237             mov 0x1d,#statusRunning
+000F 751E00          238             mov 0x1e,#statusNotRunning
+0012 751F00          239             mov 0x1f,#statusNotRunning
+                     240             
+                     241             ;next adress [cons,a,b]
+0015 752100          242             mov 0x21,#0;
+0018 752200          243             mov 0x22,#0
+001B 752300          244             mov 0x23,#0     
+001E 752400          245             mov 0x24,#0     
+0021 752500          246             mov 0x25,#0     
+0024 752600          247             mov 0x26,#0     
+A51 MACRO ASSEMBLER  INIT                                                                 11/11/2018 21:04:38 PAGE     2
 
-                     248             
-                     249             ;next adress [cons,a,b]
-000C 752100          250             mov 0x21,#0;#consoleProcess causes improper fixup error
-000F 752200          251             mov 0x22,#0
-0012 752300          252             mov 0x23,#0     
-0015 752400          253             mov 0x24,#0     
-0018 752500          254             mov 0x25,#0     
-001B 752600          255             mov 0x26,#0     
-001E 752700          256             mov 0x27,#0
-0021 752800          257             mov 0x28,#0
-                     258                     
-                     259             ;save area for registers
-                     260             ;set default stack pointers to 0x07
-0024 753F07          261             mov 0x3f,#7
-0027 754B07          262             mov 0x4b,#7
-002A 756307          263             mov 0x63,#7; checken ob das passt, wegen doofer rechnung vorher
-002D 757B07          264             mov 0x7b,#7
-                     265             
-                     266             ;priorities
-0030 759003          267             mov 0x90,#3
-0033 759202          268             mov 0x92,#2
-0036 759402          269             mov 0x94,#2
-0039 759604          270             mov 0x96,#4
-                     271             
-                     272             ;serialisbusy byte
-003C 758F00          273             mov 0x8f,#serialNotBlocked
-                     274             
-003F 120000   F      275             call scheduler
-                     276             
-                     277             end
-A51 MACRO ASSEMBLER  INIT                                                                 11/11/2018 20:34:47 PAGE     3
+0027 752700          248             mov 0x27,#0
+002A 752800          249             mov 0x28,#0
+                     250                     
+                     251             ;save area for registers
+                     252             ;set default stack pointers to 0x07
+002D 753F07          253             mov 0x3f,#7
+0030 754B07          254             mov 0x4b,#7
+0033 756307          255             mov 0x63,#7; checken ob das passt, wegen doofer rechnung vorher
+0036 757B07          256             mov 0x7b,#7
+                     257             
+                     258             ;priorities
+0039 759003          259             mov 0x90,#3
+003C 759202          260             mov 0x92,#2
+003F 759402          261             mov 0x94,#2
+0042 759604          262             mov 0x96,#4
+                     263             
+                     264             ;serialisbusy byte
+0045 758F00          265             mov 0x8f,#serialNotBlocked
+                     266             
+0048 120000   F      267             call scheduler
+                     268             
+                     269             end
+A51 MACRO ASSEMBLER  INIT                                                                 11/11/2018 21:04:38 PAGE     3
 
 SYMBOL TABLE LISTING
 ------ ----- -------
@@ -151,6 +143,7 @@ COMCLRH. . . . . .  D ADDR   00A4H   A
 COMCLRL. . . . . .  D ADDR   00A3H   A   
 COMSETH. . . . . .  D ADDR   00A2H   A   
 COMSETL. . . . . .  D ADDR   00A1H   A   
+CONSOLEPROCESS . .  C ADDR   -----       EXT
 CRCH . . . . . . .  D ADDR   00CBH   A   
 CRCL . . . . . . .  D ADDR   00CAH   A   
 CTCON. . . . . . .  D ADDR   00E1H   A   
@@ -164,9 +157,9 @@ EADC . . . . . . .  B ADDR   00B8H.0 A
 EAL. . . . . . . .  B ADDR   00A8H.7 A   
 ES . . . . . . . .  B ADDR   00A8H.4 A   
 ET0. . . . . . . .  B ADDR   00A8H.1 A   
-ET1. . . . . . . .  B ADDR   00A8H.3 A   
-A51 MACRO ASSEMBLER  INIT                                                                 11/11/2018 20:34:47 PAGE     4
+A51 MACRO ASSEMBLER  INIT                                                                 11/11/2018 21:04:38 PAGE     4
 
+ET1. . . . . . . .  B ADDR   00A8H.3 A   
 ET2. . . . . . . .  B ADDR   00A8H.5 A   
 EX0. . . . . . . .  B ADDR   00A8H.0 A   
 EX1. . . . . . . .  B ADDR   00A8H.2 A   
@@ -221,7 +214,7 @@ P6 . . . . . . . .  D ADDR   00FAH   A
 P7 . . . . . . . .  D ADDR   00DBH   A   
 P8 . . . . . . . .  D ADDR   00DDH   A   
 PCON . . . . . . .  D ADDR   0087H   A   
-PROGRAMCODE. . . .  C SEG    0042H       REL=UNIT
+PROGRAMCODE. . . .  C SEG    004BH       REL=UNIT
 PSW. . . . . . . .  D ADDR   00D0H   A   
 RB80 . . . . . . .  B ADDR   0098H.2 A   
 RD . . . . . . . .  B ADDR   00B0H.7 A   
@@ -232,9 +225,9 @@ RS1. . . . . . . .  B ADDR   00D0H.4 A
 RXD. . . . . . . .  B ADDR   00B0H.0 A   
 S0BUF. . . . . . .  D ADDR   0099H   A   
 S0CON. . . . . . .  D ADDR   0098H   A   
-S0RELH . . . . . .  D ADDR   00BAH   A   
-A51 MACRO ASSEMBLER  INIT                                                                 11/11/2018 20:34:47 PAGE     5
+A51 MACRO ASSEMBLER  INIT                                                                 11/11/2018 21:04:38 PAGE     5
 
+S0RELH . . . . . .  D ADDR   00BAH   A   
 S0RELL . . . . . .  D ADDR   00AAH   A   
 S1BUF. . . . . . .  D ADDR   009CH   A   
 S1CON. . . . . . .  D ADDR   009BH   A   

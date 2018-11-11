@@ -6,12 +6,11 @@ PUBLIC scheduler
 	
 EXTRN CODE(consoleProcess)	
 	
-	;define timer2 interupt routine
+	;define timer1 interupt routine
 	cseg at 001bh
 	jmp tihandler	
 	
 schedulerSegment SEGMENT CODE
-	; switch to the created relocatable segment
 	RSEG schedulerSegment
 	
 scheduler:
@@ -22,13 +21,11 @@ scheduler:
 	
 	;start
 	org 0000h
-		
-	mov dptr,#consoleProcess
-	mov 0x21,dpl
-	mov 0x22,dph
 	
 	;enable all interrupts
 	setb eal
+	
+	;configure timer1
 	mov th1,#0
 	mov tl1,#0
 	
@@ -36,20 +33,19 @@ scheduler:
 	setb et1
 	setb tr1
 	
-	;start console process DELETE THIS
+	;start console process
 	call consoleProcess
-	jmp endloop
+	jmp endloop					;should not be reached
 	
 	
 tihandler:
-	;do scheduelr stuff here
 	
-	;save old adress
-	;put accu & r0 in save space to do some basic calc
+	;save accu and r0
 	mov 0x1a,r0
 	mov 0x1b,A
 	
 	;check priorites
+	;if left timeslots are 0 reset them and change to the next processs
 	mov A,0x1c
 	xrl A,#0
 	jz prioCons
@@ -107,17 +103,12 @@ tihandler:
 		
 	
 	returnToProcess:
+		;reload r0 and acc from save area
 		mov r0,0x1a
 		mov a,0x1b
 		reti
 	
 	changeProcess:
-	;reset priority
-	dec r0
-	mov A,@r0
-	inc r0
-	mov @r0,A
-	
 	
 	;save next adress of interruped process
 	;find next adress space for the process
@@ -125,7 +116,7 @@ tihandler:
 	rl	A		;quick multiply A by two, because adress is 2 bits long
 	add A,#21h	;add offset to beginning of next adress area
 	
-;	;move adress from stack to calculated adress					dont save return adress, cuz we save whole stack afterwards
+	;move adress from stack to calculated adress
 	mov r0,A
 	;first pop high
 	inc r0
@@ -140,7 +131,8 @@ tihandler:
 	mov A,0x1c
 	mov r0,0x1c
 	
-	;calculate offset in register safe (id * size of one register store[32])
+	;calculate offset in register safe (id * size of one register store[20])
+	;using rl A for convenience of multiplaying by 2
 	rl A
 	rl A
 	rl A
@@ -166,7 +158,7 @@ tihandler:
 	add A,#29h
 	mov r0,A
 	
-	;actually save registers
+	;save registers
 	mov @r0,0x1a ;r0 from register save space
 	inc r0
 	mov @r0,1
@@ -195,10 +187,12 @@ tihandler:
 	inc r0
 	mov @r0,psw
 	inc r0
+	
 	;save stack
 	mov r1,#7
 	mov r2,SP
 	inc r2
+	;saves up from 7 until sp value is reached
 	saveStack:	
 		mov A,@r1
 		mov @r0,A
@@ -215,7 +209,7 @@ tihandler:
 		mov A,0x1c
 		inc A
 		
-		;build modulo 3 (making 0 if its 3)
+		;build modulo 4 (making 0 if its 4)
 		cjne A,#4,justSkipTheLineBefore
 		clr A
 		
@@ -223,23 +217,18 @@ tihandler:
 		;save new current process
 		mov 0x1c,A
 		
-		;check if started
+		;check if process has status running or start request
 		add A,#1dh
 		mov r0,A
 		mov A,@r0
 		xrl A,#statusNotRunning
 		jz findNextProcess
-;		mov r0,A
-;		cjne @r0,#statusRunning,findNextProcess
+
 	
 	;load context of next process	
-	;calc context adress
+	
 	;switch register bank to 2
 	orl psw,#00010000b
-;	mov A,0x58
-;	rl  A
-;	add A,#5ch
-;	mov r0,A
 	
 	;get start adress of saved context
 	mov A,0x1c
@@ -248,6 +237,7 @@ tihandler:
 	rl A
 	rl A
 	rl A
+	;adding stack size
 	cjne r0,#0,is1or2v2
 	jmp afterCalculatingOffset2
 	is1or2v2:
@@ -263,7 +253,8 @@ tihandler:
 	
 
 
-	afterCalculatingOffset2:	
+	afterCalculatingOffset2:
+	;adding start adress of register safe
 	add A,#29h
 	mov r0,A
 	
@@ -298,14 +289,12 @@ tihandler:
 	;resave A,0
 	mov 0x1b,A
 	
-	;restore psw later to stay in register bank 3
+	;restore psw later to stay in register bank 2
 	mov A,r0
-	mov r2,A   ;r2 now has pointer to value of psw
-;	mov psw,@r0
+	mov r2,A
 	inc r0
 	
-	
-	;if process is in status start request make sp manually #7
+	;if process is in status start request set sp manually #7
 	mov A,0x1c
 	add A,#1dh
 	cjne A,#statusStartReq,beforeRestoreStack
@@ -319,7 +308,7 @@ tihandler:
 	mov r4,sp
 	mov r1,#7
 	mov A,r1
-	xrl A,r4 ;in case stack didnt grow
+	xrl A,r4 ;jump over in case stack didnt grow
 	jz restoreStackComplete
 	restoreStack:
 		mov A,@r0
@@ -345,22 +334,19 @@ tihandler:
 	push 0x19
 	
 	
-	;switch register bank back to 0
+	;restore psw to swtich back to reg-bank 0
 	mov A,r2
 	mov r0,A
 	mov psw,@r0
 	mov A,0x1b
-;	anl psw,#11100111b
-	reti
 	
-	jmp realend
+	
+	reti
 	
 endloop:
 	nop
 	setb wdt
 	setb swdt
 	jmp endloop
-	
-realend:	
 
 	end

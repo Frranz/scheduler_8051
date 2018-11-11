@@ -6,8 +6,8 @@ PUBLIC consoleProcess
 
 EXTRN CODE (processA,processB,fkt_text)
 
+;define program as relocatable
 consoleSegment SEGMENT CODE
-	; switch to the created relocatable segment
 	RSEG consoleSegment
 		
 	;define process status values
@@ -16,13 +16,6 @@ consoleSegment SEGMENT CODE
 	statusRunning equ 2
 
 consoleProcess:	
-
-	;testing stuff
-	mov r0,#17h
-	mov r1,#58h
-	mov r6,#33h
-	mov r7,#19h
-	mov A,#93h
 
 ;configure seriel port 0
 	mov s0con,#01010000b
@@ -35,7 +28,7 @@ waitloop:
 	setb wdt
 	setb swdt
 	mov A,0x8f
-	jnz waitloop			;wenn serial busy ist
+	jnz waitloop			;wait until ser0 isnt blocked anymore
 	jnb RI0,waitloop
 	mov r1,s0buf
 	
@@ -55,46 +48,48 @@ waitloop:
 	;check if input was z
 	subb A,#23
 	jz  inpIsZ
+	
+	;if none of the above just continue reading
 	jmp readMoreInput
 	
 	
 
 inpIsA:
-	;load status proc A in Reg A
+	;load status of proc A in Reg A
 	mov A,0x1e
 	
 	;check if A is not running already
 	cjne A,#statusNotRunning,readMoreInput
 	
-	;queue in for start by changing status and setting start adress
+	;queue in for start by changing status, setting start adress and setting priority
 	mov 0x1e,#statusStartReq
 	mov dptr,#processA
 	mov 0x23,dpl
 	mov 0x24,dph
 	mov 0x93,0x92
 	
-;	call processA
+	
 	jmp readMoreInput
 
 inpIsB:
-	;load status proc B in Reg A
+	;load status of proc B in Reg A
 	mov A,0x1f
 	
 	;check if b is not running already
 	cjne A,#statusNotRunning,readMoreInput
 	
-	;queue in for start by changing status and setting start adress
+	;queue in for start by changing status, setting start adress and setting priority
 	mov 0x1f,#statusStartReq
 	mov dptr,#processB
 	mov 0x25,dpl
 	mov 0x26,dph
 	mov 0x95,0x94
 	
-	;call process b
+	
 	jmp readMoreInput
 
 inpIsC:
-	;0x2e status of process b
+	;change status of proc B
 	mov 0x1f,#statusNotRunning
 	jmp readMoreInput
 
@@ -114,6 +109,7 @@ inpIsZ:
 	jmp readMoreInput
 
 stopZ:
+	;change status of fkt_text
 	mov 0x20,#statusNotRunning
 	jmp readMoreInput
 
