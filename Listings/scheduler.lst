@@ -1,4 +1,4 @@
-A51 MACRO ASSEMBLER  SCHEDULER                                                            11/11/2018 10:35:07 PAGE     1
+A51 MACRO ASSEMBLER  SCHEDULER                                                            11/11/2018 11:42:14 PAGE     1
 
 
 MACRO ASSEMBLER A51 V8.2.7.0
@@ -65,7 +65,7 @@ LOC  OBJ            LINE     SOURCE
                      246             ;save old adress
                      247             ;put accu & r0 in save space to do some basic calc
 001B 8856            248             mov 0x56,r0
-A51 MACRO ASSEMBLER  SCHEDULER                                                            11/11/2018 10:35:07 PAGE     2
+A51 MACRO ASSEMBLER  SCHEDULER                                                            11/11/2018 11:42:14 PAGE     2
 
 001D F557            249             mov 0x57,A
                      250             
@@ -77,194 +77,210 @@ LOC  OBJ            LINE     SOURCE
                      256             
                      257     ;       ;move adress from stack to calculated adress                                    don
                              t save return adress, cuz we save whole stack afterwards
-                     258             ;first pop high
-                     259     ;       mov r0,A
-                     260     ;       inc r0
-                     261     ;       pop ACC
-                     262             ;then low
-                     263     ;       mov @r0,A
-                     264     ;       dec r0
-                     265     ;       pop ACC
-                     266     ;       mov @r0,A
+0024 F8              258             mov r0,A
+                     259             ;first pop high
+0025 08              260             inc r0
+0026 D0E0            261             pop ACC
+0028 F6              262             mov @r0,A
+                     263             ;then low
+0029 18              264             dec r0
+002A D0E0            265             pop ACC
+002C F6              266             mov @r0,A
                      267             
                      268             ;save rest of context
-0024 E558            269             mov A,0x58
+002D E558            269             mov A,0x58
                      270             
                      271             ;calculate offset in register safe (id * size of one register store[32])
-0026 23              272             rl A
-0027 23              273             rl A
-0028 23              274             rl A
-0029 23              275             rl A
-002A 23              276             rl A
+002F 23              272             rl A
+0030 23              273             rl A
+0031 23              274             rl A
+0032 23              275             rl A
+0033 23              276             rl A
                      277             ;add start adress of register safe
-002B 2468            278             add A,#68h
-002D F8              279             mov r0,A
+0034 2468            278             add A,#68h
+0036 F8              279             mov r0,A
                      280             
                      281             ;actually save registers
-002E A656            282             mov @r0,0x56 ;r0 from register save space
-0030 08              283             inc r0
-0031 A601            284             mov @r0,1
-0033 08              285             inc r0
-0034 A602            286             mov @r0,2
-0036 08              287             inc r0
-0037 A603            288             mov @r0,3
-0039 08              289             inc r0
-003A A604            290             mov @r0,4
-003C 08              291             inc r0
-003D A605            292             mov @r0,5
-003F 08              293             inc r0
-0040 A606            294             mov @r0,6
-0042 08              295             inc r0
-0043 A607            296             mov @r0,7
-0045 08              297             inc r0
-0046 A657            298             mov @r0,0x57 ;reg A from save space
-0048 08              299             inc r0
-0049 A6F0            300             mov @r0,b
-004B 08              301             inc r0
-004C A681            302             mov @r0,SP
-004E 08              303             inc r0
-004F A682            304             mov @r0,dpl
-0051 08              305             inc r0
-0052 A683            306             mov @r0,dph
-0054 08              307             inc r0
-0055 A6D0            308             mov @r0,psw
-0057 08              309             inc r0
+0037 A656            282             mov @r0,0x56 ;r0 from register save space
+0039 08              283             inc r0
+003A A601            284             mov @r0,1
+003C 08              285             inc r0
+003D A602            286             mov @r0,2
+003F 08              287             inc r0
+0040 A603            288             mov @r0,3
+0042 08              289             inc r0
+0043 A604            290             mov @r0,4
+0045 08              291             inc r0
+0046 A605            292             mov @r0,5
+0048 08              293             inc r0
+0049 A606            294             mov @r0,6
+004B 08              295             inc r0
+004C A607            296             mov @r0,7
+004E 08              297             inc r0
+004F A657            298             mov @r0,0x57 ;reg A from save space
+0051 08              299             inc r0
+0052 A6F0            300             mov @r0,b
+0054 08              301             inc r0
+0055 A681            302             mov @r0,SP
+0057 08              303             inc r0
+0058 A682            304             mov @r0,dpl
+005A 08              305             inc r0
+005B A683            306             mov @r0,dph
+005D 08              307             inc r0
+005E A6D0            308             mov @r0,psw
+0060 08              309             inc r0
                      310             ;save stack
-0058 7907            311             mov r1,#7
-005A AA81            312             mov r2,SP
-005C 0A              313             inc r2
-A51 MACRO ASSEMBLER  SCHEDULER                                                            11/11/2018 10:35:07 PAGE     3
+0061 7907            311             mov r1,#7
+0063 AA81            312             mov r2,SP
+0065 0A              313             inc r2
+A51 MACRO ASSEMBLER  SCHEDULER                                                            11/11/2018 11:42:14 PAGE     3
 
-005D                 314             saveStack:      
-005D E7              315                     mov A,@r1
-005E F6              316                     mov @r0,A
-005F 09              317                     inc r1
-0060 08              318                     inc r0
-0061 E9              319                     mov A,r1
-0062 6A              320                     xrl A,r2 ;to act like compare equal
-0063 70F8            321                     jnz saveStack
+0066                 314             saveStack:      
+0066 E7              315                     mov A,@r1
+0067 F6              316                     mov @r0,A
+0068 09              317                     inc r1
+0069 08              318                     inc r0
+006A E9              319                     mov A,r1
+006B 6A              320                     xrl A,r2 ;to act like compare equal
+006C 70F8            321                     jnz saveStack
                      322             
                      323     
                      324             
-0065                 325             findNextProcess:
+006E                 325             findNextProcess:
                      326                     ;find next program to execute
-0065 E558            327                     mov A,0x58
-0067 04              328                     inc A
+006E E558            327                     mov A,0x58
+0070 04              328                     inc A
                      329                     
                      330                     ;build modulo 3 (making 0 if its 3)
-0068 B40301          331                     cjne A,#3,justSkipTheLineBefore
-006B E4              332                     clr A
+0071 B40301          331                     cjne A,#3,justSkipTheLineBefore
+0074 E4              332                     clr A
                      333                     
-006C                 334                     justSkipTheLineBefore:
+0075                 334                     justSkipTheLineBefore:
                      335                     ;save new current process
-006C F558            336                     mov 0x58,A
+0075 F558            336                     mov 0x58,A
                      337                     
                      338                     ;check if started
-006E 2459            339                     add A,#59h
-0070 F8              340                     mov r0,A
-0071 B602F1          341                     cjne @r0,#statusRunning,findNextProcess
+0077 2459            339                     add A,#59h
+0079 F8              340                     mov r0,A
+007A B602F1          341                     cjne @r0,#statusRunning,findNextProcess
                      342             
                      343             ;load context of next process   
                      344             ;calc context adress
                      345             ;switch register bank to 3
-0074 43D018          346             orl psw,#00011000b
+007D 43D018          346             orl psw,#00011000b
                      347     ;       mov A,0x58
                      348     ;       rl  A
                      349     ;       add A,#5ch
                      350     ;       mov r0,A
                      351             
                      352             ;get start adress of saved context
-0077 E558            353             mov A,0x58
-0079 23              354             rl A
-007A 23              355             rl A
-007B 23              356             rl A
-007C 23              357             rl A
-007D 23              358             rl A
-007E 2468            359             add A,#68h
-0080 F8              360             mov r0,A
+0080 E558            353             mov A,0x58
+0082 23              354             rl A
+0083 23              355             rl A
+0084 23              356             rl A
+0085 23              357             rl A
+0086 23              358             rl A
+0087 2468            359             add A,#68h
+0089 F8              360             mov r0,A
                      361             
                      362             ;restore registers
-0081 8600            363             mov 0,@r0
-0083 08              364             inc r0
-0084 8601            365             mov 1,@r0
-0086 08              366             inc r0
-0087 8602            367             mov 2,@r0
-0089 08              368             inc r0
-008A 8603            369             mov 3,@r0
-008C 08              370             inc r0
-008D 8604            371             mov 4,@r0
-008F 08              372             inc r0
-0090 8605            373             mov 5,@r0
-0092 08              374             inc r0
-0093 8606            375             mov 6,@r0
-0095 08              376             inc r0
-0096 8607            377             mov 7,@r0
-0098 08              378             inc r0
-0099 E6              379             mov A,@r0
-A51 MACRO ASSEMBLER  SCHEDULER                                                            11/11/2018 10:35:07 PAGE     4
+008A 8600            363             mov 0,@r0
+008C 08              364             inc r0
+008D 8601            365             mov 1,@r0
+008F 08              366             inc r0
+0090 8602            367             mov 2,@r0
+0092 08              368             inc r0
+0093 8603            369             mov 3,@r0
+0095 08              370             inc r0
+0096 8604            371             mov 4,@r0
+0098 08              372             inc r0
+0099 8605            373             mov 5,@r0
+009B 08              374             inc r0
+009C 8606            375             mov 6,@r0
+009E 08              376             inc r0
+009F 8607            377             mov 7,@r0
+00A1 08              378             inc r0
+00A2 E6              379             mov A,@r0
+A51 MACRO ASSEMBLER  SCHEDULER                                                            11/11/2018 11:42:14 PAGE     4
 
-009A 08              380             inc r0
-009B 86F0            381             mov b,@r0
-009D 08              382             inc r0
-009E 8681            383             mov sp,@r0
-00A0 08              384             inc r0
-00A1 8682            385             mov dpl,@r0
-00A3 08              386             inc r0
-00A4 8683            387             mov dph,@r0
-00A6 08              388             inc r0
+00A3 08              380             inc r0
+00A4 86F0            381             mov b,@r0
+00A6 08              382             inc r0
+00A7 8681            383             mov sp,@r0
+00A9 08              384             inc r0
+00AA 8682            385             mov dpl,@r0
+00AC 08              386             inc r0
+00AD 8683            387             mov dph,@r0
+00AF 08              388             inc r0
                      389             
-                     390             ;restore psw later to stay in register bank 3
-00A7 E8              391             mov A,r0
-00A8 FA              392             mov r2,A   ;r2 now has pointer to value of psw
-                     393     ;       mov psw,@r0
-00A9 08              394             inc r0
-                     395             
-00AA 7907            396             mov r1,#7
-00AC AC81            397             mov r4,sp
-00AE E9              398             mov A,r1
-00AF 6C              399             xrl A,r4 ;in case stack didnt grow
-00B0 6008            400             jz restoreStackComplete
-00B2                 401             restoreStack:
-00B2 E6              402                     mov A,@r0
-00B3 F7              403                     mov @r1,A
-00B4 09              404                     inc r1
-00B5 08              405                     inc r0
-00B6 E9              406                     mov A,r1
-                     407                     ;check if r1 equals sp
-00B7 6C              408                     xrl A,r4
-00B8 70F8            409                     jnz restoreStack
-                     410             
-00BA                 411             restoreStackComplete:
-                     412             ;push it onto stack                             probably not necessary, because sta
-                             ck is saved anyways
-                     413     ;       mov r0,A
-                     414     ;       mov dpl,@r0
-                     415     ;       push dpl
-                     416     ;       inc r0
-                     417     ;       mov dph,@r0
-                     418     ;       push dph
-                     419             
-                     420             ;switch register bank back to 0
-00BA 53D0E7          421             anl psw,#11100111b
-00BD 32              422             reti
-                     423             
-00BE 8008            424             jmp realend
-                     425             
-00C0                 426     findNextProg:
-                     427     ;       cjne r0,statusRunning,
-                     428             
-00C0 32              429             reti
-                     430             
-00C1                 431     endloop:
-00C1 00              432             nop
-00C2 D2AE            433             setb wdt
-00C4 D2BE            434             setb swdt
-00C6 80F9            435             jmp endloop
-                     436             
-00C8                 437     realend:        
-                     438     
-                     439             end
-A51 MACRO ASSEMBLER  SCHEDULER                                                            11/11/2018 10:35:07 PAGE     5
+                     390             ;resave A,0
+00B0 F557            391             mov 0x57,A
+                     392             
+                     393             ;restore psw later to stay in register bank 3
+00B2 E8              394             mov A,r0
+00B3 FA              395             mov r2,A   ;r2 now has pointer to value of psw
+                     396     ;       mov psw,@r0
+00B4 08              397             inc r0
+                     398             
+00B5 7907            399             mov r1,#7
+00B7 AC81            400             mov r4,sp
+00B9 E9              401             mov A,r1
+00BA 6C              402             xrl A,r4 ;in case stack didnt grow
+00BB 6008            403             jz restoreStackComplete
+00BD                 404             restoreStack:
+00BD E6              405                     mov A,@r0
+00BE F7              406                     mov @r1,A
+00BF 09              407                     inc r1
+00C0 08              408                     inc r0
+00C1 E9              409                     mov A,r1
+                     410                     ;check if r1 equals sp
+00C2 6C              411                     xrl A,r4
+00C3 70F8            412                     jnz restoreStack
+                     413             
+00C5                 414             restoreStackComplete:
+                     415             ;push return adress onto stack                          probably not necessary, bec
+                             ause stack is saved anyways
+00C5 E558            416             mov A,0x58
+00C7 23              417             rl  A
+00C8 245C            418             add A,#5ch
+00CA F8              419             mov r0,A
+                     420             
+00CB 8654            421             mov 0x54,@r0
+00CD 08              422             inc r0
+00CE 8655            423             mov 0x55,@r0
+00D0 C054            424             push 0x54
+00D2 C055            425             push 0x55
+                     426             
+                     427     ;       mov r0,A
+                     428     ;       mov dpl,@r0
+                     429     ;       push dpl
+                     430     ;       inc r0
+                     431     ;       mov dph,@r0
+                     432     ;       push dph
+                     433             
+                     434             ;switch register bank back to 0
+00D4 53D0E7          435             anl psw,#11100111b
+00D7 32              436             reti
+                     437             
+00D8 8008            438             jmp realend
+                     439             
+00DA                 440     findNextProg:
+                     441     ;       cjne r0,statusRunning,
+                     442             
+00DA 32              443             reti
+                     444             
+A51 MACRO ASSEMBLER  SCHEDULER                                                            11/11/2018 11:42:14 PAGE     5
+
+00DB                 445     endloop:
+00DB 00              446             nop
+00DC D2AE            447             setb wdt
+00DE D2BE            448             setb swdt
+00E0 80F9            449             jmp endloop
+                     450             
+00E2                 451     realend:        
+                     452     
+                     453             end
+A51 MACRO ASSEMBLER  SCHEDULER                                                            11/11/2018 11:42:14 PAGE     6
 
 SYMBOL TABLE LISTING
 ------ ----- -------
@@ -330,9 +346,9 @@ DPL . . . . . . . . .  D ADDR   0082H   A
 DPSEL . . . . . . . .  D ADDR   0092H   A   
 EADC. . . . . . . . .  B ADDR   00B8H.0 A   
 EAL . . . . . . . . .  B ADDR   00A8H.7 A   
-ENDLOOP . . . . . . .  C ADDR   00C1H   R   SEG=SCHEDULERSEGMENT
+ENDLOOP . . . . . . .  C ADDR   00DBH   R   SEG=SCHEDULERSEGMENT
 ES. . . . . . . . . .  B ADDR   00A8H.4 A   
-A51 MACRO ASSEMBLER  SCHEDULER                                                            11/11/2018 10:35:07 PAGE     6
+A51 MACRO ASSEMBLER  SCHEDULER                                                            11/11/2018 11:42:14 PAGE     7
 
 ET0 . . . . . . . . .  B ADDR   00A8H.1 A   
 ET1 . . . . . . . . .  B ADDR   00A8H.3 A   
@@ -348,8 +364,8 @@ EXEN2 . . . . . . . .  B ADDR   00B8H.7 A
 EXF2. . . . . . . . .  B ADDR   00C0H.7 A   
 F0. . . . . . . . . .  B ADDR   00D0H.5 A   
 F1. . . . . . . . . .  B ADDR   00D0H.1 A   
-FINDNEXTPROCESS . . .  C ADDR   0065H   R   SEG=SCHEDULERSEGMENT
-FINDNEXTPROG. . . . .  C ADDR   00C0H   R   SEG=SCHEDULERSEGMENT
+FINDNEXTPROCESS . . .  C ADDR   006EH   R   SEG=SCHEDULERSEGMENT
+FINDNEXTPROG. . . . .  C ADDR   00DAH   R   SEG=SCHEDULERSEGMENT
 I2FR. . . . . . . . .  B ADDR   00C8H.5 A   
 I3FR. . . . . . . . .  B ADDR   00C8H.6 A   
 IADC. . . . . . . . .  B ADDR   00C0H.0 A   
@@ -371,7 +387,7 @@ IRCON . . . . . . . .  D ADDR   00C0H   A
 IRCON1. . . . . . . .  D ADDR   00D1H   A   
 IT0 . . . . . . . . .  B ADDR   0088H.0 A   
 IT1 . . . . . . . . .  B ADDR   0088H.2 A   
-JUSTSKIPTHELINEBEFORE  C ADDR   006CH   R   SEG=SCHEDULERSEGMENT
+JUSTSKIPTHELINEBEFORE  C ADDR   0075H   R   SEG=SCHEDULERSEGMENT
 MD0 . . . . . . . . .  D ADDR   00E9H   A   
 MD1 . . . . . . . . .  D ADDR   00EAH   A   
 MD2 . . . . . . . . .  D ADDR   00EBH   A   
@@ -396,11 +412,11 @@ PCON. . . . . . . . .  D ADDR   0087H   A
 PSW . . . . . . . . .  D ADDR   00D0H   A   
 RB80. . . . . . . . .  B ADDR   0098H.2 A   
 RD. . . . . . . . . .  B ADDR   00B0H.7 A   
-REALEND . . . . . . .  C ADDR   00C8H   R   SEG=SCHEDULERSEGMENT
+REALEND . . . . . . .  C ADDR   00E2H   R   SEG=SCHEDULERSEGMENT
 REN0. . . . . . . . .  B ADDR   0098H.4 A   
-RESTORESTACK. . . . .  C ADDR   00B2H   R   SEG=SCHEDULERSEGMENT
-RESTORESTACKCOMPLETE.  C ADDR   00BAH   R   SEG=SCHEDULERSEGMENT
-A51 MACRO ASSEMBLER  SCHEDULER                                                            11/11/2018 10:35:07 PAGE     7
+RESTORESTACK. . . . .  C ADDR   00BDH   R   SEG=SCHEDULERSEGMENT
+RESTORESTACKCOMPLETE.  C ADDR   00C5H   R   SEG=SCHEDULERSEGMENT
+A51 MACRO ASSEMBLER  SCHEDULER                                                            11/11/2018 11:42:14 PAGE     8
 
 RI0 . . . . . . . . .  B ADDR   0098H.0 A   
 RS0 . . . . . . . . .  B ADDR   00D0H.3 A   
@@ -414,9 +430,9 @@ S1BUF . . . . . . . .  D ADDR   009CH   A
 S1CON . . . . . . . .  D ADDR   009BH   A   
 S1RELH. . . . . . . .  D ADDR   00BBH   A   
 S1RELL. . . . . . . .  D ADDR   009DH   A   
-SAVESTACK . . . . . .  C ADDR   005DH   R   SEG=SCHEDULERSEGMENT
+SAVESTACK . . . . . .  C ADDR   0066H   R   SEG=SCHEDULERSEGMENT
 SCHEDULER . . . . . .  C ADDR   0000H   R   SEG=SCHEDULERSEGMENT
-SCHEDULERSEGMENT. . .  C SEG    00C8H       REL=UNIT
+SCHEDULERSEGMENT. . .  C SEG    00E2H       REL=UNIT
 SETMSK. . . . . . . .  D ADDR   00A5H   A   
 SM0 . . . . . . . . .  B ADDR   0098H.7 A   
 SM1 . . . . . . . . .  B ADDR   0098H.6 A   

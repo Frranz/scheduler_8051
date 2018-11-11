@@ -56,15 +56,15 @@ tihandler:
 	add A,#5ch	;add offset to beginning of next adress area
 	
 ;	;move adress from stack to calculated adress					dont save return adress, cuz we save whole stack afterwards
+	mov r0,A
 	;first pop high
-;	mov r0,A
-;	inc r0
-;	pop ACC
+	inc r0
+	pop ACC
+	mov @r0,A
 	;then low
-;	mov @r0,A
-;	dec r0
-;	pop ACC
-;	mov @r0,A
+	dec r0
+	pop ACC
+	mov @r0,A
 	
 	;save rest of context
 	mov A,0x58
@@ -188,6 +188,9 @@ tihandler:
 	mov dph,@r0
 	inc r0
 	
+	;resave A,0
+	mov 0x57,A
+	
 	;restore psw later to stay in register bank 3
 	mov A,r0
 	mov r2,A   ;r2 now has pointer to value of psw
@@ -210,7 +213,18 @@ tihandler:
 		jnz restoreStack
 	
 	restoreStackComplete:
-	;push it onto stack				probably not necessary, because stack is saved anyways
+	;push return adress onto stack				probably not necessary, because stack is saved anyways
+	mov A,0x58
+	rl  A
+	add A,#5ch
+	mov r0,A
+	
+	mov 0x54,@r0
+	inc r0
+	mov 0x55,@r0
+	push 0x54
+	push 0x55
+	
 ;	mov r0,A
 ;	mov dpl,@r0
 ;	push dpl
@@ -219,7 +233,9 @@ tihandler:
 ;	push dph
 	
 	;switch register bank back to 0
-	anl psw,#11100111b
+	mov r0,r2
+	mov psw,@r0
+;	anl psw,#11100111b
 	reti
 	
 	jmp realend

@@ -1,4 +1,6 @@
 scheduler interface:
+0x54		adresl save space for loading adress to stack
+0x55		adresh save space for loading adress to stack
 0x56 		save space for r0
 0x57		save space for Accu
 0x58		currently running process
