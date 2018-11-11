@@ -14,6 +14,32 @@ scheduler interface:
 0x88-0xa7	saved context proess a
 0xa8-0xc7	saved context proess b
 
+new:
+0x27		adresl save space for loading adress to stack
+0x28		adresh save space for loading adress to stack
+0x29 		save space for r0
+0x2a		save space for Accu
+0x2b		currently running process
+0x2c		status console process
+0x2d		status process a
+0x2e		status process b
+0x2f/30		next adress to execute for console process
+0x31/32		next adress to execute for process a
+0x33/34		next adress to execute for process b
+0x35-0x4d	saved context console proess
+0x4e-0x66	saved context proess a
+0x67-0x7f	saved context proess b
+
+
+
+
+
+
+
+
+
+
+
 Offsets inside saved context's
 0x00		r0
 0x01		r1

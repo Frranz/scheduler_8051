@@ -65,7 +65,7 @@ inpIsA:
 	cjne A,#statusNotRunning,readMoreInput
 	
 	;queue in for start by changing status and setting start adress
-	mov 0x5a,#statusRunning
+	mov 0x5a,#statusStartReq
 	mov dptr,#processA
 	mov 0x5e,dpl
 	mov 0x5f,dph
@@ -81,7 +81,7 @@ inpIsB:
 	cjne A,#statusNotRunning,readMoreInput
 	
 	;queue in for start by changing status and setting start adress
-	mov 0x5b,#statusRunning
+	mov 0x5b,#statusStartReq
 	mov dptr,#processB
 	mov 0x60,dpl
 	mov 0x61,dph

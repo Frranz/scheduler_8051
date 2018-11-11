@@ -139,7 +139,11 @@ tihandler:
 		;check if started
 		add A,#59h
 		mov r0,A
-		cjne @r0,#statusRunning,findNextProcess
+		mov A,@r0
+		xrl A,#statusNotRunning
+		jz findNextProcess
+;		mov r0,A
+;		cjne @r0,#statusRunning,findNextProcess
 	
 	;load context of next process	
 	;calc context adress
@@ -198,6 +202,14 @@ tihandler:
 	inc r0
 	
 	mov r1,#7
+	
+	;if process is in status start request make sp manually #7
+	mov A,0x58
+	cjne A,#statusStartReq,beforeRestoreStack
+	mov sp,#7	;set default for sp
+	
+	
+	beforeRestoreStack:
 	mov r4,sp
 	mov A,r1
 	xrl A,r4 ;in case stack didnt grow
@@ -233,8 +245,10 @@ tihandler:
 ;	push dph
 	
 	;switch register bank back to 0
-	mov r0,r2
+	mov A,r2
+	mov r0,A
 	mov psw,@r0
+	mov A,0x57
 ;	anl psw,#11100111b
 	reti
 	

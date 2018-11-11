@@ -1,4 +1,4 @@
-A51 MACRO ASSEMBLER  CONSOLE                                                              11/11/2018 10:12:11 PAGE     1
+A51 MACRO ASSEMBLER  CONSOLE                                                              11/11/2018 11:54:10 PAGE     1
 
 
 MACRO ASSEMBLER A51 V8.2.7.0
@@ -65,7 +65,7 @@ LOC  OBJ            LINE     SOURCE
 0025 601B            246             jz  inpIsB
                      247             
                      248             ;check if input was c
-A51 MACRO ASSEMBLER  CONSOLE                                                              11/11/2018 10:12:11 PAGE     2
+A51 MACRO ASSEMBLER  CONSOLE                                                              11/11/2018 11:54:10 PAGE     2
 
 0027 14              249             dec A
 0028 602B            250             jz  inpIsC
@@ -85,7 +85,7 @@ LOC  OBJ            LINE     SOURCE
 0031 B40025          264             cjne A,#statusNotRunning,readMoreInput
                      265             
                      266             ;queue in for start by changing status and setting start adress
-0034 755A02          267             mov 0x5a,#statusRunning
+0034 755A01          267             mov 0x5a,#statusStartReq
 0037 900000   F      268             mov dptr,#processA
 003A 85825E          269             mov 0x5e,dpl
 003D 85835F          270             mov 0x5f,dph
@@ -101,7 +101,7 @@ LOC  OBJ            LINE     SOURCE
 0044 B40012          280             cjne A,#statusNotRunning,readMoreInput
                      281             
                      282             ;queue in for start by changing status and setting start adress
-0047 755B02          283             mov 0x5b,#statusRunning
+0047 755B01          283             mov 0x5b,#statusStartReq
 004A 900000   F      284             mov dptr,#processB
 004D 858260          285             mov 0x60,dpl
 0050 858361          286             mov 0x61,dph
@@ -125,7 +125,7 @@ LOC  OBJ            LINE     SOURCE
 0060 D2BE            304             setb swdt
 0062 80F9            305             jmp endloop
                      306             end
-A51 MACRO ASSEMBLER  CONSOLE                                                              11/11/2018 10:12:11 PAGE     3
+A51 MACRO ASSEMBLER  CONSOLE                                                              11/11/2018 11:54:10 PAGE     3
 
 SYMBOL TABLE LISTING
 ------ ----- -------
@@ -193,7 +193,7 @@ DPSEL. . . . . . .  D ADDR   0092H   A
 EADC . . . . . . .  B ADDR   00B8H.0 A   
 EAL. . . . . . . .  B ADDR   00A8H.7 A   
 ENDLOOP. . . . . .  C ADDR   005DH   R   SEG=CONSOLESEGMENT
-A51 MACRO ASSEMBLER  CONSOLE                                                              11/11/2018 10:12:11 PAGE     4
+A51 MACRO ASSEMBLER  CONSOLE                                                              11/11/2018 11:54:10 PAGE     4
 
 ES . . . . . . . .  B ADDR   00A8H.4 A   
 ET0. . . . . . . .  B ADDR   00A8H.1 A   
@@ -261,7 +261,7 @@ PROCESSB . . . . .  C ADDR   -----       EXT
 PSW. . . . . . . .  D ADDR   00D0H   A   
 RB80 . . . . . . .  B ADDR   0098H.2 A   
 RD . . . . . . . .  B ADDR   00B0H.7 A   
-A51 MACRO ASSEMBLER  CONSOLE                                                              11/11/2018 10:12:11 PAGE     5
+A51 MACRO ASSEMBLER  CONSOLE                                                              11/11/2018 11:54:10 PAGE     5
 
 READMOREINPUT. . .  C ADDR   0059H   R   SEG=CONSOLESEGMENT
 REN0 . . . . . . .  B ADDR   0098H.4 A   
