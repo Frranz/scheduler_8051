@@ -56,7 +56,7 @@ start:
 	;set default stack pointers to 0x07
 	mov 0x3f,#7
 	mov 0x57,#7
-	mov 0x60,#7; checken ob das passt, wegen doofer rechnung vorher
+	mov 0x6f,#7; checken ob das passt, wegen doofer rechnung vorher
 	
 	call scheduler
 	

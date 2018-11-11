@@ -1,4 +1,4 @@
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                    11/11/2018  15:21:55  PAGE 1
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                    11/11/2018  15:39:52  PAGE 1
 
 
 BL51 BANKED LINKER/LOCATER V6.22.2.0, INVOKED BY:
@@ -28,11 +28,11 @@ LINK MAP OF MODULE:  .\Objects\project (CONSOLEPROCESS)
                     0003H     0018H                  *** GAP ***
             CODE    001BH     0003H     ABSOLUTE     
                     001EH     07E2H                  *** GAP ***
-            CODE    0800H     010CH     UNIT         SCHEDULERSEGMENT
-            CODE    090CH     0064H     UNIT         CONSOLESEGMENT
-            CODE    0970H     0034H     UNIT         PROCESSBSEGMENT
-            CODE    09A4H     002AH     UNIT         PROGRAMCODE
-            CODE    09CEH     001FH     UNIT         PROCESSASEGMENT
+            CODE    0800H     010FH     UNIT         SCHEDULERSEGMENT
+            CODE    090FH     0067H     UNIT         CONSOLESEGMENT
+            CODE    0976H     0034H     UNIT         PROCESSBSEGMENT
+            CODE    09AAH     002AH     UNIT         PROGRAMCODE
+            CODE    09D4H     001FH     UNIT         PROCESSASEGMENT
 
 
 
@@ -42,8 +42,8 @@ SYMBOL TABLE OF MODULE:  .\Objects\project (CONSOLEPROCESS)
   ----------------------------------
 
   -------         MODULE        CONSOLEPROCESS
-  C:090CH         SEGMENT       CONSOLESEGMENT
-  C:090CH         PUBLIC        CONSOLEPROCESS
+  C:090FH         SEGMENT       CONSOLESEGMENT
+  C:090FH         PUBLIC        CONSOLEPROCESS
   B:00D0H.6       SYMBOL        AC
   D:00E0H         SYMBOL        ACC
   D:00D8H         SYMBOL        ADCON0
@@ -59,7 +59,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\project (CONSOLEPROCESS)
   D:00C9H         SYMBOL        CC4EN
   D:00C1H         SYMBOL        CCEN
   D:00C3H         SYMBOL        CCH1
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/11/2018  15:21:55  PAGE 2
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/11/2018  15:39:52  PAGE 2
 
 
   D:00C5H         SYMBOL        CCH2
@@ -104,7 +104,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\project (CONSOLEPROCESS)
   D:0092H         SYMBOL        DPSEL
   B:00B8H.0       SYMBOL        EADC
   B:00A8H.7       SYMBOL        EAL
-  C:0969H         SYMBOL        ENDLOOP
+  C:096FH         SYMBOL        ENDLOOP
   B:00A8H.4       SYMBOL        ES
   B:00A8H.1       SYMBOL        ET0
   B:00A8H.3       SYMBOL        ET1
@@ -119,7 +119,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\project (CONSOLEPROCESS)
   B:00B8H.7       SYMBOL        EXEN2
   B:00C0H.7       SYMBOL        EXF2
   B:00D0H.5       SYMBOL        F0
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/11/2018  15:21:55  PAGE 3
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/11/2018  15:39:52  PAGE 3
 
 
   B:00D0H.1       SYMBOL        F1
@@ -136,10 +136,10 @@ SYMBOL TABLE OF MODULE:  .\Objects\project (CONSOLEPROCESS)
   B:00C0H.3       SYMBOL        IEX4
   B:00C0H.4       SYMBOL        IEX5
   B:00C0H.5       SYMBOL        IEX6
-  C:093BH         SYMBOL        INPISA
-  C:094EH         SYMBOL        INPISB
-  C:0961H         SYMBOL        INPISC
-  C:0963H         SYMBOL        INPISZ
+  C:093EH         SYMBOL        INPISA
+  C:0951H         SYMBOL        INPISB
+  C:0964H         SYMBOL        INPISC
+  C:0969H         SYMBOL        INPISZ
   B:00B0H.2       SYMBOL        INT0
   B:00B0H.3       SYMBOL        INT1
   D:00A9H         SYMBOL        IP0
@@ -172,14 +172,14 @@ SYMBOL TABLE OF MODULE:  .\Objects\project (CONSOLEPROCESS)
   D:00D0H         SYMBOL        PSW
   B:0098H.2       SYMBOL        RB80
   B:00B0H.7       SYMBOL        RD
-  C:0965H         SYMBOL        READMOREINPUT
+  C:096BH         SYMBOL        READMOREINPUT
   B:0098H.4       SYMBOL        REN0
   B:0098H.0       SYMBOL        RI0
   B:00D0H.3       SYMBOL        RS0
   B:00D0H.4       SYMBOL        RS1
   B:00B0H.0       SYMBOL        RXD
   D:0099H         SYMBOL        S0BUF
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/11/2018  15:21:55  PAGE 4
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/11/2018  15:39:52  PAGE 4
 
 
   D:0098H         SYMBOL        S0CON
@@ -224,66 +224,67 @@ SYMBOL TABLE OF MODULE:  .\Objects\project (CONSOLEPROCESS)
   B:0088H.4       SYMBOL        TR0
   B:0088H.6       SYMBOL        TR1
   B:00B0H.1       SYMBOL        TXD
-  C:0922H         SYMBOL        WAITLOOP
+  C:0925H         SYMBOL        WAITLOOP
   B:00A8H.6       SYMBOL        WDT
   D:0085H         SYMBOL        WDTH
   D:0084H         SYMBOL        WDTL
   D:0086H         SYMBOL        WDTREL
   B:00B0H.6       SYMBOL        WR
   D:0091H         SYMBOL        XPAGE
-  C:090CH         LINE#         21
-  C:090EH         LINE#         22
-  C:0910H         LINE#         23
-  C:0912H         LINE#         24
-  C:0914H         LINE#         25
-  C:0916H         LINE#         28
-  C:0919H         LINE#         29
-  C:091CH         LINE#         30
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/11/2018  15:21:55  PAGE 5
+  C:090FH         LINE#         21
+  C:0911H         LINE#         22
+  C:0913H         LINE#         23
+  C:0915H         LINE#         24
+  C:0917H         LINE#         25
+  C:0919H         LINE#         28
+  C:091CH         LINE#         29
+  C:091FH         LINE#         30
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/11/2018  15:39:52  PAGE 5
 
 
-  C:091FH         LINE#         31
-  C:0922H         LINE#         35
-  C:0924H         LINE#         36
-  C:0926H         LINE#         37
-  C:0929H         LINE#         38
-  C:092BH         LINE#         41
-  C:092CH         LINE#         42
-  C:092EH         LINE#         43
-  C:0930H         LINE#         46
-  C:0931H         LINE#         47
-  C:0933H         LINE#         50
-  C:0934H         LINE#         51
-  C:0936H         LINE#         54
-  C:0937H         LINE#         55
-  C:0939H         LINE#         56
-  C:093BH         LINE#         62
-  C:093DH         LINE#         65
-  C:0940H         LINE#         68
-  C:0943H         LINE#         69
-  C:0946H         LINE#         70
-  C:0949H         LINE#         71
-  C:094CH         LINE#         74
-  C:094EH         LINE#         78
-  C:0950H         LINE#         81
-  C:0953H         LINE#         84
-  C:0956H         LINE#         85
-  C:0959H         LINE#         86
-  C:095CH         LINE#         87
-  C:095FH         LINE#         90
-  C:0961H         LINE#         93
-  C:0963H         LINE#         96
-  C:0965H         LINE#         99
-  C:0967H         LINE#         100
-  C:0969H         LINE#         103
-  C:096AH         LINE#         104
-  C:096CH         LINE#         105
-  C:096EH         LINE#         106
+  C:0922H         LINE#         31
+  C:0925H         LINE#         35
+  C:0927H         LINE#         36
+  C:0929H         LINE#         37
+  C:092CH         LINE#         38
+  C:092EH         LINE#         41
+  C:092FH         LINE#         42
+  C:0931H         LINE#         43
+  C:0933H         LINE#         46
+  C:0934H         LINE#         47
+  C:0936H         LINE#         50
+  C:0937H         LINE#         51
+  C:0939H         LINE#         54
+  C:093AH         LINE#         55
+  C:093CH         LINE#         56
+  C:093EH         LINE#         62
+  C:0940H         LINE#         65
+  C:0943H         LINE#         68
+  C:0946H         LINE#         69
+  C:0949H         LINE#         70
+  C:094CH         LINE#         71
+  C:094FH         LINE#         74
+  C:0951H         LINE#         78
+  C:0953H         LINE#         81
+  C:0956H         LINE#         84
+  C:0959H         LINE#         85
+  C:095CH         LINE#         86
+  C:095FH         LINE#         87
+  C:0962H         LINE#         90
+  C:0964H         LINE#         94
+  C:0967H         LINE#         95
+  C:0969H         LINE#         98
+  C:096BH         LINE#         101
+  C:096DH         LINE#         102
+  C:096FH         LINE#         105
+  C:0970H         LINE#         106
+  C:0972H         LINE#         107
+  C:0974H         LINE#         108
   -------         ENDMOD        CONSOLEPROCESS
 
   -------         MODULE        PROCESSA
-  C:09CEH         SEGMENT       PROCESSASEGMENT
-  C:09CEH         PUBLIC        PROCESSA
+  C:09D4H         SEGMENT       PROCESSASEGMENT
+  C:09D4H         PUBLIC        PROCESSA
   B:00D0H.6       SYMBOL        AC
   D:00E0H         SYMBOL        ACC
   D:00D8H         SYMBOL        ADCON0
@@ -298,10 +299,10 @@ SYMBOL TABLE OF MODULE:  .\Objects\project (CONSOLEPROCESS)
   B:00D8H.4       SYMBOL        BSY
   D:00C9H         SYMBOL        CC4EN
   D:00C1H         SYMBOL        CCEN
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/11/2018  15:39:52  PAGE 6
+
+
   D:00C3H         SYMBOL        CCH1
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/11/2018  15:21:55  PAGE 6
-
-
   D:00C5H         SYMBOL        CCH2
   D:00C7H         SYMBOL        CCH3
   D:00CFH         SYMBOL        CCH4
@@ -344,7 +345,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\project (CONSOLEPROCESS)
   D:0092H         SYMBOL        DPSEL
   B:00B8H.0       SYMBOL        EADC
   B:00A8H.7       SYMBOL        EAL
-  C:09E6H         SYMBOL        ENDLOOP
+  C:09ECH         SYMBOL        ENDLOOP
   B:00A8H.4       SYMBOL        ES
   B:00A8H.1       SYMBOL        ET0
   B:00A8H.3       SYMBOL        ET1
@@ -358,10 +359,10 @@ SYMBOL TABLE OF MODULE:  .\Objects\project (CONSOLEPROCESS)
   B:00B8H.5       SYMBOL        EX6
   B:00B8H.7       SYMBOL        EXEN2
   B:00C0H.7       SYMBOL        EXF2
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/11/2018  15:39:52  PAGE 7
+
+
   B:00D0H.5       SYMBOL        F0
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/11/2018  15:21:55  PAGE 7
-
-
   B:00D0H.1       SYMBOL        F1
   B:00C8H.5       SYMBOL        I2FR
   B:00C8H.6       SYMBOL        I3FR
@@ -418,13 +419,13 @@ SYMBOL TABLE OF MODULE:  .\Objects\project (CONSOLEPROCESS)
   D:00BAH         SYMBOL        S0RELH
   D:00AAH         SYMBOL        S0RELL
   D:009CH         SYMBOL        S1BUF
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/11/2018  15:39:52  PAGE 8
+
+
   D:009BH         SYMBOL        S1CON
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/11/2018  15:21:55  PAGE 8
-
-
   D:00BBH         SYMBOL        S1RELH
   D:009DH         SYMBOL        S1RELL
-  C:09D0H         SYMBOL        SENDLOOP
+  C:09D6H         SYMBOL        SENDLOOP
   D:00A5H         SYMBOL        SETMSK
   B:0098H.7       SYMBOL        SM0
   B:0098H.6       SYMBOL        SM1
@@ -460,36 +461,36 @@ SYMBOL TABLE OF MODULE:  .\Objects\project (CONSOLEPROCESS)
   B:0088H.4       SYMBOL        TR0
   B:0088H.6       SYMBOL        TR1
   B:00B0H.1       SYMBOL        TXD
-  C:09D6H         SYMBOL        WAITNEXTSEND
+  C:09DCH         SYMBOL        WAITNEXTSEND
   B:00A8H.6       SYMBOL        WDT
   D:0085H         SYMBOL        WDTH
   D:0084H         SYMBOL        WDTL
   D:0086H         SYMBOL        WDTREL
   B:00B0H.6       SYMBOL        WR
   D:0091H         SYMBOL        XPAGE
-  C:09CEH         LINE#         19
-  C:09D0H         LINE#         23
-  C:09D2H         LINE#         24
-  C:09D5H         LINE#         26
-  C:09D6H         LINE#         29
-  C:09D8H         LINE#         30
-  C:09DBH         LINE#         31
-  C:09DEH         LINE#         33
-  C:09DFH         LINE#         34
-  C:09E0H         LINE#         35
-  C:09E3H         LINE#         38
-  C:09E6H         LINE#         41
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/11/2018  15:21:55  PAGE 9
+  C:09D4H         LINE#         19
+  C:09D6H         LINE#         23
+  C:09D8H         LINE#         24
+  C:09DBH         LINE#         26
+  C:09DCH         LINE#         29
+  C:09DEH         LINE#         30
+  C:09E1H         LINE#         31
+  C:09E4H         LINE#         33
+  C:09E5H         LINE#         34
+  C:09E6H         LINE#         35
+  C:09E9H         LINE#         38
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/11/2018  15:39:52  PAGE 9
 
 
-  C:09E7H         LINE#         42
-  C:09E9H         LINE#         43
-  C:09EBH         LINE#         44
+  C:09ECH         LINE#         41
+  C:09EDH         LINE#         42
+  C:09EFH         LINE#         43
+  C:09F1H         LINE#         44
   -------         ENDMOD        PROCESSA
 
   -------         MODULE        PROCESSB
-  C:0970H         SEGMENT       PROCESSBSEGMENT
-  C:0970H         PUBLIC        PROCESSB
+  C:0976H         SEGMENT       PROCESSBSEGMENT
+  C:0976H         PUBLIC        PROCESSB
   B:00D0H.6       SYMBOL        AC
   D:00E0H         SYMBOL        ACC
   D:00D8H         SYMBOL        ADCON0
@@ -512,7 +513,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\project (CONSOLEPROCESS)
   D:00C4H         SYMBOL        CCL2
   D:00C6H         SYMBOL        CCL3
   D:00CEH         SYMBOL        CCL4
-  C:097CH         SYMBOL        CHECKTF
+  C:0982H         SYMBOL        CHECKTF
   B:00D8H.6       SYMBOL        CLK
   D:00A6H         SYMBOL        CLRMSK
   D:00F6H         SYMBOL        CMEN
@@ -538,10 +539,10 @@ SYMBOL TABLE OF MODULE:  .\Objects\project (CONSOLEPROCESS)
   D:00A2H         SYMBOL        COMSETH
   D:00A1H         SYMBOL        COMSETL
   D:00CBH         SYMBOL        CRCH
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/11/2018  15:39:52  PAGE 10
+
+
   D:00CAH         SYMBOL        CRCL
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/11/2018  15:21:55  PAGE 10
-
-
   D:00E1H         SYMBOL        CTCON
   D:00DFH         SYMBOL        CTRELH
   D:00DEH         SYMBOL        CTRELL
@@ -551,7 +552,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\project (CONSOLEPROCESS)
   D:0092H         SYMBOL        DPSEL
   B:00B8H.0       SYMBOL        EADC
   B:00A8H.7       SYMBOL        EAL
-  C:0997H         SYMBOL        ENDLOOP
+  C:099DH         SYMBOL        ENDLOOP
   B:00A8H.4       SYMBOL        ES
   B:00A8H.1       SYMBOL        ET0
   B:00A8H.3       SYMBOL        ET1
@@ -598,10 +599,10 @@ SYMBOL TABLE OF MODULE:  .\Objects\project (CONSOLEPROCESS)
   B:00D8H.1       SYMBOL        MX1
   B:00D8H.2       SYMBOL        MX2
   B:00D0H.2       SYMBOL        OV
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/11/2018  15:39:52  PAGE 11
+
+
   B:00D0H.0       SYMBOL        P
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/11/2018  15:21:55  PAGE 11
-
-
   D:0080H         SYMBOL        P0
   D:0090H         SYMBOL        P1
   D:00A0H         SYMBOL        P2
@@ -656,48 +657,48 @@ SYMBOL TABLE OF MODULE:  .\Objects\project (CONSOLEPROCESS)
   D:008DH         SYMBOL        TH1
   D:00CDH         SYMBOL        TH2
   B:0098H.1       SYMBOL        TI0
-  C:099FH         SYMBOL        TIHANDLER
+  C:09A5H         SYMBOL        TIHANDLER
   D:008AH         SYMBOL        TL0
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/11/2018  15:39:52  PAGE 12
+
+
   D:008BH         SYMBOL        TL1
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/11/2018  15:21:55  PAGE 12
-
-
   D:00CCH         SYMBOL        TL2
   D:0089H         SYMBOL        TMOD
   B:0088H.4       SYMBOL        TR0
   B:0088H.6       SYMBOL        TR1
   B:00B0H.1       SYMBOL        TXD
-  C:098DH         SYMBOL        WAITNEXTSEND
+  C:0993H         SYMBOL        WAITNEXTSEND
   B:00A8H.6       SYMBOL        WDT
   D:0085H         SYMBOL        WDTH
   D:0084H         SYMBOL        WDTL
   D:0086H         SYMBOL        WDTREL
   B:00B0H.6       SYMBOL        WR
   D:0091H         SYMBOL        XPAGE
-  C:0970H         LINE#         22
-  C:0972H         LINE#         26
-  C:0975H         LINE#         27
-  C:0978H         LINE#         30
-  C:097AH         LINE#         33
-  C:097CH         LINE#         37
-  C:097EH         LINE#         38
-  C:0980H         LINE#         39
-  C:0983H         LINE#         42
-  C:0985H         LINE#         43
-  C:0987H         LINE#         45
-  C:098AH         LINE#         46
-  C:098DH         LINE#         49
-  C:098FH         LINE#         50
-  C:0992H         LINE#         51
-  C:0995H         LINE#         54
-  C:0997H         LINE#         57
-  C:0998H         LINE#         58
-  C:099AH         LINE#         59
-  C:099CH         LINE#         60
-  C:099EH         LINE#         62
-  C:099FH         LINE#         65
-  C:09A0H         LINE#         66
-  C:09A2H         LINE#         68
+  C:0976H         LINE#         22
+  C:0978H         LINE#         26
+  C:097BH         LINE#         27
+  C:097EH         LINE#         30
+  C:0980H         LINE#         33
+  C:0982H         LINE#         37
+  C:0984H         LINE#         38
+  C:0986H         LINE#         39
+  C:0989H         LINE#         42
+  C:098BH         LINE#         43
+  C:098DH         LINE#         45
+  C:0990H         LINE#         46
+  C:0993H         LINE#         49
+  C:0995H         LINE#         50
+  C:0998H         LINE#         51
+  C:099BH         LINE#         54
+  C:099DH         LINE#         57
+  C:099EH         LINE#         58
+  C:09A0H         LINE#         59
+  C:09A2H         LINE#         60
+  C:09A4H         LINE#         62
+  C:09A5H         LINE#         65
+  C:09A6H         LINE#         66
+  C:09A8H         LINE#         68
   -------         ENDMOD        PROCESSB
 
   -------         MODULE        SCHEDULER
@@ -716,12 +717,12 @@ SYMBOL TABLE OF MODULE:  .\Objects\project (CONSOLEPROCESS)
   D:00EFH         SYMBOL        ARCON
   D:00F0H         SYMBOL        B
   B:00D8H.7       SYMBOL        BD
-  C:08DEH         SYMBOL        BEFORERESTORESTACK
+  C:08DFH         SYMBOL        BEFORERESTORESTACK
   B:00D8H.4       SYMBOL        BSY
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/11/2018  15:39:52  PAGE 13
+
+
   D:00C9H         SYMBOL        CC4EN
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/11/2018  15:21:55  PAGE 13
-
-
   D:00C1H         SYMBOL        CCEN
   D:00C3H         SYMBOL        CCH1
   D:00C5H         SYMBOL        CCH2
@@ -766,7 +767,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\project (CONSOLEPROCESS)
   D:0092H         SYMBOL        DPSEL
   B:00B8H.0       SYMBOL        EADC
   B:00A8H.7       SYMBOL        EAL
-  C:0905H         SYMBOL        ENDLOOP
+  C:0908H         SYMBOL        ENDLOOP
   B:00A8H.4       SYMBOL        ES
   B:00A8H.1       SYMBOL        ET0
   B:00A8H.3       SYMBOL        ET1
@@ -778,15 +779,15 @@ SYMBOL TABLE OF MODULE:  .\Objects\project (CONSOLEPROCESS)
   B:00B8H.3       SYMBOL        EX4
   B:00B8H.4       SYMBOL        EX5
   B:00B8H.5       SYMBOL        EX6
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/11/2018  15:39:52  PAGE 14
+
+
   B:00B8H.7       SYMBOL        EXEN2
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/11/2018  15:21:55  PAGE 14
-
-
   B:00C0H.7       SYMBOL        EXF2
   B:00D0H.5       SYMBOL        F0
   B:00D0H.1       SYMBOL        F1
   C:087BH         SYMBOL        FINDNEXTPROCESS
-  C:0904H         SYMBOL        FINDNEXTPROG
+  C:0907H         SYMBOL        FINDNEXTPROG
   B:00C8H.5       SYMBOL        I2FR
   B:00C8H.6       SYMBOL        I3FR
   B:00C0H.0       SYMBOL        IADC
@@ -835,13 +836,13 @@ SYMBOL TABLE OF MODULE:  .\Objects\project (CONSOLEPROCESS)
   D:00D0H         SYMBOL        PSW
   B:0098H.2       SYMBOL        RB80
   B:00B0H.7       SYMBOL        RD
-  C:090CH         SYMBOL        REALEND
+  C:090FH         SYMBOL        REALEND
   B:0098H.4       SYMBOL        REN0
-  C:08E4H         SYMBOL        RESTORESTACK
-  C:08ECH         SYMBOL        RESTORESTACKCOMPLETE
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/11/2018  15:21:55  PAGE 15
+  C:08E7H         SYMBOL        RESTORESTACK
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/11/2018  15:39:52  PAGE 15
 
 
+  C:08EFH         SYMBOL        RESTORESTACKCOMPLETE
   B:0098H.0       SYMBOL        RI0
   B:00D0H.3       SYMBOL        RS0
   B:00D0H.4       SYMBOL        RS1
@@ -898,10 +899,10 @@ SYMBOL TABLE OF MODULE:  .\Objects\project (CONSOLEPROCESS)
   B:00B0H.6       SYMBOL        WR
   D:0091H         SYMBOL        XPAGE
   C:001BH         LINE#         11
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/11/2018  15:39:52  PAGE 16
+
+
   C:0800H         LINE#         26
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/11/2018  15:21:55  PAGE 16
-
-
   C:0803H         LINE#         27
   C:0806H         LINE#         28
   C:0809H         LINE#         31
@@ -958,10 +959,10 @@ SYMBOL TABLE OF MODULE:  .\Objects\project (CONSOLEPROCESS)
   C:0861H         LINE#         113
   C:0862H         LINE#         114
   C:0864H         LINE#         115
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/11/2018  15:39:52  PAGE 17
+
+
   C:0865H         LINE#         116
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/11/2018  15:21:55  PAGE 17
-
-
   C:0867H         LINE#         117
   C:0868H         LINE#         118
   C:086AH         LINE#         119
@@ -1018,10 +1019,10 @@ SYMBOL TABLE OF MODULE:  .\Objects\project (CONSOLEPROCESS)
   C:08BAH         LINE#         203
   C:08BCH         LINE#         204
   C:08BDH         LINE#         205
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/11/2018  15:39:52  PAGE 18
+
+
   C:08BEH         LINE#         206
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/11/2018  15:21:55  PAGE 18
-
-
   C:08BFH         LINE#         207
   C:08C1H         LINE#         208
   C:08C2H         LINE#         209
@@ -1034,54 +1035,56 @@ SYMBOL TABLE OF MODULE:  .\Objects\project (CONSOLEPROCESS)
   C:08CDH         LINE#         220
   C:08CEH         LINE#         221
   C:08CFH         LINE#         223
-  C:08D0H         LINE#         225
+  C:08D0H         LINE#         227
   C:08D2H         LINE#         228
   C:08D4H         LINE#         229
   C:08D7H         LINE#         230
   C:08DAH         LINE#         231
   C:08DCH         LINE#         232
-  C:08DEH         LINE#         236
-  C:08E0H         LINE#         237
+  C:08DDH         LINE#         233
+  C:08DFH         LINE#         237
   C:08E1H         LINE#         238
-  C:08E2H         LINE#         239
-  C:08E4H         LINE#         241
-  C:08E5H         LINE#         242
-  C:08E6H         LINE#         243
-  C:08E7H         LINE#         244
-  C:08E8H         LINE#         245
-  C:08E9H         LINE#         247
-  C:08EAH         LINE#         248
-  C:08ECH         LINE#         252
-  C:08EEH         LINE#         253
+  C:08E3H         LINE#         239
+  C:08E4H         LINE#         240
+  C:08E5H         LINE#         241
+  C:08E7H         LINE#         243
+  C:08E8H         LINE#         244
+  C:08E9H         LINE#         245
+  C:08EAH         LINE#         246
+  C:08EBH         LINE#         247
+  C:08ECH         LINE#         249
+  C:08EDH         LINE#         250
   C:08EFH         LINE#         254
   C:08F1H         LINE#         255
-  C:08F2H         LINE#         257
-  C:08F4H         LINE#         258
+  C:08F2H         LINE#         256
+  C:08F4H         LINE#         257
   C:08F5H         LINE#         259
   C:08F7H         LINE#         260
-  C:08F9H         LINE#         261
-  C:08FBH         LINE#         271
-  C:08FCH         LINE#         272
-  C:08FDH         LINE#         273
+  C:08F8H         LINE#         261
+  C:08FAH         LINE#         262
+  C:08FCH         LINE#         263
+  C:08FEH         LINE#         273
   C:08FFH         LINE#         274
-  C:0901H         LINE#         276
-  C:0902H         LINE#         278
-  C:0904H         LINE#         283
-  C:0905H         LINE#         286
-  C:0906H         LINE#         287
+  C:0900H         LINE#         275
+  C:0902H         LINE#         276
+  C:0904H         LINE#         278
+  C:0905H         LINE#         280
+  C:0907H         LINE#         285
   C:0908H         LINE#         288
-  C:090AH         LINE#         289
+  C:0909H         LINE#         289
+  C:090BH         LINE#         290
+  C:090DH         LINE#         291
   -------         ENDMOD        SCHEDULER
 
   -------         MODULE        INIT
-  C:09A4H         SEGMENT       PROGRAMCODE
+  C:09AAH         SEGMENT       PROGRAMCODE
   B:00D0H.6       SYMBOL        AC
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/11/2018  15:39:52  PAGE 19
+
+
   D:00E0H         SYMBOL        ACC
   D:00D8H         SYMBOL        ADCON0
   D:00DCH         SYMBOL        ADCON1
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/11/2018  15:21:55  PAGE 19
-
-
   D:00D9H         SYMBOL        ADDATH
   D:00DAH         SYMBOL        ADDATL
   B:00D8H.5       SYMBOL        ADEX
@@ -1136,12 +1139,12 @@ SYMBOL TABLE OF MODULE:  .\Objects\project (CONSOLEPROCESS)
   B:00B8H.0       SYMBOL        EADC
   B:00A8H.7       SYMBOL        EAL
   B:00A8H.4       SYMBOL        ES
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/11/2018  15:39:52  PAGE 20
+
+
   B:00A8H.1       SYMBOL        ET0
   B:00A8H.3       SYMBOL        ET1
   B:00A8H.5       SYMBOL        ET2
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/11/2018  15:21:55  PAGE 20
-
-
   B:00A8H.0       SYMBOL        EX0
   B:00A8H.2       SYMBOL        EX1
   B:00B8H.1       SYMBOL        EX2
@@ -1196,12 +1199,12 @@ SYMBOL TABLE OF MODULE:  .\Objects\project (CONSOLEPROCESS)
   D:00DDH         SYMBOL        P8
   D:0087H         SYMBOL        PCON
   D:00D0H         SYMBOL        PSW
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/11/2018  15:39:52  PAGE 21
+
+
   B:0098H.2       SYMBOL        RB80
   B:00B0H.7       SYMBOL        RD
   B:0098H.4       SYMBOL        REN0
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/11/2018  15:21:55  PAGE 21
-
-
   B:0098H.0       SYMBOL        RI0
   B:00D0H.3       SYMBOL        RS0
   B:00D0H.4       SYMBOL        RS1
@@ -1219,7 +1222,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\project (CONSOLEPROCESS)
   B:0098H.6       SYMBOL        SM1
   B:0098H.5       SYMBOL        SM20
   D:0081H         SYMBOL        SP
-  C:09A4H         SYMBOL        START
+  C:09AAH         SYMBOL        START
   N:0000H         SYMBOL        STATUSNOTRUNNING
   N:0002H         SYMBOL        STATUSRUNNING
   N:0001H         SYMBOL        STATUSSTARTREQ
@@ -1256,29 +1259,29 @@ SYMBOL TABLE OF MODULE:  .\Objects\project (CONSOLEPROCESS)
   D:0086H         SYMBOL        WDTREL
   B:00B0H.6       SYMBOL        WR
   D:0091H         SYMBOL        XPAGE
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/11/2018  15:39:52  PAGE 22
+
+
   C:0000H         LINE#         16
-  C:09A4H         LINE#         40
-  C:09A7H         LINE#         43
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/11/2018  15:21:55  PAGE 22
-
-
-  C:09AAH         LINE#         44
-  C:09ADH         LINE#         45
-  C:09B0H         LINE#         48
-  C:09B3H         LINE#         49
-  C:09B6H         LINE#         50
-  C:09B9H         LINE#         51
-  C:09BCH         LINE#         52
-  C:09BFH         LINE#         53
-  C:09C2H         LINE#         57
-  C:09C5H         LINE#         58
-  C:09C8H         LINE#         59
-  C:09CBH         LINE#         61
+  C:09AAH         LINE#         40
+  C:09ADH         LINE#         43
+  C:09B0H         LINE#         44
+  C:09B3H         LINE#         45
+  C:09B6H         LINE#         48
+  C:09B9H         LINE#         49
+  C:09BCH         LINE#         50
+  C:09BFH         LINE#         51
+  C:09C2H         LINE#         52
+  C:09C5H         LINE#         53
+  C:09C8H         LINE#         57
+  C:09CBH         LINE#         58
+  C:09CEH         LINE#         59
+  C:09D1H         LINE#         61
   -------         ENDMOD        INIT
 
 ******************************************************************************
-* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 01F3H BYTE (24%) *
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 01F9H BYTE (24%) *
 ******************************************************************************
 
-Program Size: data=8.0 xdata=0 code=499
+Program Size: data=8.0 xdata=0 code=505
 LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

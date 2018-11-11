@@ -27,7 +27,7 @@ processB:
 	mov tl0,#0
 	
 	;15 cuz on timer runs 0,065536s
-	mov r1,#0ah
+	mov r1,#0xa8
 
 	;starting timer
 	setb tr0

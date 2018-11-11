@@ -222,19 +222,20 @@ tihandler:
 ;	mov psw,@r0
 	inc r0
 	
-	mov r1,#7
 	
 	;if process is in status start request make sp manually #7
 	mov A,0x2b
+	add A,#2ch
 	cjne A,#statusStartReq,beforeRestoreStack
 	mov sp,#7	;set default for sp & change status
 	add A,#2ch
-	mov r0
-	mov A,#statusRunning
+	mov r1,A
+	mov @r0,#statusRunning
 	
 	
 	beforeRestoreStack:
 	mov r4,sp
+	mov r1,#7
 	mov A,r1
 	xrl A,r4 ;in case stack didnt grow
 	jz restoreStackComplete

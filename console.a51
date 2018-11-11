@@ -90,6 +90,8 @@ inpIsB:
 	jmp readMoreInput
 
 inpIsC:
+	;0x2e status of process b
+	mov 0x2e,#statusNotRunning
 	jmp readMoreInput
 
 inpIsZ:

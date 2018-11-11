@@ -1,4 +1,4 @@
-A51 MACRO ASSEMBLER  INIT                                                                 11/11/2018 15:21:55 PAGE     1
+A51 MACRO ASSEMBLER  INIT                                                                 11/11/2018 15:33:38 PAGE     1
 
 
 MACRO ASSEMBLER A51 V8.2.7.0
@@ -65,7 +65,7 @@ LOC  OBJ            LINE     SOURCE
                      245             
                      246             ;next adress [cons,a,b]
 000C 752F00          247             mov 0x2f,#0;#consoleProcess causes improper fixup error
-A51 MACRO ASSEMBLER  INIT                                                                 11/11/2018 15:21:55 PAGE     2
+A51 MACRO ASSEMBLER  INIT                                                                 11/11/2018 15:33:38 PAGE     2
 
 000F 753000          248             mov 0x30,#0
 0012 753100          249             mov 0x31,#0     
@@ -77,12 +77,12 @@ LOC  OBJ            LINE     SOURCE
                      255             ;set default stack pointers to 0x07
 001E 753F07          256             mov 0x3f,#7
 0021 755707          257             mov 0x57,#7
-0024 756007          258             mov 0x60,#7; checken ob das passt, wegen doofer rechnung vorher
+0024 756F07          258             mov 0x6f,#7; checken ob das passt, wegen doofer rechnung vorher
                      259             
 0027 120000   F      260             call scheduler
                      261             
                      262             end
-A51 MACRO ASSEMBLER  INIT                                                                 11/11/2018 15:21:55 PAGE     3
+A51 MACRO ASSEMBLER  INIT                                                                 11/11/2018 15:33:38 PAGE     3
 
 SYMBOL TABLE LISTING
 ------ ----- -------
@@ -150,7 +150,7 @@ EAL. . . . . . . .  B ADDR   00A8H.7 A
 ES . . . . . . . .  B ADDR   00A8H.4 A   
 ET0. . . . . . . .  B ADDR   00A8H.1 A   
 ET1. . . . . . . .  B ADDR   00A8H.3 A   
-A51 MACRO ASSEMBLER  INIT                                                                 11/11/2018 15:21:55 PAGE     4
+A51 MACRO ASSEMBLER  INIT                                                                 11/11/2018 15:33:38 PAGE     4
 
 ET2. . . . . . . .  B ADDR   00A8H.5 A   
 EX0. . . . . . . .  B ADDR   00A8H.0 A   
@@ -218,7 +218,7 @@ RXD. . . . . . . .  B ADDR   00B0H.0 A
 S0BUF. . . . . . .  D ADDR   0099H   A   
 S0CON. . . . . . .  D ADDR   0098H   A   
 S0RELH . . . . . .  D ADDR   00BAH   A   
-A51 MACRO ASSEMBLER  INIT                                                                 11/11/2018 15:21:55 PAGE     5
+A51 MACRO ASSEMBLER  INIT                                                                 11/11/2018 15:33:38 PAGE     5
 
 S0RELL . . . . . .  D ADDR   00AAH   A   
 S1BUF. . . . . . .  D ADDR   009CH   A   

@@ -1,4 +1,4 @@
-A51 MACRO ASSEMBLER  PROC_A                                                               11/11/2018 13:52:27 PAGE     1
+A51 MACRO ASSEMBLER  PROC_A                                                               11/11/2018 15:29:55 PAGE     1
 
 
 MACRO ASSEMBLER A51 V8.2.7.0
@@ -64,7 +64,7 @@ LOC  OBJ            LINE     SOURCE
                      244             
                      245             
                      246             end
-A51 MACRO ASSEMBLER  PROC_A                                                               11/11/2018 13:52:27 PAGE     2
+A51 MACRO ASSEMBLER  PROC_A                                                               11/11/2018 15:29:55 PAGE     2
 
 SYMBOL TABLE LISTING
 ------ ----- -------
@@ -132,7 +132,7 @@ EAL. . . . . . . .  B ADDR   00A8H.7 A
 ENDLOOP. . . . . .  C ADDR   0018H   R   SEG=PROCESSASEGMENT
 ES . . . . . . . .  B ADDR   00A8H.4 A   
 ET0. . . . . . . .  B ADDR   00A8H.1 A   
-A51 MACRO ASSEMBLER  PROC_A                                                               11/11/2018 13:52:27 PAGE     3
+A51 MACRO ASSEMBLER  PROC_A                                                               11/11/2018 15:29:55 PAGE     3
 
 ET1. . . . . . . .  B ADDR   00A8H.3 A   
 ET2. . . . . . . .  B ADDR   00A8H.5 A   
@@ -200,7 +200,7 @@ RS0. . . . . . . .  B ADDR   00D0H.3 A
 RS1. . . . . . . .  B ADDR   00D0H.4 A   
 RXD. . . . . . . .  B ADDR   00B0H.0 A   
 S0BUF. . . . . . .  D ADDR   0099H   A   
-A51 MACRO ASSEMBLER  PROC_A                                                               11/11/2018 13:52:27 PAGE     4
+A51 MACRO ASSEMBLER  PROC_A                                                               11/11/2018 15:29:55 PAGE     4
 
 S0CON. . . . . . .  D ADDR   0098H   A   
 S0RELH . . . . . .  D ADDR   00BAH   A   
