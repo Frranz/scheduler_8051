@@ -1,4 +1,4 @@
-A51 MACRO ASSEMBLER  SCHEDULER                                                            11/10/2018 18:08:00 PAGE     1
+A51 MACRO ASSEMBLER  SCHEDULER                                                            11/11/2018 10:35:07 PAGE     1
 
 
 MACRO ASSEMBLER A51 V8.2.7.0
@@ -65,7 +65,7 @@ LOC  OBJ            LINE     SOURCE
                      246             ;save old adress
                      247             ;put accu & r0 in save space to do some basic calc
 001B 8856            248             mov 0x56,r0
-A51 MACRO ASSEMBLER  SCHEDULER                                                            11/10/2018 18:08:00 PAGE     2
+A51 MACRO ASSEMBLER  SCHEDULER                                                            11/11/2018 10:35:07 PAGE     2
 
 001D F557            249             mov 0x57,A
                      250             
@@ -88,7 +88,7 @@ LOC  OBJ            LINE     SOURCE
                      266     ;       mov @r0,A
                      267             
                      268             ;save rest of context
-0024 E557            269             mov A,0x57
+0024 E558            269             mov A,0x58
                      270             
                      271             ;calculate offset in register safe (id * size of one register store[32])
 0026 23              272             rl A
@@ -133,7 +133,7 @@ LOC  OBJ            LINE     SOURCE
 0058 7907            311             mov r1,#7
 005A AA81            312             mov r2,SP
 005C 0A              313             inc r2
-A51 MACRO ASSEMBLER  SCHEDULER                                                            11/10/2018 18:08:00 PAGE     3
+A51 MACRO ASSEMBLER  SCHEDULER                                                            11/11/2018 10:35:07 PAGE     3
 
 005D                 314             saveStack:      
 005D E7              315                     mov A,@r1
@@ -201,7 +201,7 @@ LOC  OBJ            LINE     SOURCE
 0096 8607            377             mov 7,@r0
 0098 08              378             inc r0
 0099 E6              379             mov A,@r0
-A51 MACRO ASSEMBLER  SCHEDULER                                                            11/10/2018 18:08:00 PAGE     4
+A51 MACRO ASSEMBLER  SCHEDULER                                                            11/11/2018 10:35:07 PAGE     4
 
 009A 08              380             inc r0
 009B 86F0            381             mov b,@r0
@@ -222,7 +222,7 @@ LOC  OBJ            LINE     SOURCE
 00AA 7907            396             mov r1,#7
 00AC AC81            397             mov r4,sp
 00AE E9              398             mov A,r1
-00AF 4C              399             orl A,r4
+00AF 6C              399             xrl A,r4 ;in case stack didnt grow
 00B0 6008            400             jz restoreStackComplete
 00B2                 401             restoreStack:
 00B2 E6              402                     mov A,@r0
@@ -264,7 +264,7 @@ LOC  OBJ            LINE     SOURCE
 00C8                 437     realend:        
                      438     
                      439             end
-A51 MACRO ASSEMBLER  SCHEDULER                                                            11/10/2018 18:08:00 PAGE     5
+A51 MACRO ASSEMBLER  SCHEDULER                                                            11/11/2018 10:35:07 PAGE     5
 
 SYMBOL TABLE LISTING
 ------ ----- -------
@@ -332,7 +332,7 @@ EADC. . . . . . . . .  B ADDR   00B8H.0 A
 EAL . . . . . . . . .  B ADDR   00A8H.7 A   
 ENDLOOP . . . . . . .  C ADDR   00C1H   R   SEG=SCHEDULERSEGMENT
 ES. . . . . . . . . .  B ADDR   00A8H.4 A   
-A51 MACRO ASSEMBLER  SCHEDULER                                                            11/10/2018 18:08:00 PAGE     6
+A51 MACRO ASSEMBLER  SCHEDULER                                                            11/11/2018 10:35:07 PAGE     6
 
 ET0 . . . . . . . . .  B ADDR   00A8H.1 A   
 ET1 . . . . . . . . .  B ADDR   00A8H.3 A   
@@ -400,7 +400,7 @@ REALEND . . . . . . .  C ADDR   00C8H   R   SEG=SCHEDULERSEGMENT
 REN0. . . . . . . . .  B ADDR   0098H.4 A   
 RESTORESTACK. . . . .  C ADDR   00B2H   R   SEG=SCHEDULERSEGMENT
 RESTORESTACKCOMPLETE.  C ADDR   00BAH   R   SEG=SCHEDULERSEGMENT
-A51 MACRO ASSEMBLER  SCHEDULER                                                            11/10/2018 18:08:00 PAGE     7
+A51 MACRO ASSEMBLER  SCHEDULER                                                            11/11/2018 10:35:07 PAGE     7
 
 RI0 . . . . . . . . .  B ADDR   0098H.0 A   
 RS0 . . . . . . . . .  B ADDR   00D0H.3 A   

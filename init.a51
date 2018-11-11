@@ -53,7 +53,10 @@ start:
 	mov 0x61,#0	
 		
 	;save area for registers
-	;....
+	;set default stack pointers to 0x07
+	mov 0x72,#7
+	mov 0x92,#7
+	mov 0xa2,#7
 	
 	call scheduler
 	

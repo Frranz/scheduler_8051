@@ -1,4 +1,4 @@
-A51 MACRO ASSEMBLER  PROC_B                                                               11/10/2018 12:01:21 PAGE     1
+A51 MACRO ASSEMBLER  PROC_B                                                               11/10/2018 18:43:10 PAGE     1
 
 
 MACRO ASSEMBLER A51 V8.2.7.0
@@ -65,7 +65,7 @@ LOC  OBJ            LINE     SOURCE
 0018 7B11            246             mov r3,#11h             
                      247             
                      248             ;mark proc_b as done
-A51 MACRO ASSEMBLER  PROC_B                                                               11/10/2018 12:01:21 PAGE     2
+A51 MACRO ASSEMBLER  PROC_B                                                               11/10/2018 18:43:10 PAGE     2
 
 001A 755B00          249             mov 0x5b,#statusNotRunning
 001D                 250     endloop:
@@ -84,7 +84,7 @@ LOC  OBJ            LINE     SOURCE
                      263             
                      264     
                      265             end
-A51 MACRO ASSEMBLER  PROC_B                                                               11/10/2018 12:01:21 PAGE     3
+A51 MACRO ASSEMBLER  PROC_B                                                               11/10/2018 18:43:10 PAGE     3
 
 SYMBOL TABLE LISTING
 ------ ----- -------
@@ -152,7 +152,7 @@ EADC . . . . . . .  B ADDR   00B8H.0 A
 EAL. . . . . . . .  B ADDR   00A8H.7 A   
 ENDLOOP. . . . . .  C ADDR   001DH   R   SEG=PROCESSBSEGMENT
 ES . . . . . . . .  B ADDR   00A8H.4 A   
-A51 MACRO ASSEMBLER  PROC_B                                                               11/10/2018 12:01:21 PAGE     4
+A51 MACRO ASSEMBLER  PROC_B                                                               11/10/2018 18:43:10 PAGE     4
 
 ET0. . . . . . . .  B ADDR   00A8H.1 A   
 ET1. . . . . . . .  B ADDR   00A8H.3 A   
@@ -220,7 +220,7 @@ RI0. . . . . . . .  B ADDR   0098H.0 A
 RS0. . . . . . . .  B ADDR   00D0H.3 A   
 RS1. . . . . . . .  B ADDR   00D0H.4 A   
 RXD. . . . . . . .  B ADDR   00B0H.0 A   
-A51 MACRO ASSEMBLER  PROC_B                                                               11/10/2018 12:01:21 PAGE     5
+A51 MACRO ASSEMBLER  PROC_B                                                               11/10/2018 18:43:10 PAGE     5
 
 S0BUF. . . . . . .  D ADDR   0099H   A   
 S0CON. . . . . . .  D ADDR   0098H   A   

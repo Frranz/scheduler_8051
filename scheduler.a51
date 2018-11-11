@@ -67,7 +67,7 @@ tihandler:
 ;	mov @r0,A
 	
 	;save rest of context
-	mov A,0x57
+	mov A,0x58
 	
 	;calculate offset in register safe (id * size of one register store[32])
 	rl A
@@ -197,7 +197,7 @@ tihandler:
 	mov r1,#7
 	mov r4,sp
 	mov A,r1
-	orl A,r4
+	xrl A,r4 ;in case stack didnt grow
 	jz restoreStackComplete
 	restoreStack:
 		mov A,@r0

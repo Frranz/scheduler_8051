@@ -14,3 +14,5 @@ PUBLIC statusProcA,statusProcB
 
 
 EXTRN DATA (statusProcA,statusProcB)	
+
+register restoren bei start neuen programs immer noch fehlerbehaftet

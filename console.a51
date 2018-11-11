@@ -17,6 +17,13 @@ consoleSegment SEGMENT CODE
 
 consoleProcess:	
 
+	;testing stuff
+	mov r0,#17h
+	mov r1,#58h
+	mov r6,#33h
+	mov r7,#19h
+	mov A,#93h
+
 ;configure seriel port 0
 	mov s0con,#01010000b
 	mov adcon0,#11000000b
